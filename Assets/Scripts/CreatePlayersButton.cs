@@ -1,13 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class CreatePlayersButton : MonoBehaviour
 {
-    public void CreatePlayers(string text)
+    public TMP_Text playerName;
+    public string marker;
+
+    public delegate void ClickAction(string marker);
+    public static event ClickAction OnPlayerChosen;
+
+    public void PlayerChosen()
     {
-        Player player = new Player();
-        player.CreateTwoPlayers(text);
+        OnPlayerChosen(marker);
     }
+
+  
 }
