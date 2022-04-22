@@ -6,8 +6,16 @@ public class Board : MonoBehaviour
 {
     public GameObject boardParent;
     public BoardScriptableObject boardSettings;
+    void OnEnable()
+    {
+        CreatePlayersButton.OnPlayerChosen += CreateBoard;
+    }
 
-    void CreateBoard()
+    void OnDisable()
+    {
+        CreatePlayersButton.OnPlayerChosen -= CreateBoard;
+    }
+    void CreateBoard(string text)
     {
         CanvasRenderer boardPanel = Instantiate(boardSettings.parentPanel);
         boardPanel.transform.SetParent(boardParent.transform);

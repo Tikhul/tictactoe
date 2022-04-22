@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player
+public class Player : MonoBehaviour
 {
     public bool isHuman;
     public string marker;
@@ -26,5 +26,23 @@ public class Player
     {
         IsHuman = isHuman;
         Marker = marker;
+    }
+
+    void OnEnable()
+    {
+        CreatePlayersButton.OnPlayerChosen += CreateTwoPlayers;
+    }
+
+    void OnDisable()
+    {
+        CreatePlayersButton.OnPlayerChosen -= CreateTwoPlayers;
+    }
+
+    public void CreateTwoPlayers(string buttonText)
+    {
+        Player human = new Player(true, buttonText);
+        Player pc = new Player(false, markerX);
+
+        if (buttonText.Equals(markerX)) pc.marker = markerZero;
     }
 }
