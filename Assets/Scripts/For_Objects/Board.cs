@@ -1,21 +1,31 @@
 ﻿using UnityEngine.UI;
 using UnityEngine;
-using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 
 public class Board : MonoBehaviour
 {
     public GameObject boardParent;
     public BoardScriptableObject boardSettings;
+    public List<string> winCombinations;
+    private const string alphabet = "abcdefghijklmnopqrstuvwxyz";
+
     void OnEnable()
     {
-        CreatePlayersButton.OnPlayerChosen += CreateBoard;
+       // CreatePlayersButton.OnPlayerChosen += CreateBoard;
     }
 
     void OnDisable()
     {
-        CreatePlayersButton.OnPlayerChosen -= CreateBoard;
+       // CreatePlayersButton.OnPlayerChosen -= CreateBoard;
     }
-    void CreateBoard(string text)
+
+    private void Start()
+    {
+        CreateBoard();
+    }
+
+    void CreateBoard()
     {
         CanvasRenderer boardPanel = CreateBoardPanel();
         HorizontalLayoutGroup column = CreateColumn(boardPanel);
@@ -26,13 +36,14 @@ public class Board : MonoBehaviour
         for (int r = 0; r < boardSettings.rowNumber; r++)
         {
             VerticalLayoutGroup row = CreateRow(column, buttonWidth, canvasWidth);
-
+            winCombinations.Add(r+alphabet.Substring(0, boardSettings.rowNumber));
+  
             for (int b = 0; b < boardSettings.rowNumber; b++)
             {
                 Button button = CreateButton(row, buttonWidth, buttonWidth);
             }
-                
         }
+        CreateWinCombinations();
     }
 
     CanvasRenderer CreateBoardPanel()
@@ -74,6 +85,18 @@ public class Board : MonoBehaviour
     }
     void CreateWinCombinations()
     {
+        string diagonal1 = "";
+        string diagonal2 = "";
+        for (int i = 0; i < boardSettings.rowNumber; i++)
+        {
+            diagonal1 += i + alphabet[i].ToString();
+            diagonal2 += i+alphabet[boardSettings.rowNumber - i].ToString();
+        }
+
+        winCombinations.Add(diagonal1);
+        winCombinations.Add(diagonal2);
+
+        foreach (var i in winCombinations) Debug.Log(i);
 
     }
 
