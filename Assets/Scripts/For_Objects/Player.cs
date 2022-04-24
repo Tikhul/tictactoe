@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     public static string markerX = "X";
     public static string markerZero = "0";
     public bool IsHuman { get; set; }
+    public List<string> winList;
     public string Marker
     {
         get { return marker; }
@@ -26,23 +27,5 @@ public class Player : MonoBehaviour
     {
         IsHuman = isHuman;
         Marker = marker;
-    }
-
-    void OnEnable()
-    {
-        CreatePlayersButton.OnPlayerChosen += CreateTwoPlayers;
-    }
-
-    void OnDisable()
-    {
-        CreatePlayersButton.OnPlayerChosen -= CreateTwoPlayers;
-    }
-
-    public void CreateTwoPlayers(string buttonText)
-    {
-        Player human = new Player(true, buttonText);
-        Player pc = new Player(false, markerX);
-
-        if (buttonText.Equals(markerX)) pc.marker = markerZero;
     }
 }

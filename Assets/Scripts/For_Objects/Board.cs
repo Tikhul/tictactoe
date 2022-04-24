@@ -1,32 +1,18 @@
 ﻿using UnityEngine.UI;
 using UnityEngine;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 
 public class Board : MonoBehaviour
 {
     public GameObject boardParent;
     public BoardScriptableObject boardSettings;
     public List<string> winCombinations;
+    public List<CellButton> cellList;
     private const string alphabet = "abcdefghijklmnopqrstuvwxyz";
 
-    void OnEnable()
+    public void CreateBoard()
     {
-       // CreatePlayersButton.OnPlayerChosen += CreateBoard;
-    }
-
-    void OnDisable()
-    {
-       // CreatePlayersButton.OnPlayerChosen -= CreateBoard;
-    }
-
-    private void Start()
-    {
-        CreateBoard();
-    }
-
-    void CreateBoard()
-    {
+        Debug.Log(boardSettings.parentPanel.name);
         CanvasRenderer boardPanel = CreateBoardPanel();
         HorizontalLayoutGroup column = CreateColumn(boardPanel);
 
@@ -41,6 +27,11 @@ public class Board : MonoBehaviour
             for (int b = 0; b < boardSettings.rowNumber; b++)
             {
                 Button button = CreateButton(row, buttonWidth, buttonWidth);
+                CellButton cell = button.GetComponent<CellButton>();
+                cell.cellInt = b;
+                cell.cellChar = alphabet[b];
+                cell.taken = false;
+                cellList.Add(cell);
             }
         }
         CreateWinCombinations();
@@ -48,6 +39,7 @@ public class Board : MonoBehaviour
 
     CanvasRenderer CreateBoardPanel()
     {
+        Debug.Log(boardSettings.parentPanel.name);
         CanvasRenderer boardPanel = Instantiate(boardSettings.parentPanel);
         boardPanel.transform.SetParent(boardParent.transform);
         boardPanel.transform.localScale = new Vector3(1, 1, 1);
@@ -95,13 +87,5 @@ public class Board : MonoBehaviour
 
         winCombinations.Add(diagonal1);
         winCombinations.Add(diagonal2);
-
-        foreach (var i in winCombinations) Debug.Log(i);
-
-    }
-
-    void CheckWinCombinations()
-    {
-        
     }
 }
