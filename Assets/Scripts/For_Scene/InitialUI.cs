@@ -1,19 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class InitialUI : MonoBehaviour
 {
     public List<Button> initialButtons;
+    
     void OnEnable()
     {
         CreatePlayersButton.OnPlayerChosen += ShowPlayersNames;
+        CellButton.OnPlayerClick += BlockAllButtons;
     }
 
     void OnDisable()
     {
         CreatePlayersButton.OnPlayerChosen -= ShowPlayersNames;
+        CellButton.OnPlayerClick -= BlockAllButtons;
     }
 
     void ShowPlayersNames(string marker)
@@ -27,4 +29,12 @@ public class InitialUI : MonoBehaviour
         }
     }
 
+    void BlockAllButtons(string marker, int cellInt, char cellChar)
+    {
+        CellButton[] cellButtons = FindObjectsOfType<CellButton>();
+        foreach(var cell in cellButtons)
+        {
+            if(cell.GetComponent<Button>()) cell.GetComponent<Button>().enabled = false;
+        }
+    }
 }

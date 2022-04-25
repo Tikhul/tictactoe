@@ -17,7 +17,6 @@ public class CellButton : MonoBehaviour
         taken = true;
         buttonText.text = Process.human.marker;
         buttonText.gameObject.SetActive(true);
-        GetComponent<Button>().enabled = false;
         OnPlayerClick(Process.human.marker, cellInt, cellChar);
     }
 }

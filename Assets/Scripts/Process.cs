@@ -30,13 +30,15 @@ public class Process : Player
         CreateBoard();
         human.playerWins = winCombinations;
         pc.playerWins = winCombinations;
-        //if (marker.Equals(Player.markerZero)) GeneratePCTurn();
+
+        if (marker.Equals(markerZero)) GeneratePCTurn(cellList, pc.marker);
     }
-    //void GeneratePCTurn(string pcMarker)
-   // {
-      //  System.Random rnd = new System.Random();
-     //   int r = rnd.Next(cellList.Count);
-   // }
+
+    void GeneratePCTurn(List<CellButton> availableCells, string pcMarker)
+    {
+        System.Random rnd = new System.Random();
+        int r = rnd.Next(cellList.Count);
+    }
 
     void AfterClick(string actualMarker, int cellInt, char cellChar)
     {
