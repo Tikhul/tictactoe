@@ -8,24 +8,25 @@ public class Board : MonoBehaviour
     public GameObject boardParent;
     public BoardScriptableObject boardSettings;
     public List<string> winCombinations;
+    public List<CellButton> cellList;
     private const string alphabet = "abcdefghijklmnopqrstuvwxyz";
 
     void OnEnable()
     {
-       // CreatePlayersButton.OnPlayerChosen += CreateBoard;
+        CreatePlayersButton.OnPlayerChosen += CreateBoard;
     }
 
     void OnDisable()
     {
-       // CreatePlayersButton.OnPlayerChosen -= CreateBoard;
+        CreatePlayersButton.OnPlayerChosen -= CreateBoard;
     }
 
     private void Start()
     {
-        CreateBoard();
+       // CreateBoard();
     }
 
-    void CreateBoard()
+    void CreateBoard(string text)
     {
         CanvasRenderer boardPanel = CreateBoardPanel();
         HorizontalLayoutGroup column = CreateColumn(boardPanel);
@@ -41,6 +42,9 @@ public class Board : MonoBehaviour
             for (int b = 0; b < boardSettings.rowNumber; b++)
             {
                 Button button = CreateButton(row, buttonWidth, buttonWidth);
+                CellButton buttonSettings = button.GetComponent<CellButton>();
+                buttonSettings.cellChar = alphabet[b];
+                buttonSettings.cellInt = b;
             }
         }
         CreateWinCombinations();
@@ -96,12 +100,23 @@ public class Board : MonoBehaviour
         winCombinations.Add(diagonal1);
         winCombinations.Add(diagonal2);
 
-        foreach (var i in winCombinations) Debug.Log(i);
-
     }
 
-    void CheckWinCombinations()
+    void CheckWinCombinations(List<string> playerWins, int cellInt, char cellChar)
     {
-        
+        foreach(var win in playerWins)
+        {
+            if (win.Contains(cellInt.ToString()) && win.Contains(cellChar.ToString())){
+                playerWins.Remove(win);
+            }
+        }
+    }
+
+    void CellsAfterTurn()
+    {
+        foreach (var cell in cellList)
+        {
+            if (cell.taken) cellList.Remove(cell);
+        }
     }
 }

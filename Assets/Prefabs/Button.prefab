@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1027707768107338642}
   - component: {fileID: 1027707768107338643}
   - component: {fileID: 1027707768107338640}
+  - component: {fileID: 6993376694542533403}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -120,6 +121,22 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6993376694542533403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027707768107338654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 350567630e1160a40a26d22ffc00e702, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cellInt: 0
+  cellChar: 0
+  taken: 0
+  buttonText: {fileID: 1027707769663876576}
 --- !u!1 &1027707769663876590
 GameObject:
   m_ObjectHideFlags: 0
@@ -131,13 +148,14 @@ GameObject:
   - component: {fileID: 1027707769663876577}
   - component: {fileID: 1027707769663876579}
   - component: {fileID: 1027707769663876576}
+  - component: {fileID: 753290649732257105}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1027707769663876577
 RectTransform:
   m_ObjectHideFlags: 0
@@ -185,7 +203,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -212,8 +230,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 100
+  m_fontSizeBase: 100
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -254,3 +272,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &753290649732257105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027707769663876590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 350567630e1160a40a26d22ffc00e702, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cellInt: 0
+  cellChar: 0
+  taken: 0
+  buttonText: {fileID: 0}
