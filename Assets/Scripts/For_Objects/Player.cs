@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Board
 {
     public bool isHuman;
     public string marker;
     public static string markerX = "X";
     public static string markerZero = "0";
+    public List<string> playerWins;
     public bool IsHuman { get; set; }
     public string Marker
     {
@@ -26,23 +27,5 @@ public class Player : MonoBehaviour
     {
         IsHuman = isHuman;
         Marker = marker;
-    }
-
-    void OnEnable()
-    {
-        CreatePlayersButton.OnPlayerChosen += CreateTwoPlayers;
-    }
-
-    void OnDisable()
-    {
-        CreatePlayersButton.OnPlayerChosen -= CreateTwoPlayers;
-    }
-
-    public void CreateTwoPlayers(string buttonText)
-    {
-        Player human = new Player(true, buttonText);
-        Player pc = new Player(false, markerX);
-
-        if (buttonText.Equals(markerX)) pc.marker = markerZero;
     }
 }

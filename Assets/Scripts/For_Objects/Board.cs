@@ -1,7 +1,6 @@
 ﻿using UnityEngine.UI;
 using UnityEngine;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 
 public class Board : MonoBehaviour
 {
@@ -11,22 +10,7 @@ public class Board : MonoBehaviour
     public List<CellButton> cellList;
     private const string alphabet = "abcdefghijklmnopqrstuvwxyz";
 
-    void OnEnable()
-    {
-        CreatePlayersButton.OnPlayerChosen += CreateBoard;
-    }
-
-    void OnDisable()
-    {
-        CreatePlayersButton.OnPlayerChosen -= CreateBoard;
-    }
-
-    private void Start()
-    {
-       // CreateBoard();
-    }
-
-    void CreateBoard(string text)
+    public void CreateBoard()
     {
         CanvasRenderer boardPanel = CreateBoardPanel();
         HorizontalLayoutGroup column = CreateColumn(boardPanel);

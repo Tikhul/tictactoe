@@ -8,16 +8,12 @@ public class CellButton : MonoBehaviour
     public char cellChar;
     public bool taken;
     public TMP_Text buttonText;
-    private string humanMarker;
 
-    public void GetHumanMarker(string marker)
-    {
-        humanMarker = marker;
-    }
     public void CellClicked()
     {
         taken = true;
+        buttonText.text = Process.human.marker;
+        buttonText.gameObject.SetActive(true);
         GetComponent<Button>().enabled = false;
-        buttonText.text = humanMarker;
     }
 }

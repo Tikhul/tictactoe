@@ -310,7 +310,6 @@ MonoBehaviour:
   initialButtons:
   - {fileID: 537951774}
   - {fileID: 1427912972}
-  board: {fileID: 0}
 --- !u!1 &537951772
 GameObject:
   m_ObjectHideFlags: 0
@@ -902,6 +901,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1271080713}
   m_CullTransparentMesh: 0
+--- !u!1 &1299534247
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1299534249}
+  - component: {fileID: 1299534248}
+  m_Layer: 0
+  m_Name: Process
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1299534248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1299534247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f43eca3cd3d89184fa780bd7aef620a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boardParent: {fileID: 1658658656}
+  boardSettings: {fileID: 11400000, guid: ba01cc269630d1b47867e93d5a7f4d34, type: 2}
+  winCombinations: []
+  cellList: []
+--- !u!4 &1299534249
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1299534247}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -440.34296, y: 288.435, z: 333.83948}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1427912970
 GameObject:
   m_ObjectHideFlags: 0
@@ -1062,7 +1108,6 @@ GameObject:
   - component: {fileID: 1658658659}
   - component: {fileID: 1658658658}
   - component: {fileID: 1658658657}
-  - component: {fileID: 1658658661}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1150,20 +1195,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1658658661
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1658658656}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b41c51436b3b9f41aee9b71dfc46cfa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  boardParent: {fileID: 1658658656}
-  boardSettings: {fileID: 11400000, guid: ba01cc269630d1b47867e93d5a7f4d34, type: 2}
 --- !u!850595691 &1791652060
 LightingSettings:
   m_ObjectHideFlags: 0
