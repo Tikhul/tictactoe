@@ -2,68 +2,48 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Process : MonoBehaviour
+public class Process : Player
 
 {
-    Board board = new Board();
-    public Player human;
-    public Player pc;
-    public List<CellButton> cellList;
+    public static Player human;
+    public static Player pc;
+  
     void OnEnable()
     {
         CreatePlayersButton.OnPlayerChosen += StartGame;
-       // CellButton.OnCellHumanClicked += GeneratePCTurn;
-       // CellButton.OnCellHumanClicked += CellsAfterTurn;
+        CellButton.OnCellHumanClicked += GeneratePCTurn;
+        CellButton.OnCellHumanClicked += AfterTurn;
+        CellButton.OnCellPCTaken += AfterTurn;
     }
 
     void OnDisable()
     {
         CreatePlayersButton.OnPlayerChosen -= StartGame;
-       // CellButton.OnCellHumanClicked -= GeneratePCTurn;
-       // CellButton.OnCellHumanClicked -= CellsAfterTurn;
+        CellButton.OnCellHumanClicked -= GeneratePCTurn;
+        CellButton.OnCellHumanClicked -= AfterTurn;
+        CellButton.OnCellPCTaken -= AfterTurn;
     }
 
-    void StartGame(string marker)
+    void StartGame(string actualMarker)
     {
-        human = new Player(true, marker);
-        pc = new Player(false, Player.markerX);
+        human = new Player(true, actualMarker);
+        pc = new Player(false, markerX);
 
-        if (marker.Equals(Player.markerX)) pc.marker = Player.markerZero;
+        if (actualMarker.Equals(markerX)) pc.marker = markerZero;
 
-        board.CreateBoard();
+        CreateBoard();
 
-        human.winList = board.winCombinations;
-        pc.winList = board.winCombinations;
-        cellList = board.cellList;
+        human.winList = winCombinations;
+        pc.winList = winCombinations;
 
-        if (marker.Equals(Player.markerZero)) GeneratePCTurn();
+        if (pc.marker.Equals(markerX)) GeneratePCTurn(actualMarker, 1, 'A');
     }
 
-    void GeneratePCTurn()
+    void AfterTurn(string actualMarker, int cellInt, char cellChar)
     {
+        CellsAfterTurn(cellInt, cellChar);
 
-    }
-
-    public void CellsAfterTurn()
-        // клики + ходы пк
-    {
-        foreach (var cell in cellList)
-        {
-            if (cell.taken) cellList.Remove(cell);
-        }
-    }
-
-    public List<string> CheckWinCombinations(List<string> wins, int cellInt, char cellChar) 
-    {
-        foreach (var w in wins)
-        {
-            if (w.Contains(cellInt.ToString()) && w.Contains(cellChar.ToString())) wins.Remove(w);
-        }
-        return wins;
-    }
-
-    void FinishGame()
-    {
-        // Если нет больше выигрышных стратегий
+        if (actualMarker.Equals(human.marker)) CheckWinCombinations(pc.winList, cellInt, cellChar);
+        else if (actualMarker.Equals(pc.marker)) CheckWinCombinations(human.winList, cellInt, cellChar);
     }
 }

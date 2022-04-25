@@ -268,7 +268,7 @@ GameObject:
   - component: {fileID: 435521497}
   - component: {fileID: 435521496}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Process
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -286,9 +286,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f43eca3cd3d89184fa780bd7aef620a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  human: {fileID: 0}
-  pc: {fileID: 0}
+  boardParent: {fileID: 1658658656}
+  boardSettings: {fileID: 11400000, guid: ba01cc269630d1b47867e93d5a7f4d34, type: 2}
+  winCombinations: []
   cellList: []
+  isHuman: 0
+  marker: 
+  winList: []
 --- !u!4 &435521497
 Transform:
   m_ObjectHideFlags: 0

@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class Player : MonoBehaviour
+public class Player : Board
 {
     public bool isHuman;
     public string marker;
@@ -27,5 +28,22 @@ public class Player : MonoBehaviour
     {
         IsHuman = isHuman;
         Marker = marker;
+    }
+
+    public delegate void GenerateTurnAction(CellButton button);
+    public static event GenerateTurnAction OnPCTurn;
+    public void GeneratePCTurn(string marker, int cellInt, char cellChar)
+    {
+        IEnumerator coroutine = WaitPCTurn(2.0f);
+        StartCoroutine(coroutine);
+    }
+
+    private IEnumerator WaitPCTurn(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        System.Random rand = new System.Random();
+        int index = rand.Next(cellList.Count);
+        CellButton chosenButton = cellList[index];
+        OnPCTurn(chosenButton);
     }
 }

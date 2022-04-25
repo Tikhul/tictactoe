@@ -12,7 +12,6 @@ public class Board : MonoBehaviour
 
     public void CreateBoard()
     {
-        Debug.Log(boardSettings.parentPanel.name);
         CanvasRenderer boardPanel = CreateBoardPanel();
         HorizontalLayoutGroup column = CreateColumn(boardPanel);
 
@@ -28,7 +27,7 @@ public class Board : MonoBehaviour
             {
                 Button button = CreateButton(row, buttonWidth, buttonWidth);
                 CellButton cell = button.GetComponent<CellButton>();
-                cell.cellInt = b;
+                cell.cellInt = r;
                 cell.cellChar = alphabet[b];
                 cell.taken = false;
                 cellList.Add(cell);
@@ -39,7 +38,6 @@ public class Board : MonoBehaviour
 
     CanvasRenderer CreateBoardPanel()
     {
-        Debug.Log(boardSettings.parentPanel.name);
         CanvasRenderer boardPanel = Instantiate(boardSettings.parentPanel);
         boardPanel.transform.SetParent(boardParent.transform);
         boardPanel.transform.localScale = new Vector3(1, 1, 1);
@@ -87,5 +85,29 @@ public class Board : MonoBehaviour
 
         winCombinations.Add(diagonal1);
         winCombinations.Add(diagonal2);
+    }
+
+    public void CellsAfterTurn(int index, char charIndex)
+    {
+        List<CellButton> tempList = new List<CellButton>();
+
+        foreach (var cell in cellList)
+        {
+            if (cell.cellInt.Equals(index) && cell.cellChar.Equals(charIndex)) tempList.Add(cell);
+        }
+
+        cellList.RemoveAll(item => tempList.Contains(item));
+    }
+
+    public void CheckWinCombinations(List<string> wins, int index, char charIndex)
+    {
+        List<string> tempList = new List<string>();
+
+        foreach(var win in wins)
+        {
+            if (win.Contains(index.ToString()) && win.Contains(charIndex.ToString())) tempList.Add(win);
+        }
+
+        wins.RemoveAll(item => tempList.Contains(item));
     }
 }
