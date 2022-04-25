@@ -12,12 +12,16 @@ public class Process : Player
     {
         CreatePlayersButton.OnPlayerChosen += StartGame;
         CellButton.OnPlayerClick += AfterClick;
+        CellButton.OnPlayerClick += GeneratePCTurn;
+        CellButton.OnPCTaken += AfterClick;
     }
 
     void OnDisable()
     {
         CreatePlayersButton.OnPlayerChosen -= StartGame;
         CellButton.OnPlayerClick -= AfterClick;
+        CellButton.OnPlayerClick -= GeneratePCTurn;
+        CellButton.OnPCTaken -= AfterClick;
     }
 
     void StartGame(string actualMarker)
@@ -31,13 +35,18 @@ public class Process : Player
         human.playerWins = winCombinations;
         pc.playerWins = winCombinations;
 
-        if (marker.Equals(markerZero)) GeneratePCTurn(cellList, pc.marker);
+        if (actualMarker.Equals(markerZero)) GeneratePCTurn(actualMarker, 1, 'H');
     }
 
-    void GeneratePCTurn(List<CellButton> availableCells, string pcMarker)
+    public delegate void GenerateAction(CellButton button);
+    public static event GenerateAction OnTurnGenerated;
+
+    void GeneratePCTurn(string actualMarker, int cellInt, char cellChar)
     {
         System.Random rnd = new System.Random();
         int r = rnd.Next(cellList.Count);
+        CellButton chosenButton = cellList[r];
+        OnTurnGenerated(chosenButton);
     }
 
     void AfterClick(string actualMarker, int cellInt, char cellChar)

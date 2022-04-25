@@ -10,12 +10,14 @@ public class InitialUI : MonoBehaviour
     {
         CreatePlayersButton.OnPlayerChosen += ShowPlayersNames;
         CellButton.OnPlayerClick += BlockAllButtons;
+        CellButton.OnPCTaken += ActivateButtons;
     }
 
     void OnDisable()
     {
         CreatePlayersButton.OnPlayerChosen -= ShowPlayersNames;
         CellButton.OnPlayerClick -= BlockAllButtons;
+        CellButton.OnPCTaken += ActivateButtons;
     }
 
     void ShowPlayersNames(string marker)
@@ -31,10 +33,17 @@ public class InitialUI : MonoBehaviour
 
     void BlockAllButtons(string marker, int cellInt, char cellChar)
     {
-        CellButton[] cellButtons = FindObjectsOfType<CellButton>();
-        foreach(var cell in cellButtons)
+        foreach (var cell in FindObjectsOfType<CellButton>())
         {
             if(cell.GetComponent<Button>()) cell.GetComponent<Button>().enabled = false;
+        }
+    }
+
+    void ActivateButtons(string marker, int cellInt, char cellChar)
+    {
+        foreach (var cell in FindObjectsOfType<CellButton>())
+        {
+            if (cell.GetComponent<Button>() && !cell.taken) cell.GetComponent<Button>().enabled = true;
         }
     }
 }
