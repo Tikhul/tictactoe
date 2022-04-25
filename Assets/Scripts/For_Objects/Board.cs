@@ -98,12 +98,15 @@ public class Board : MonoBehaviour
         }
     }
 
-    public void CellsAfterTurn()
+    public void CellsAfterTurn(int cellInt, char cellChar)
     {
+        List<CellButton> tempList = new List<CellButton>();
+
         foreach (var cell in cellList)
-        {
-            if (cell.taken) cellList.Remove(cell);
-            break;
-        }
+           {
+               if (cell.cellInt.Equals(cellInt) && cell.cellChar.Equals(cellChar)) tempList.Add(cell);
+           }
+
+        cellList.RemoveAll(item => tempList.Contains(item));
     }
 }

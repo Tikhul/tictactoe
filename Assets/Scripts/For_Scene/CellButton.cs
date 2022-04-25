@@ -14,12 +14,12 @@ public class CellButton : MonoBehaviour
 
     private void OnEnable()
     {
-        Process.OnTurnGenerated += CellTaken;
+        Player.OnTurnGenerated += CellTaken;
     }
 
     private void OnDisable()
     {
-        Process.OnTurnGenerated -= CellTaken;
+        Player.OnTurnGenerated -= CellTaken;
     }
 
     public void CellClicked()

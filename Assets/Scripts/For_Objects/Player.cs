@@ -28,4 +28,28 @@ public class Player : Board
         IsHuman = isHuman;
         Marker = marker;
     }
+
+    public delegate void GenerateAction(CellButton button);
+    public static event GenerateAction OnTurnGenerated;
+    public void GeneratePCTurn(string actualMarker, int cellInt, char cellChar)
+    {
+        IEnumerator coroutine = WaitPCTurn(1.0f);
+        StartCoroutine(coroutine);
+    }
+    private IEnumerator WaitPCTurn(float waitTime)
+    {
+        
+        yield return new WaitForSeconds(waitTime);
+        foreach (var i in cellList) Debug.Log("Player " + i.cellInt.ToString()+i.cellChar.ToString());
+        System.Random rnd = new System.Random();
+        if (cellList.Count > 0)
+        {
+            int r = rnd.Next(cellList.Count);
+            Debug.Log("Index" + r);
+            Debug.Log("Count" + cellList.Count);
+            CellButton chosenButton = cellList[r];
+            OnTurnGenerated(chosenButton);
+        }
+    }
+
 }

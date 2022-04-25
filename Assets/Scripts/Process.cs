@@ -11,16 +11,16 @@ public class Process : Player
     void OnEnable()
     {
         CreatePlayersButton.OnPlayerChosen += StartGame;
-        CellButton.OnPlayerClick += AfterClick;
         CellButton.OnPlayerClick += GeneratePCTurn;
+        CellButton.OnPlayerClick += AfterClick;
         CellButton.OnPCTaken += AfterClick;
     }
 
     void OnDisable()
     {
         CreatePlayersButton.OnPlayerChosen -= StartGame;
-        CellButton.OnPlayerClick -= AfterClick;
         CellButton.OnPlayerClick -= GeneratePCTurn;
+        CellButton.OnPlayerClick -= AfterClick;
         CellButton.OnPCTaken -= AfterClick;
     }
 
@@ -32,30 +32,26 @@ public class Process : Player
         if (actualMarker.Equals(markerX)) pc.marker = markerZero;
 
         CreateBoard();
+
         human.playerWins = winCombinations;
         pc.playerWins = winCombinations;
 
-        if (actualMarker.Equals(markerZero)) GeneratePCTurn(actualMarker, 1, 'H');
+        PlayGame(actualMarker);
     }
 
-    public delegate void GenerateAction(CellButton button);
-    public static event GenerateAction OnTurnGenerated;
-
-    void GeneratePCTurn(string actualMarker, int cellInt, char cellChar)
+    void PlayGame(string actualMarker)
     {
-        System.Random rnd = new System.Random();
-        int r = rnd.Next(cellList.Count);
-        CellButton chosenButton = cellList[r];
-        OnTurnGenerated(chosenButton);
+        if (actualMarker.Equals(markerZero)) GeneratePCTurn(actualMarker, 1, 'A');
     }
 
     void AfterClick(string actualMarker, int cellInt, char cellChar)
     {
         if (actualMarker.Equals(human.marker))
             CheckWinCombinations(pc.playerWins, cellInt, cellChar);
-        else 
+        else
             CheckWinCombinations(human.playerWins, cellInt, cellChar);
 
-        CellsAfterTurn();
-    }
+        CellsAfterTurn(cellInt, cellChar);
+        Debug.Log("Process " + cellList.Count);
+    } 
 }
