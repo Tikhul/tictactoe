@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Process : Player
 {
@@ -10,11 +11,13 @@ public class Process : Player
     void OnEnable()
     {
         CreatePlayersButton.OnPlayerChosen += StartGame;
+        CellButton.OnPlayerClick += AfterClick;
     }
 
     void OnDisable()
     {
         CreatePlayersButton.OnPlayerChosen -= StartGame;
+        CellButton.OnPlayerClick -= AfterClick;
     }
 
     void StartGame(string actualMarker)
@@ -25,11 +28,23 @@ public class Process : Player
         if (actualMarker.Equals(markerX)) pc.marker = markerZero;
 
         CreateBoard();
-
-        //human.playerWins = winCombinations;
-        //pc.winList = board.winCombinations;
-        //cellList = board.cellList;
-
+        human.playerWins = winCombinations;
+        pc.playerWins = winCombinations;
         //if (marker.Equals(Player.markerZero)) GeneratePCTurn();
+    }
+    //void GeneratePCTurn(string pcMarker)
+   // {
+      //  System.Random rnd = new System.Random();
+     //   int r = rnd.Next(cellList.Count);
+   // }
+
+    void AfterClick(string actualMarker, int cellInt, char cellChar)
+    {
+        if (actualMarker.Equals(human.marker))
+            CheckWinCombinations(pc.playerWins, cellInt, cellChar);
+        else 
+            CheckWinCombinations(human.playerWins, cellInt, cellChar);
+
+        CellsAfterTurn();
     }
 }

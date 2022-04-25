@@ -7,6 +7,6 @@ public class BoardScriptableObject : ScriptableObject
     public int rowNumber = 3;
     public Button buttonExample;
     public CanvasRenderer parentPanel;
-    public HorizontalLayoutGroup columns;
-    public VerticalLayoutGroup rows;
+    public HorizontalLayoutGroup rows;
+    public VerticalLayoutGroup columns;
 }
