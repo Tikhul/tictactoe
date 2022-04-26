@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
-public class CellButton : MonoBehaviour
+public class CellButton : TicTacToeElement
 {
     public int cellInt;
     public char cellChar;
@@ -14,20 +13,20 @@ public class CellButton : MonoBehaviour
 
     private void OnEnable()
     {
-        Player.OnTurnGenerated += CellTaken;
+        PlayerController.OnTurnGenerated += CellTaken;
     }
 
     private void OnDisable()
     {
-        Player.OnTurnGenerated -= CellTaken;
+        PlayerController.OnTurnGenerated -= CellTaken;
     }
 
     public void CellClicked()
     {
         taken = true;
-        buttonText.text = Process.human.marker;
+        buttonText.text = game.human.marker;
         buttonText.gameObject.SetActive(true);
-        OnPlayerClick(Process.human.marker, cellInt, cellChar);
+        OnPlayerClick(game.human.marker, cellInt, cellChar);
     }
 
     public delegate void TakeAction(string marker, int cellInt, char cellChar);
@@ -38,9 +37,9 @@ public class CellButton : MonoBehaviour
         if(this == chosenButton)
         {
             taken = true;
-            buttonText.text = Process.pc.marker;
+            buttonText.text = game.pc.marker;
             buttonText.gameObject.SetActive(true);
-            OnPCTaken(Process.pc.marker, cellInt, cellChar);
+            OnPCTaken(game.pc.marker, cellInt, cellChar);
         }
     }
 }
