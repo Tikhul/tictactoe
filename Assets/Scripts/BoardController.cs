@@ -14,12 +14,13 @@ public class BoardController : TicTacToeElement
 
     private void OnDisable()
     {
-        BoardView.OnGameStarted -= CreateBoard;
+        
         CellButton.OnPlayerClick -= CellsAfterTurn;
         CellButton.OnPCTaken -= CellsAfterTurn;
     }
     void CreateBoard()
     {
+        
         CanvasRenderer boardPanel = CreateBoardPanel();
         HorizontalLayoutGroup row = CreateRow(boardPanel);
 
@@ -46,6 +47,7 @@ public class BoardController : TicTacToeElement
                 }
             }
         }
+        BoardView.OnGameStarted -= CreateBoard;
         CreateWinCombinations();
     }
 

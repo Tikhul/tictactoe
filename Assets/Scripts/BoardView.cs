@@ -9,14 +9,10 @@ public class BoardView : TicTacToeElement
         CreatePlayersButton.OnPlayerChosen += StartGame;
     }
 
-    private void OnDisable()
-    {
-        CreatePlayersButton.OnPlayerChosen -= StartGame;
-    }
     public delegate void StartGameAction();
     public static event StartGameAction OnGameStarted;
     void StartGame(string actualMarker)
     {
-        OnGameStarted();
+        OnGameStarted?.Invoke();
     }
 }
