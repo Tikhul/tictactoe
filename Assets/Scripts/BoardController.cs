@@ -7,16 +7,18 @@ public class BoardController : TicTacToeElement
 {
     private void OnEnable()
     {
+        BoardView.OnGameStarted += CreateBoard;
         CellButton.OnPlayerClick += CellsAfterTurn;
         CellButton.OnPCTaken += CellsAfterTurn;
     }
 
     private void OnDisable()
     {
+        BoardView.OnGameStarted -= CreateBoard;
         CellButton.OnPlayerClick -= CellsAfterTurn;
         CellButton.OnPCTaken -= CellsAfterTurn;
     }
-    public void CreateBoard()
+    void CreateBoard()
     {
         CanvasRenderer boardPanel = CreateBoardPanel();
         HorizontalLayoutGroup row = CreateRow(boardPanel);
@@ -96,7 +98,6 @@ public class BoardController : TicTacToeElement
 
         game.boardModel.winCombinations.Add(diagonal1);
         game.boardModel.winCombinations.Add(diagonal2);
-
     }
 
     public List<string> CheckWinCombinations(List<string> wins, int cellInt, char cellChar)

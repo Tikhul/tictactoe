@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine;
 
 public class PlayerView : TicTacToeElement
 {
@@ -20,28 +21,28 @@ public class PlayerView : TicTacToeElement
 
     void ShowPlayersNames(string marker)
     {
-        foreach (CreatePlayersButton i in GetComponents<CreatePlayersButton>())
+        foreach (CreatePlayersButton i in FindObjectsOfType<CreatePlayersButton>())
         {
             string actualMarker = i.marker;
             i.playerName.gameObject.SetActive(true);
             if (actualMarker.Equals(marker)) i.playerName.text = "Игрок";
-            gameObject.GetComponent<Button>().enabled = false;
+            i.GetComponent<Button>().enabled = false;
         }
     }
 
     void BlockButtons(string marker, int cellInt, char cellChar)
     {
-        foreach (var cell in GetComponents<CellButton>())
+        foreach (var cell in FindObjectsOfType<CellButton>())
         {
-            gameObject.GetComponent<Button>().enabled = false;
+            if(cell.GetComponent<Button>()) cell.GetComponent<Button>().enabled = false;
         }
     }
 
     void ActivateButtons(string marker, int cellInt, char cellChar)
     {
-        foreach (var cell in GetComponents<CellButton>())
+        foreach (var cell in FindObjectsOfType<CellButton>())
         {
-            if (!cell.taken) gameObject.GetComponent<Button>().enabled = true;
+            if (cell.GetComponent<Button>() && !cell.taken) cell.GetComponent<Button>().enabled = true;
         }
     }
 }

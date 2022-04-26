@@ -900,6 +900,7 @@ GameObject:
   - component: {fileID: 1299534253}
   - component: {fileID: 1299534251}
   - component: {fileID: 1299534250}
+  - component: {fileID: 1299534252}
   m_Layer: 0
   m_Name: TicTacToeGame
   m_TagString: Untagged
@@ -920,6 +921,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boardModel: {fileID: 1299534255}
+  boardView: {fileID: 1299534252}
   boardController: {fileID: 1299534254}
   human: {fileID: 1493752100}
   pc: {fileID: 1347366624}
@@ -963,6 +965,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f08aca8fab0876545b02094c3b21bd58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1299534252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1299534247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68197c5ce14d4e643a8572a6d5acf0f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1299534253

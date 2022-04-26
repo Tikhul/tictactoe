@@ -30,8 +30,6 @@ public class PlayerController : TicTacToeElement
 
         if (actualMarker.Equals(PlayerModel.markerX)) game.pc.marker = PlayerModel.markerZero;
 
-        game.boardController.CreateBoard();
-
         game.human.playerWins.AddRange(game.boardModel.winCombinations);
         game.pc.playerWins.AddRange(game.boardModel.winCombinations);
 
@@ -59,6 +57,7 @@ public class PlayerController : TicTacToeElement
         {
             int r = rnd.Next(game.boardModel.cellList.Count);
             CellButton chosenButton = game.boardModel.cellList[r];
+            Debug.Log(chosenButton.cellChar + chosenButton.cellInt);
             OnTurnGenerated(chosenButton);
         }
     }
