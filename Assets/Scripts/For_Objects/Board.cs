@@ -13,24 +13,23 @@ public class Board : MonoBehaviour
     public void CreateBoard()
     {
         CanvasRenderer boardPanel = CreateBoardPanel();
-        HorizontalLayoutGroup column = CreateColumn(boardPanel);
+        HorizontalLayoutGroup row = CreateRow(boardPanel);
 
         float canvasWidth = boardPanel.GetComponent<RectTransform>().sizeDelta.x;
         float buttonWidth = canvasWidth / boardSettings.rowNumber;
 
         for (int r = 0; r < boardSettings.rowNumber; r++)
         {
-            VerticalLayoutGroup row = CreateRow(column, buttonWidth, canvasWidth);
+            VerticalLayoutGroup column = CreateColumn(row, buttonWidth, canvasWidth);
             winCombinations.Add(r+alphabet.Substring(0, boardSettings.rowNumber));
   
             for (int b = 0; b < boardSettings.rowNumber; b++)
             {
-                Button button = CreateButton(row, buttonWidth, buttonWidth);
-                CellButton cell = button.GetComponent<CellButton>();
-                cell.cellInt = r;
-                cell.cellChar = alphabet[b];
-                cell.taken = false;
-                cellList.Add(cell);
+                Button button = CreateButton(column, buttonWidth, buttonWidth);
+                CellButton buttonSettings = button.GetComponent<CellButton>();
+                buttonSettings.cellChar = alphabet[b];
+                buttonSettings.cellInt = r;
+                cellList.Add(buttonSettings);
             }
         }
         CreateWinCombinations();
@@ -45,30 +44,30 @@ public class Board : MonoBehaviour
         return boardPanel;
     }
 
-    HorizontalLayoutGroup CreateColumn(CanvasRenderer boardPanel)
+    HorizontalLayoutGroup CreateRow(CanvasRenderer boardPanel)
     {
-        HorizontalLayoutGroup column = Instantiate(boardSettings.columns);
-        column.transform.SetParent(boardPanel.transform);
-        column.transform.localPosition = boardSettings.columns.transform.position;
-        column.transform.localScale = new Vector3(1, 1, 1);
-        return column;
-    }
-
-    VerticalLayoutGroup CreateRow(HorizontalLayoutGroup column, float width, float height)
-    {
-        VerticalLayoutGroup row = Instantiate(boardSettings.rows);
-        row.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
-        row.transform.SetParent(column.transform);
+        HorizontalLayoutGroup row = Instantiate(boardSettings.rows);
+        row.transform.SetParent(boardPanel.transform);
         row.transform.localPosition = boardSettings.rows.transform.position;
         row.transform.localScale = new Vector3(1, 1, 1);
         return row;
     }
 
-    Button CreateButton(VerticalLayoutGroup row, float width, float height)
+    VerticalLayoutGroup CreateColumn(HorizontalLayoutGroup row, float width, float height)
+    {
+        VerticalLayoutGroup column = Instantiate(boardSettings.columns);
+        column.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
+        column.transform.SetParent(row.transform);
+        column.transform.localPosition = boardSettings.columns.transform.position;
+        column.transform.localScale = new Vector3(1, 1, 1);
+        return column;
+    }
+
+    Button CreateButton(VerticalLayoutGroup column, float width, float height)
     {
         Button button = Instantiate(boardSettings.buttonExample);
         button.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
-        button.transform.SetParent(row.transform);
+        button.transform.SetParent(column.transform);
         button.transform.localPosition = boardSettings.buttonExample.transform.position;
         button.transform.localScale = new Vector3(1, 1, 1);
         return button;
@@ -85,29 +84,29 @@ public class Board : MonoBehaviour
 
         winCombinations.Add(diagonal1);
         winCombinations.Add(diagonal2);
+
     }
 
-    public void CellsAfterTurn(int index, char charIndex)
+    public void CheckWinCombinations(List<string> wins, int cellInt, char cellChar)
+    {
+        foreach(var win in wins)
+        {
+            if (win.Contains(cellInt.ToString()) && win.Contains(cellChar.ToString())){
+                wins.Remove(win);
+                break;
+            }
+        }
+    }
+
+    public void CellsAfterTurn(int cellInt, char cellChar)
     {
         List<CellButton> tempList = new List<CellButton>();
 
         foreach (var cell in cellList)
-        {
-            if (cell.cellInt.Equals(index) && cell.cellChar.Equals(charIndex)) tempList.Add(cell);
-        }
+           {
+               if (cell.cellInt.Equals(cellInt) && cell.cellChar.Equals(cellChar)) tempList.Add(cell);
+           }
 
         cellList.RemoveAll(item => tempList.Contains(item));
-    }
-
-    public void CheckWinCombinations(List<string> wins, int index, char charIndex)
-    {
-        List<string> tempList = new List<string>();
-
-        foreach(var win in wins)
-        {
-            if (win.Contains(index.ToString()) && win.Contains(charIndex.ToString())) tempList.Add(win);
-        }
-
-        wins.RemoveAll(item => tempList.Contains(item));
     }
 }

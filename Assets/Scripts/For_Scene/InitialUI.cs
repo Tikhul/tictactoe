@@ -1,23 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class InitialUI : MonoBehaviour
 {
     public List<Button> initialButtons;
+    
     void OnEnable()
     {
         CreatePlayersButton.OnPlayerChosen += ShowPlayersNames;
-        CellButton.OnCellHumanClicked += DeactivateButtons;
-        CellButton.OnCellPCTaken += ActivateButtons;
+        CellButton.OnPlayerClick += BlockAllButtons;
+        CellButton.OnPCTaken += ActivateButtons;
     }
 
     void OnDisable()
     {
         CreatePlayersButton.OnPlayerChosen -= ShowPlayersNames;
-        CellButton.OnCellHumanClicked += DeactivateButtons;
-        CellButton.OnCellPCTaken += ActivateButtons;
+        CellButton.OnPlayerClick -= BlockAllButtons;
+        CellButton.OnPCTaken += ActivateButtons;
     }
 
     void ShowPlayersNames(string marker)
@@ -31,19 +31,19 @@ public class InitialUI : MonoBehaviour
         }
     }
 
-    void DeactivateButtons(string marker, int cellInt, char cellChar)
+    void BlockAllButtons(string marker, int cellInt, char cellChar)
     {
-        CellButton[] buttons = FindObjectsOfType<CellButton>();
-        foreach (var button in buttons)
-            if (button.GetComponent<Button>())
-                button.GetComponent<Button>().enabled = false;
+        foreach (var cell in FindObjectsOfType<CellButton>())
+        {
+            if(cell.GetComponent<Button>()) cell.GetComponent<Button>().enabled = false;
+        }
     }
 
     void ActivateButtons(string marker, int cellInt, char cellChar)
     {
-        CellButton[] buttons = FindObjectsOfType<CellButton>();
-        foreach (var button in buttons)
-            if (button.GetComponent<Button>() && !button.taken)
-                button.GetComponent<Button>().enabled = true;
+        foreach (var cell in FindObjectsOfType<CellButton>())
+        {
+            if (cell.GetComponent<Button>() && !cell.taken) cell.GetComponent<Button>().enabled = true;
+        }
     }
 }

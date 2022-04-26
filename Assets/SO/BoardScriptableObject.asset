@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbf12bfe2f225154aafd09fceec4c0df, type: 3}
   m_Name: BoardScriptableObject
   m_EditorClassIdentifier: 
-  rowNumber: 4
+  rowNumber: 3
   buttonExample: {fileID: 1027707768107338640, guid: a5811acf409d16c4f8d559c4bf76f227, type: 3}
   parentPanel: {fileID: 139042361601652586, guid: 21c60facf1358ae43afcef1624d82184, type: 3}
-  columns: {fileID: 7360667085895534237, guid: 9b4b4bf0e117c03418a2e03aa54d75f8, type: 3}
-  rows: {fileID: 7802181479087238690, guid: c76008c9e2cbf1e4b9e839a1d94c1f2c, type: 3}
+  rows: {fileID: 7360667085895534237, guid: 9b4b4bf0e117c03418a2e03aa54d75f8, type: 3}
+  columns: {fileID: 7802181479087238690, guid: c76008c9e2cbf1e4b9e839a1d94c1f2c, type: 3}

@@ -1,27 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Process : Player
-
 {
     public static Player human;
     public static Player pc;
-  
+
     void OnEnable()
     {
         CreatePlayersButton.OnPlayerChosen += StartGame;
-        CellButton.OnCellHumanClicked += GeneratePCTurn;
-        CellButton.OnCellHumanClicked += AfterTurn;
-        CellButton.OnCellPCTaken += AfterTurn;
+        CellButton.OnPlayerClick += GeneratePCTurn;
+        CellButton.OnPlayerClick += AfterClick;
+        CellButton.OnPCTaken += AfterClick;
     }
 
     void OnDisable()
     {
         CreatePlayersButton.OnPlayerChosen -= StartGame;
-        CellButton.OnCellHumanClicked -= GeneratePCTurn;
-        CellButton.OnCellHumanClicked -= AfterTurn;
-        CellButton.OnCellPCTaken -= AfterTurn;
+        CellButton.OnPlayerClick -= GeneratePCTurn;
+        CellButton.OnPlayerClick -= AfterClick;
+        CellButton.OnPCTaken -= AfterClick;
     }
 
     void StartGame(string actualMarker)
@@ -33,17 +33,25 @@ public class Process : Player
 
         CreateBoard();
 
-        human.winList = winCombinations;
-        pc.winList = winCombinations;
+        human.playerWins = winCombinations;
+        pc.playerWins = winCombinations;
 
-        if (pc.marker.Equals(markerX)) GeneratePCTurn(actualMarker, 1, 'A');
+        PlayGame(actualMarker);
     }
 
-    void AfterTurn(string actualMarker, int cellInt, char cellChar)
+    void PlayGame(string actualMarker)
     {
-        CellsAfterTurn(cellInt, cellChar);
-
-        if (actualMarker.Equals(human.marker)) CheckWinCombinations(pc.winList, cellInt, cellChar);
-        else if (actualMarker.Equals(pc.marker)) CheckWinCombinations(human.winList, cellInt, cellChar);
+        if (actualMarker.Equals(markerZero)) GeneratePCTurn(actualMarker, 1, 'A');
     }
+
+    void AfterClick(string actualMarker, int cellInt, char cellChar)
+    {
+        if (actualMarker.Equals(human.marker))
+            CheckWinCombinations(pc.playerWins, cellInt, cellChar);
+        else
+            CheckWinCombinations(human.playerWins, cellInt, cellChar);
+
+        CellsAfterTurn(cellInt, cellChar);
+        Debug.Log("Process " + cellList.Count);
+    } 
 }

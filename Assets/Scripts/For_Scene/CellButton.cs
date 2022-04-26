@@ -9,36 +9,38 @@ public class CellButton : MonoBehaviour
     public bool taken;
     public TMP_Text buttonText;
 
-    void OnEnable()
+    public delegate void ClickAction(string marker, int cellInt, char cellChar);
+    public static event ClickAction OnPlayerClick;
+
+    private void OnEnable()
     {
-        Player.OnPCTurn += PCTurn;
+        Player.OnTurnGenerated += CellTaken;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
-        Player.OnPCTurn -= PCTurn;
+        Player.OnTurnGenerated -= CellTaken;
     }
-
-    public delegate void CellClickAction(string marker, int cellInt, char cellChar);
-    public static event CellClickAction OnCellHumanClicked;
 
     public void CellClicked()
     {
         taken = true;
         buttonText.text = Process.human.marker;
-        OnCellHumanClicked(Process.human.marker, cellInt, cellChar);
+        buttonText.gameObject.SetActive(true);
+        OnPlayerClick(Process.human.marker, cellInt, cellChar);
     }
 
-    public delegate void PCTurnAction(string marker, int cellInt, char cellChar);
-    public static event PCTurnAction OnCellPCTaken;
+    public delegate void TakeAction(string marker, int cellInt, char cellChar);
+    public static event TakeAction OnPCTaken;
 
-    void PCTurn(CellButton chosenButton)
+    public void CellTaken(CellButton chosenButton)
     {
-        if (this == chosenButton)
+        if(this == chosenButton)
         {
             taken = true;
             buttonText.text = Process.pc.marker;
-            OnCellPCTaken(Process.pc.marker, cellInt, cellChar);
+            buttonText.gameObject.SetActive(true);
+            OnPCTaken(Process.pc.marker, cellInt, cellChar);
         }
     }
 }
