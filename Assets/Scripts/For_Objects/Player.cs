@@ -8,7 +8,7 @@ public class Player : Board
     public string marker;
     public static string markerX = "X";
     public static string markerZero = "0";
-    public List<string> playerWins;
+    public List<string> playerWins = new List<string>();
     public bool IsHuman { get; set; }
     public string Marker
     {
@@ -40,13 +40,10 @@ public class Player : Board
     {
         
         yield return new WaitForSeconds(waitTime);
-        foreach (var i in cellList) Debug.Log("Player " + i.cellInt.ToString()+i.cellChar.ToString());
         System.Random rnd = new System.Random();
         if (cellList.Count > 0)
         {
             int r = rnd.Next(cellList.Count);
-            Debug.Log("Index" + r);
-            Debug.Log("Count" + cellList.Count);
             CellButton chosenButton = cellList[r];
             OnTurnGenerated(chosenButton);
         }

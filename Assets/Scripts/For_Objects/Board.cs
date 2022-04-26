@@ -1,6 +1,7 @@
 ﻿using UnityEngine.UI;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public class Board : MonoBehaviour
 {
@@ -30,6 +31,12 @@ public class Board : MonoBehaviour
                 buttonSettings.cellChar = alphabet[b];
                 buttonSettings.cellInt = r;
                 cellList.Add(buttonSettings);
+                if (r == boardSettings.rowNumber - 1)
+                {
+                    List<int> tempList = Enumerable.Range(0, boardSettings.rowNumber).ToList();
+                    string s = string.Join("", tempList);
+                    winCombinations.Add(alphabet[b] + s);
+                }
             }
         }
         CreateWinCombinations();
@@ -79,7 +86,7 @@ public class Board : MonoBehaviour
         for (int i = 0; i < boardSettings.rowNumber; i++)
         {
             diagonal1 += i + alphabet[i].ToString();
-            diagonal2 += i+alphabet[boardSettings.rowNumber - i].ToString();
+            diagonal2 += i+alphabet[boardSettings.rowNumber - i - 1].ToString();
         }
 
         winCombinations.Add(diagonal1);
@@ -87,15 +94,19 @@ public class Board : MonoBehaviour
 
     }
 
-    public void CheckWinCombinations(List<string> wins, int cellInt, char cellChar)
+    public List<string> CheckWinCombinations(List<string> wins, int cellInt, char cellChar)
     {
-        foreach(var win in wins)
+        foreach (var win in wins) Debug.Log("Input wins " + win);
+        List<string> tempList = new List<string>();
+
+        foreach (var win in wins)
         {
-            if (win.Contains(cellInt.ToString()) && win.Contains(cellChar.ToString())){
-                wins.Remove(win);
-                break;
-            }
+            if (win.Contains(cellInt.ToString()) && win.Contains(cellChar.ToString())) tempList.Add(win);
         }
+
+        wins.RemoveAll(item => tempList.Contains(item));
+        foreach (var win in wins) Debug.Log("Output wins " + win);
+        return wins;
     }
 
     public void CellsAfterTurn(int cellInt, char cellChar)

@@ -33,8 +33,8 @@ public class Process : Player
 
         CreateBoard();
 
-        human.playerWins = winCombinations;
-        pc.playerWins = winCombinations;
+        human.playerWins.AddRange(winCombinations);
+        pc.playerWins.AddRange(winCombinations);
 
         PlayGame(actualMarker);
     }
@@ -46,12 +46,22 @@ public class Process : Player
 
     void AfterClick(string actualMarker, int cellInt, char cellChar)
     {
-        if (actualMarker.Equals(human.marker))
-            CheckWinCombinations(pc.playerWins, cellInt, cellChar);
-        else
-            CheckWinCombinations(human.playerWins, cellInt, cellChar);
+        //foreach (var win in pc.playerWins) Debug.Log("PC wins " + win);
 
+        if (actualMarker.Equals(human.marker))
+        {
+            Debug.Log(actualMarker + human.marker);
+            pc.playerWins = CheckWinCombinations(pc.playerWins, cellInt, cellChar);
+        }
+        else if (actualMarker.Equals(pc.marker))
+        {
+            Debug.Log(actualMarker + pc.marker);
+            human.playerWins = CheckWinCombinations(human.playerWins, cellInt, cellChar);
+        }
+            
         CellsAfterTurn(cellInt, cellChar);
-        Debug.Log("Process " + cellList.Count);
+
+       // foreach (var win in pc.playerWins) Debug.Log("PC wins " + win);
     } 
+    
 }
