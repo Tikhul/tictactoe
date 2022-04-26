@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : Board
 {
     public bool isHuman;
+    public bool isWinner = false;
     public string marker;
     public static string markerX = "X";
     public static string markerZero = "0";
