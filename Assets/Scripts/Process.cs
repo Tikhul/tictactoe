@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
+﻿using UnityEngine;
 
 public class Process : Player
 {
@@ -46,22 +43,24 @@ public class Process : Player
 
     void AfterClick(string actualMarker, int cellInt, char cellChar)
     {
-        //foreach (var win in pc.playerWins) Debug.Log("PC wins " + win);
+        CellsAfterTurn(cellInt, cellChar);
 
         if (actualMarker.Equals(human.marker))
         {
             Debug.Log(actualMarker + human.marker);
             pc.playerWins = CheckWinCombinations(pc.playerWins, cellInt, cellChar);
+            human.playerTurns.Add(cellInt.ToString()+ cellChar.ToString());
         }
         else if (actualMarker.Equals(pc.marker))
         {
             Debug.Log(actualMarker + pc.marker);
             human.playerWins = CheckWinCombinations(human.playerWins, cellInt, cellChar);
+            pc.playerTurns.Add(cellInt.ToString() + cellChar.ToString());
         }
-            
-        CellsAfterTurn(cellInt, cellChar);
-
-       // foreach (var win in pc.playerWins) Debug.Log("PC wins " + win);
     } 
-    
+
+    void FinishGame()
+    {
+
+    }
 }

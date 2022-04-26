@@ -96,7 +96,6 @@ public class Board : MonoBehaviour
 
     public List<string> CheckWinCombinations(List<string> wins, int cellInt, char cellChar)
     {
-        foreach (var win in wins) Debug.Log("Input wins " + win);
         List<string> tempList = new List<string>();
 
         foreach (var win in wins)
@@ -105,7 +104,7 @@ public class Board : MonoBehaviour
         }
 
         wins.RemoveAll(item => tempList.Contains(item));
-        foreach (var win in wins) Debug.Log("Output wins " + win);
+
         return wins;
     }
 

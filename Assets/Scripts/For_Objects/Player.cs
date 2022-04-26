@@ -9,6 +9,7 @@ public class Player : Board
     public static string markerX = "X";
     public static string markerZero = "0";
     public List<string> playerWins = new List<string>();
+    public List<string> playerTurns = new List<string>();
     public bool IsHuman { get; set; }
     public string Marker
     {
