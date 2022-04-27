@@ -25,6 +25,7 @@ public class StepExecutionController : TicTacToeElement
     public static event GenerateAction OnTurnGenerated;
     public void GeneratePCTurn(string actualMarker, int cellInt, char cellChar)
     {
+        Service.BlockButtons(actualMarker, cellInt, cellChar);
         IEnumerator coroutine = WaitPCTurn(1.0f);
         StartCoroutine(coroutine);
     }

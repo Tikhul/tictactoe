@@ -16,4 +16,5 @@ public class TicTacToeGame : MonoBehaviour
     public PlayerModel pc;
     public PlayerView playerView;
     public PlayerController playerController;
+    public Service service;
 }
