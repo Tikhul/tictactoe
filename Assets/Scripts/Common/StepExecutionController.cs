@@ -6,7 +6,7 @@ public class StepExecutionController : TicTacToeElement
 {
     private void OnEnable()
     {
-        BoardController.OnBoardCreated += LaunchFirstTurn;
+        PlayerController.OnPlayersCreated += LaunchFirstTurn;
         CellButton.OnPlayerClick += GeneratePCTurn;
     }
 
@@ -18,7 +18,7 @@ public class StepExecutionController : TicTacToeElement
     void LaunchFirstTurn(string actualMarker)
     {
         if (actualMarker.Equals(PlayerModel.markerZero)) GeneratePCTurn(actualMarker, 1, 'A');
-        BoardController.OnBoardCreated -= LaunchFirstTurn;
+        PlayerController.OnPlayersCreated -= LaunchFirstTurn;
     }
 
     public delegate void GenerateAction(CellButton button);

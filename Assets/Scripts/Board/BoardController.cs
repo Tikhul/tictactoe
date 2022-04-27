@@ -7,7 +7,7 @@ public class BoardController : TicTacToeElement
 {
     private void OnEnable()
     {
-        PlayerController.OnPlayersCreated += CreateBoard;
+        CreatePlayersButton.OnPlayerChosen += CreateBoard;
         CellButton.OnPlayerClick += CellsAfterTurn;
         CellButton.OnPCTaken += CellsAfterTurn;
     }
@@ -47,12 +47,9 @@ public class BoardController : TicTacToeElement
                     game.boardModel.winCombinations.Add(game.boardModel.alphabet[b] + s);
                 }
             }
-            
-            game.human.playerWins.AddRange(game.boardModel.winCombinations);
-            game.pc.playerWins.AddRange(game.boardModel.winCombinations);
         }
         CreateWinCombinations();
-        PlayerController.OnPlayersCreated -= CreateBoard;
+        CreatePlayersButton.OnPlayerChosen -= CreateBoard;
         OnBoardCreated?.Invoke(actualMarker);
     }
 
@@ -99,8 +96,8 @@ public class BoardController : TicTacToeElement
         string diagonal2 = "";
         for (int i = 0; i < game.boardModel.boardSettings.rowNumber; i++)
         {
-            diagonal1 += i + game.boardModel.alphabet[i].ToString();
-            diagonal2 += i + game.boardModel.alphabet[game.boardModel.boardSettings.rowNumber - i - 1].ToString();
+            diagonal1 += game.boardModel.alphabet[i].ToString() + i;
+            diagonal2 += game.boardModel.alphabet[game.boardModel.boardSettings.rowNumber - i - 1].ToString() + i;
         }
 
         game.boardModel.winCombinations.Add(diagonal1);
@@ -113,7 +110,11 @@ public class BoardController : TicTacToeElement
 
         foreach (var win in wins)
         {
-            if (win.Contains(cellInt.ToString()) && win.Contains(cellChar.ToString())) tempList.Add(win);
+            for (int i=0; i< win.Length -1; i++)
+            {
+                if (win[i].ToString().Contains(cellInt.ToString()) && win[i+1].ToString().Contains(cellChar.ToString())) 
+                    tempList.Add(win);
+            }
         }
 
         wins.RemoveAll(item => tempList.Contains(item));

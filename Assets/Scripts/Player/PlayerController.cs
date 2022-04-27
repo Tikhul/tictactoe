@@ -6,7 +6,7 @@ public class PlayerController : TicTacToeElement
 
     void OnEnable()
     {
-        CreatePlayersButton.OnPlayerChosen += CreatePlayers;
+        BoardController.OnBoardCreated += CreatePlayers;
         CellButton.OnPlayerClick += UpdatePlayers;
         CellButton.OnPCTaken += UpdatePlayers;
     }
@@ -21,12 +21,16 @@ public class PlayerController : TicTacToeElement
     public static event PlayersAction OnPlayersCreated;
     public void CreatePlayers(string actualMarker)
     {
-        CreatePlayersButton.OnPlayerChosen -= CreatePlayers;
+        BoardController.OnBoardCreated -= CreatePlayers;
         game.human.isHuman = true;
         game.human.marker = actualMarker;
 
         game.pc.isHuman = false;
         game.pc.marker = PlayerModel.markerX;
+
+        game.human.playerWins.AddRange(game.boardModel.winCombinations);
+        game.pc.playerWins.AddRange(game.boardModel.winCombinations);
+
 
         if (actualMarker.Equals(PlayerModel.markerX)) game.pc.marker = PlayerModel.markerZero;
 
@@ -66,7 +70,7 @@ public class PlayerController : TicTacToeElement
                 if (score == game.boardModel.boardSettings.rowNumber)
                 {
                     player.isWinner = true;
-                Debug.Log("winner detected");
+                    Debug.Log("winner detected");
                 }
             }
     }
