@@ -9,9 +9,9 @@ public class TicTacToeElement : MonoBehaviour
 public class TicTacToeGame : MonoBehaviour
 {
     public BoardModel boardModel;
-    public BoardView boardView;
     public BoardController boardController;
-
+    public StepExecutionController stepExecutionController;
+    public GameController gameController;
     public PlayerModel human;
     public PlayerModel pc;
     public PlayerView playerView;

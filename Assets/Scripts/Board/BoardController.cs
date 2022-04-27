@@ -7,20 +7,21 @@ public class BoardController : TicTacToeElement
 {
     private void OnEnable()
     {
-        BoardView.OnGameStarted += CreateBoard;
+        PlayerController.OnPlayersCreated += CreateBoard;
         CellButton.OnPlayerClick += CellsAfterTurn;
         CellButton.OnPCTaken += CellsAfterTurn;
     }
 
     private void OnDisable()
     {
-        
         CellButton.OnPlayerClick -= CellsAfterTurn;
         CellButton.OnPCTaken -= CellsAfterTurn;
     }
-    void CreateBoard()
+
+    public delegate void BoardAction(string marker);
+    public static event BoardAction OnBoardCreated;
+    void CreateBoard(string actualMarker)
     {
-        
         CanvasRenderer boardPanel = CreateBoardPanel();
         HorizontalLayoutGroup row = CreateRow(boardPanel);
 
@@ -46,9 +47,13 @@ public class BoardController : TicTacToeElement
                     game.boardModel.winCombinations.Add(game.boardModel.alphabet[b] + s);
                 }
             }
+            
+            game.human.playerWins.AddRange(game.boardModel.winCombinations);
+            game.pc.playerWins.AddRange(game.boardModel.winCombinations);
         }
-        BoardView.OnGameStarted -= CreateBoard;
         CreateWinCombinations();
+        PlayerController.OnPlayersCreated -= CreateBoard;
+        OnBoardCreated?.Invoke(actualMarker);
     }
 
     CanvasRenderer CreateBoardPanel()
@@ -126,5 +131,10 @@ public class BoardController : TicTacToeElement
         }
 
         game.boardModel.cellList.RemoveAll(item => tempList.Contains(item));
+    }
+
+    void DestroyBoard()
+    {
+
     }
 }
