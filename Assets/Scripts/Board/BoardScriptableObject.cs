@@ -5,8 +5,8 @@ using UnityEngine.UI;
 public class BoardScriptableObject : ScriptableObject
 {
     public int rowNumber = 3;
-    public Button buttonExample;
-    public CanvasRenderer parentPanel;
-    public HorizontalLayoutGroup rows;
-    public VerticalLayoutGroup columns;
+    public GameObject buttonExample;
+    public GameObject parentPanel;
+    public GameObject rows;
+    public GameObject columns;
 }

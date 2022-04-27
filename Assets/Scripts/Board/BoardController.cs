@@ -22,75 +22,50 @@ public class BoardController : TicTacToeElement
     public static event BoardAction OnBoardCreated;
     void CreateBoard(string actualMarker)
     {
-        CanvasRenderer boardPanel = CreateBoardPanel();
-        HorizontalLayoutGroup row = CreateRow(boardPanel);
+        GameObject parentPanel = game.boardModel.boardSettings.parentPanel;
+        int rowNumber = game.boardModel.boardSettings.rowNumber;
+        float parentPanelX = parentPanel.GetComponent<RectTransform>().sizeDelta.x;
+        float parentPanelY = parentPanel.GetComponent<RectTransform>().sizeDelta.y;
+        float buttonWidth = parentPanelX / rowNumber;
 
-        float canvasWidth = boardPanel.GetComponent<RectTransform>().sizeDelta.x;
-        float buttonWidth = canvasWidth / game.boardModel.boardSettings.rowNumber;
+        GameObject boardPanel = CreateBoardElement(parentPanel, game.boardModel.boardParent,
+            parentPanelX, parentPanelY);
 
-        for (int r = 0; r < game.boardModel.boardSettings.rowNumber; r++)
+        GameObject row = CreateBoardElement(game.boardModel.boardSettings.rows, 
+            boardPanel, parentPanelX, parentPanelY);
+
+        for (int r = 0; r < rowNumber; r++)
         {
-            VerticalLayoutGroup column = CreateColumn(row, buttonWidth, canvasWidth);
-            game.boardModel.winCombinations.Add(r + game.boardModel.alphabet.Substring(0, game.boardModel.boardSettings.rowNumber));
+            GameObject column = CreateBoardElement(game.boardModel.boardSettings.columns, row, buttonWidth, parentPanelX);
+            game.boardModel.winCombinations.Add(r + game.boardModel.alphabet.Substring(0, rowNumber));
 
-            for (int b = 0; b < game.boardModel.boardSettings.rowNumber; b++)
+            for (int b = 0; b < rowNumber; b++)
             {
-                Button button = CreateButton(column, buttonWidth, buttonWidth);
-                CellButton buttonSettings = button.GetComponent<CellButton>();
-                buttonSettings.cellChar = game.boardModel.alphabet[b];
-                buttonSettings.cellInt = r;
-                game.boardModel.cellList.Add(buttonSettings);
-                if (r == game.boardModel.boardSettings.rowNumber - 1)
+                GameObject button = CreateBoardElement(game.boardModel.boardSettings.buttonExample, column, buttonWidth, buttonWidth);
+                FillCellist(button, b, r);
+
+                if (r == rowNumber - 1)
                 {
-                    List<int> tempList = Enumerable.Range(0, game.boardModel.boardSettings.rowNumber).ToList();
-                    string s = string.Join("", tempList);
-                    game.boardModel.winCombinations.Add(game.boardModel.alphabet[b] + s);
+                    CreateDiagonalWinCombinations(b);
                 }
             }
         }
-        CreateWinCombinations();
+        CreateMainWinCombinations();
         CreatePlayersButton.OnPlayerChosen -= CreateBoard;
         OnBoardCreated?.Invoke(actualMarker);
     }
 
-    CanvasRenderer CreateBoardPanel()
+    GameObject CreateBoardElement(GameObject objToCreate, GameObject parent, float width, float height)
     {
-        CanvasRenderer boardPanel = Instantiate(game.boardModel.boardSettings.parentPanel);
-        boardPanel.transform.SetParent(game.boardModel.boardParent.transform);
-        boardPanel.transform.localScale = new Vector3(1, 1, 1);
-        boardPanel.transform.localPosition = game.boardModel.boardSettings.parentPanel.transform.position;
-        return boardPanel;
+        GameObject newObject = Instantiate(objToCreate);
+        newObject.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
+        newObject.transform.SetParent(parent.transform);
+        newObject.transform.localScale = new Vector3(1, 1, 1);
+        newObject.transform.localPosition = newObject.transform.position;
+        return newObject;
     }
 
-    HorizontalLayoutGroup CreateRow(CanvasRenderer boardPanel)
-    {
-        HorizontalLayoutGroup row = Instantiate(game.boardModel.boardSettings.rows);
-        row.transform.SetParent(boardPanel.transform);
-        row.transform.localPosition = game.boardModel.boardSettings.rows.transform.position;
-        row.transform.localScale = new Vector3(1, 1, 1);
-        return row;
-    }
-
-    VerticalLayoutGroup CreateColumn(HorizontalLayoutGroup row, float width, float height)
-    {
-        VerticalLayoutGroup column = Instantiate(game.boardModel.boardSettings.columns);
-        column.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
-        column.transform.SetParent(row.transform);
-        column.transform.localPosition = game.boardModel.boardSettings.columns.transform.position;
-        column.transform.localScale = new Vector3(1, 1, 1);
-        return column;
-    }
-
-    Button CreateButton(VerticalLayoutGroup column, float width, float height)
-    {
-        Button button = Instantiate(game.boardModel.boardSettings.buttonExample);
-        button.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
-        button.transform.SetParent(column.transform);
-        button.transform.localPosition = game.boardModel.boardSettings.buttonExample.transform.position;
-        button.transform.localScale = new Vector3(1, 1, 1);
-        return button;
-    }
-    void CreateWinCombinations()
+    void CreateMainWinCombinations()
     {
         string diagonal1 = "";
         string diagonal2 = "";
@@ -104,6 +79,19 @@ public class BoardController : TicTacToeElement
         game.boardModel.winCombinations.Add(diagonal2);
     }
 
+    void CreateDiagonalWinCombinations(int b)
+    {
+        List<int> tempList = Enumerable.Range(0, game.boardModel.boardSettings.rowNumber).ToList();
+        string s = string.Join("", tempList);
+        game.boardModel.winCombinations.Add(game.boardModel.alphabet[b] + s);
+    }
+    void FillCellist(GameObject button, int b, int r)
+    {
+        CellButton buttonSettings = button.GetComponent<CellButton>();
+        buttonSettings.cellChar = game.boardModel.alphabet[b];
+        buttonSettings.cellInt = r;
+        game.boardModel.cellList.Add(buttonSettings);
+    }
     public List<string> CheckWinCombinations(List<string> wins, int cellInt, char cellChar)
     {
         List<string> tempList = new List<string>();
