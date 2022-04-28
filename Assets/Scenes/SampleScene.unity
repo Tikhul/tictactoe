@@ -916,7 +916,6 @@ GameObject:
   - component: {fileID: 1299534257}
   - component: {fileID: 1299534256}
   - component: {fileID: 1299534252}
-  - component: {fileID: 1299534258}
   m_Layer: 0
   m_Name: TicTacToeGame
   m_TagString: Untagged
@@ -944,7 +943,6 @@ MonoBehaviour:
   pcController: {fileID: 1299534252}
   gameStateController: {fileID: 1299534257}
   stepExecutionController: {fileID: 1299534256}
-  cellButton: {fileID: 1299534258}
   initialUI: {fileID: 508929745}
   finalUI: {fileID: 1592936681}
 --- !u!4 &1299534249
@@ -1064,22 +1062,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 971087d48ba74b84b8a8d81487e09e30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1299534258
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1299534247}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 350567630e1160a40a26d22ffc00e702, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cellInt: 0
-  cellChar: 0
-  taken: 0
-  buttonText: {fileID: 0}
 --- !u!1 &1347366623
 GameObject:
   m_ObjectHideFlags: 0

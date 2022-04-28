@@ -30,8 +30,8 @@ public class GameStateController : TicTacToeElement
 
     public void FinishGame()
     {
-        Debug.Log("Finish game");
         game.stepExecutionController.OutOfTurns();
+        Debug.Log("Finish game");
     }
 
 }

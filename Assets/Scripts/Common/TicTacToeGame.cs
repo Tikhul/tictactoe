@@ -18,7 +18,6 @@ public class TicTacToeGame : MonoBehaviour
     public GameStateController gameStateController;
     public StepExecutionController stepExecutionController;
 
-    public CellButton cellButton;
     public InitialUI initialUI;
     public FinalUI finalUI;
 }

@@ -25,7 +25,7 @@ public class CellButton : TicTacToeElement
         taken = true;
         buttonText.text = game.human.marker;
         buttonText.gameObject.SetActive(true);
-        OnPlayerClick(gameObject.GetComponent<CellButton>());
+        OnPlayerClick(this);
     }
 
     public void CellTaken(CellButton chosenButton)
