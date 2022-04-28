@@ -5,19 +5,7 @@ using UnityEngine.UI;
 
 public class Service : TicTacToeElement
 {
-    void OnEnable()
-    {
-        CellButton.OnPlayerClick += BlockButtons;
-        CellButton.OnPCTaken += ActivateButtons;
-    }
-
-    void OnDisable()
-    {
-        CellButton.OnPlayerClick -= BlockButtons;
-        CellButton.OnPCTaken += ActivateButtons;
-    }
-
-    public static void BlockButtons(string marker, int cellInt, char cellChar)
+    public static void BlockButtons()
     {
         foreach (var cell in FindObjectsOfType<CellButton>())
         {
@@ -25,7 +13,7 @@ public class Service : TicTacToeElement
         }
     }
 
-    public static void ActivateButtons(string marker, int cellInt, char cellChar)
+    public static void ActivateButtons()
     {
         foreach (var cell in FindObjectsOfType<CellButton>())
         {

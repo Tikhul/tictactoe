@@ -9,22 +9,16 @@ public class TicTacToeElement : MonoBehaviour
 public class TicTacToeGame : MonoBehaviour
 {
     public BoardModel boardModel;
-    public BoardController boardController;
-    public StepExecutionController stepExecutionController;
-    public GameController gameController;
-    public PlayerModel human;
     public PlayerModel pc;
-    public PlayerView playerView;
+    public PlayerModel human;
+
+    public BoardController boardController;
     public PlayerController playerController;
-    public Service service;
+    public PCController pcController;
+    public GameStateController gameStateController;
+    public StepExecutionController stepExecutionController;
 
-    public void Notify(string p_event_path, Object p_target, params object[] p_data)
-    {
-        TicTacToeElement[] elements_list = FindObjectsOfType<TicTacToeElement>();
-        foreach (TicTacToeElement e in elements_list)
-        {
-          //  e.OnNotification(p_event_path, p_target, p_data);
-        }
-    }
-
+    public CellButton cellButton;
+    public InitialUI initialUI;
+    public FinalUI finalUI;
 }
