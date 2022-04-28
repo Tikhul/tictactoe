@@ -13,12 +13,12 @@ public class CellButton : TicTacToeElement
 
     private void OnEnable()
     {
-        StepExecutionController.OnTurnGenerated += CellTaken;
+        PlayerController.OnTurnGenerated += CellTaken;
     }
 
     private void OnDisable()
     {
-        StepExecutionController.OnTurnGenerated -= CellTaken;
+        PlayerController.OnTurnGenerated -= CellTaken;
     }
 
     public void CellClicked()

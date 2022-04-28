@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StepExecutionController : TicTacToeElement
+public class Notifications
 {
 
 }

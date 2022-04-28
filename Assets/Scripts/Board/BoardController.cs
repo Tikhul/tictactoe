@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using System.Linq;
 
 public class BoardController : TicTacToeElement
@@ -37,24 +36,51 @@ public class BoardController : TicTacToeElement
         for (int r = 0; r < rowNumber; r++)
         {
             GameObject column = CreateBoardElement(game.boardModel.boardSettings.columns, row, buttonWidth, parentPanelX);
-            game.boardModel.winCombinations.Add(r + game.boardModel.alphabet.Substring(0, rowNumber));
 
             for (int b = 0; b < rowNumber; b++)
             {
                 GameObject button = CreateBoardElement(game.boardModel.boardSettings.buttonExample, column, buttonWidth, buttonWidth);
                 FillCellist(button, b, r);
-
-                if (r == rowNumber - 1)
-                {
-                    CreateDiagonalWinCombinations(b);
-                }
             }
         }
-        CreateMainWinCombinations();
+        CreateWinCombinations();
         CreatePlayersButton.OnPlayerChosen -= CreateBoard;
         OnBoardCreated?.Invoke(actualMarker);
     }
 
+    void CreateWinCombinations()
+    {
+        string diagonal1 = "";
+        string diagonal2 = "";
+        List<string> filterInt = new List<string>();
+        List<string> filterChar = new List<string>();
+
+        for (int i = 0; i < game.boardModel.boardSettings.rowNumber; i++)
+        {
+            diagonal1 += game.boardModel.alphabet[i].ToString() + i;
+            diagonal2 += game.boardModel.alphabet[game.boardModel.boardSettings.rowNumber - i - 1].ToString() + i;
+
+            string forInt = "";
+
+            foreach (var e in game.boardModel.cellList.Where(c => c.cellInt == i))
+                forInt += e.cellChar.ToString() + e.cellInt.ToString();
+
+            filterInt.Add(forInt);
+
+            string forChar = "";
+
+            foreach (var e in game.boardModel.cellList.FindAll(c => c.cellChar == game.boardModel.alphabet[i]))
+                forChar += e.cellChar.ToString() + e.cellInt.ToString();
+
+            filterChar.Add(forChar);
+        }
+
+        game.boardModel.winCombinations.Add(diagonal1);
+        game.boardModel.winCombinations.Add(diagonal2);
+        game.boardModel.winCombinations.AddRange(filterInt);
+        game.boardModel.winCombinations.AddRange(filterChar);
+
+    }
     GameObject CreateBoardElement(GameObject objToCreate, GameObject parent, float width, float height)
     {
         GameObject newObject = Instantiate(objToCreate);
@@ -65,49 +91,12 @@ public class BoardController : TicTacToeElement
         return newObject;
     }
 
-    void CreateMainWinCombinations()
-    {
-        string diagonal1 = "";
-        string diagonal2 = "";
-        for (int i = 0; i < game.boardModel.boardSettings.rowNumber; i++)
-        {
-            diagonal1 += game.boardModel.alphabet[i].ToString() + i;
-            diagonal2 += game.boardModel.alphabet[game.boardModel.boardSettings.rowNumber - i - 1].ToString() + i;
-        }
-
-        game.boardModel.winCombinations.Add(diagonal1);
-        game.boardModel.winCombinations.Add(diagonal2);
-    }
-
-    void CreateDiagonalWinCombinations(int b)
-    {
-        List<int> tempList = Enumerable.Range(0, game.boardModel.boardSettings.rowNumber).ToList();
-        string s = string.Join("", tempList);
-        game.boardModel.winCombinations.Add(game.boardModel.alphabet[b] + s);
-    }
     void FillCellist(GameObject button, int b, int r)
     {
         CellButton buttonSettings = button.GetComponent<CellButton>();
         buttonSettings.cellChar = game.boardModel.alphabet[b];
         buttonSettings.cellInt = r;
         game.boardModel.cellList.Add(buttonSettings);
-    }
-    public List<string> CheckWinCombinations(List<string> wins, int cellInt, char cellChar)
-    {
-        List<string> tempList = new List<string>();
-
-        foreach (var win in wins)
-        {
-            for (int i=0; i< win.Length -1; i++)
-            {
-                if (win[i].ToString().Contains(cellInt.ToString()) && win[i+1].ToString().Contains(cellChar.ToString())) 
-                    tempList.Add(win);
-            }
-        }
-
-        wins.RemoveAll(item => tempList.Contains(item));
-
-        return wins;
     }
     
     public void CellsAfterTurn(string actualMarker, int cellInt, char cellChar)
@@ -116,7 +105,8 @@ public class BoardController : TicTacToeElement
 
         foreach (var cell in game.boardModel.cellList)
         {
-            if (cell.cellInt.Equals(cellInt) && cell.cellChar.Equals(cellChar)) tempList.Add(cell);
+            if (cell.cellInt.Equals(cellInt) && cell.cellChar.Equals(cellChar)) 
+                tempList.Add(cell);
         }
 
         game.boardModel.cellList.RemoveAll(item => tempList.Contains(item));
