@@ -56,20 +56,19 @@ public class PlayerController : TicTacToeElement
         {
             game.gameStateController.finishedGame = true;
             game.stepExecutionController.OutOfTurns("Ничья");
-        }
-        
+        } 
     }
 
     public void LaunchWinnerDetection(string actualMarker)
     // При достаточном количестве ходов проверяю игру на выигрыш (человек)
     {
-        float halfSteps = game.boardModel.boardSettings.rowNumber / 2;
+        float steps = game.boardModel.boardSettings.rowNumber;
 
-        if (actualMarker.Equals(game.human.marker) && game.human.playerTurns.Count >= halfSteps)
+        if (actualMarker.Equals(game.human.marker) && game.human.playerTurns.Count >= steps)
         {
             DetectWinner(game.human.playerWins, game.human.playerTurns, game.human);
         }
-        else if (actualMarker.Equals(game.pc.marker) && game.pc.playerTurns.Count >= halfSteps)
+        else if (actualMarker.Equals(game.pc.marker) && game.pc.playerTurns.Count >= steps)
         {
             DetectWinner(game.pc.playerWins, game.pc.playerTurns, game.pc);
         }
@@ -96,9 +95,7 @@ public class PlayerController : TicTacToeElement
                 if (player.isHuman) game.stepExecutionController.OutOfTurns("Вы выиграли");
                 else game.stepExecutionController.OutOfTurns("ПК выиграл");
             }
-        }
-
-                
+        }         
     }
 }
 

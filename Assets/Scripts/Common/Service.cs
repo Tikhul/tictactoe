@@ -20,4 +20,10 @@ public class Service : TicTacToeElement
             if (cell.GetComponent<Button>() && !cell.taken) cell.GetComponent<Button>().enabled = true;
         }
     }
+
+    public static int RandomInt(int range)
+    {
+        System.Random rnd = new System.Random();
+        return rnd.Next(range);
+    }
 }
