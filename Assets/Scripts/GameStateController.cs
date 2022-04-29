@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameStateController : TicTacToeElement
+
+    // Общее состояние игры
 {
+    public bool finishedGame;
+
     private void OnEnable()
     {
         CreatePlayersButton.OnPlayerChosen += GameStarted;
@@ -11,10 +15,11 @@ public class GameStateController : TicTacToeElement
 
     private void OnDisable()
     {
-        
+        CreatePlayersButton.OnPlayerChosen -= GameStarted;
     }
     void GameStarted(string actualMarker)
     {
+        finishedGame = false;
         game.boardController.CreateBoard(actualMarker);
         game.playerController.CreatePlayers(actualMarker);
         game.stepExecutionController.LaunchFirstTurn(actualMarker);
@@ -27,11 +32,4 @@ public class GameStateController : TicTacToeElement
         game.playerController.UpdatePlayers(actualMarker, cell);
         game.playerController.LaunchWinnerDetection(actualMarker);
     }
-
-    public void FinishGame()
-    {
-        game.stepExecutionController.OutOfTurns();
-        Debug.Log("Finish game");
-    }
-
 }

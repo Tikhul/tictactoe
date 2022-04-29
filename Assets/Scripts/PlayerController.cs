@@ -6,7 +6,6 @@ public class PlayerController : TicTacToeElement
 {
     public void CreatePlayers(string actualMarker)
     {
-       
         game.human.isHuman = true;
         game.human.marker = actualMarker;
 
@@ -51,14 +50,12 @@ public class PlayerController : TicTacToeElement
                     }
                 }
             }
-
-            // foreach (var t in tempList) Debug.Log(t);
             wins.RemoveAll(item => tempList.Contains(item));
         }
         else 
         {
-            game.gameStateController.FinishGame();
-            game.finalUI.ActivateResults("Ничья");
+            game.gameStateController.finishedGame = true;
+            game.stepExecutionController.OutOfTurns("Ничья");
         }
         
     }
@@ -70,18 +67,18 @@ public class PlayerController : TicTacToeElement
 
         if (actualMarker.Equals(game.human.marker) && game.human.playerTurns.Count >= halfSteps)
         {
-            Debug.Log("Human detect launch");
             DetectWinner(game.human.playerWins, game.human.playerTurns, game.human);
         }
         else if (actualMarker.Equals(game.pc.marker) && game.pc.playerTurns.Count >= halfSteps)
         {
-            Debug.Log("pc detect launch");
             DetectWinner(game.pc.playerWins, game.pc.playerTurns, game.pc);
         }
             
     }
 
     void DetectWinner(List<string> wins, List<string> turns, PlayerModel player)
+
+        // Определение победителя при наличии выигрышных комбинаций
     {
         foreach (var win in wins)
         {
@@ -95,10 +92,9 @@ public class PlayerController : TicTacToeElement
             if (score == game.boardModel.boardSettings.rowNumber)
             {
                 player.isWinner = true;
-                game.gameStateController.FinishGame();
-                if (player.isHuman) game.finalUI.ActivateResults("Вы выиграли");
-                else game.finalUI.ActivateResults("ПК выиграл");
-                Debug.Log("winner detected");
+                game.gameStateController.finishedGame = true;
+                if (player.isHuman) game.stepExecutionController.OutOfTurns("Вы выиграли");
+                else game.stepExecutionController.OutOfTurns("ПК выиграл");
             }
         }
 

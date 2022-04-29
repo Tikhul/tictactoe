@@ -4,6 +4,8 @@ using UnityEngine.UI;
 using UnityEngine;
 
 public class InitialUI : TicTacToeElement
+
+    // UI для начала игры
 {
     void OnEnable()
     {

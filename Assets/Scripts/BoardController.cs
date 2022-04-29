@@ -103,8 +103,8 @@ public class BoardController : TicTacToeElement
         }
         else
         {
-            game.gameStateController.FinishGame();
-            game.finalUI.ActivateResults("Ничья");
+            game.gameStateController.finishedGame = true;
+            game.stepExecutionController.OutOfTurns("Ничья");
         }    
     }
 

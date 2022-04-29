@@ -2,6 +2,7 @@
 using TMPro;
 
 public class CellButton : TicTacToeElement
+    // Кнопка для поля
 {
     public int cellInt;
     public char cellChar;
@@ -21,6 +22,7 @@ public class CellButton : TicTacToeElement
         PCController.OnGenerateFinished -= CellTaken;
     }
     public void CellClicked()
+    // Если нажал человек
     {
         taken = true;
         buttonText.text = game.human.marker;
@@ -29,6 +31,7 @@ public class CellButton : TicTacToeElement
     }
 
     public void CellTaken(CellButton chosenButton)
+    // Если кнопку выбрал ПК
     {
         if (chosenButton.Equals(this))
         {
