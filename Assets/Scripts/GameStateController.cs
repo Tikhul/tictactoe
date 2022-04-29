@@ -30,6 +30,7 @@ public class GameStateController : TicTacToeElement
     {
         game.boardController.CellsAfterTurn(cell);
         game.playerController.UpdatePlayers(actualMarker, cell);
+        game.playerController.CheckRemainingWins();
         game.playerController.LaunchWinnerDetection(actualMarker);
     }
 }

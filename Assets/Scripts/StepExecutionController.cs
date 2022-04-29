@@ -13,8 +13,6 @@ public class StepExecutionController : TicTacToeElement
 
     private void OnDisable()
     {
-        CellButton.OnPlayerClick -= GetPlayerTurn;
-        PCController.OnGenerateFinished -= GetPCTurn;
     }
 
     public void LaunchFirstTurn(string actualMarker)
@@ -31,14 +29,13 @@ public class StepExecutionController : TicTacToeElement
     void GetPCTurn(CellButton cell)
     {
         TurnExecuted(game.pc.marker, cell);
-        Service.ActivateButtons();
+        if(!game.gameStateController.finishedGame) Service.ActivateButtons();
     }
 
     void GetPlayerTurn(CellButton cell)
     {
         TurnExecuted(game.human.marker, cell);
-        if (!game.gameStateController.finishedGame)
-            LaunchPCTurn();
+        if (!game.gameStateController.finishedGame) LaunchPCTurn();
     }
 
     void TurnExecuted(string actualMarker, CellButton cell)
@@ -48,6 +45,8 @@ public class StepExecutionController : TicTacToeElement
 
     public void OutOfTurns(string result)
     {
+        PCController.OnGenerateFinished -= GetPCTurn;
+        CellButton.OnPlayerClick -= GetPlayerTurn;
         game.finalUI.ActivateResults(result);
         Service.BlockButtons();
     }
