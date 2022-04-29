@@ -20,7 +20,7 @@ public class GameStateController : TicTacToeElement
     void GameStarted(string actualMarker)
     {
         finishedGame = false;
-        game.boardController.CreateBoard(actualMarker);
+        game.boardController.CreateBoard();
         game.playerController.CreatePlayers(actualMarker);
         game.stepExecutionController.LaunchFirstTurn(actualMarker);
         CreatePlayersButton.OnPlayerChosen -= GameStarted;

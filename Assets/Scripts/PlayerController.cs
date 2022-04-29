@@ -15,6 +15,7 @@ public class PlayerController : TicTacToeElement
         game.human.playerWins.AddRange(game.boardModel.winCombinations);
         game.pc.playerWins.AddRange(game.boardModel.winCombinations);
 
+        //       foreach (var v in game.pc.playerWins) foreach (var i in v) Debug.Log(i.cellChar.ToString() + i.cellInt.ToString());
         if (actualMarker.Equals(PlayerModel.markerX)) game.pc.marker = PlayerModel.markerZero;
     }
 
@@ -23,40 +24,39 @@ public class PlayerController : TicTacToeElement
         if (actualMarker.Equals(game.human.marker))
         {
             CheckWinCombinations(game.pc.playerWins, cell);
-            game.human.playerTurns.Add(cell.cellChar.ToString() + cell.cellInt.ToString());
+            game.human.playerTurns.Add(cell);
         }
         else if (actualMarker.Equals(game.pc.marker))
         {
             CheckWinCombinations(game.human.playerWins, cell);
-            game.pc.playerTurns.Add(cell.cellChar.ToString() + cell.cellInt.ToString());
+            game.pc.playerTurns.Add(cell);
         }
     }
 
-    void CheckWinCombinations(List<string> wins, CellButton cell)
+    void CheckWinCombinations(List<List<CellButton>> wins, CellButton cell)
     // Убираю недоступные выигрышные комбинации для игрока
     {
+        Debug.Log(game.pc.playerWins.Count);
         if (wins.Any())
         {
-            List<string> tempList = new List<string>();
+            List<List<CellButton>> tempList = new List<List<CellButton>>();
 
             foreach (var win in wins)
             {
-                for (int i = 0; i < win.Length - 1; i += 2)
-                {
-                    if (win[i].ToString().Contains(cell.cellChar.ToString()) && win[i + 1].ToString().Contains(cell.cellInt.ToString()))
-                    {
-
-                        tempList.Add(win);
-                    }
-                }
+                if (win.Contains(cell)) tempList.Add(win);
             }
+            Debug.Log("Начало");
+            Debug.Log(wins.Count);
+           // foreach (var v in tempList) foreach (var i in v) Debug.Log(i.cellChar.ToString() + i.cellInt.ToString());
             wins.RemoveAll(item => tempList.Contains(item));
         }
         else 
         {
             game.gameStateController.finishedGame = true;
             game.stepExecutionController.OutOfTurns("Ничья");
-        } 
+        }
+
+ //       foreach (var v in game.pc.playerWins) foreach (var i in v) Debug.Log(i.cellChar.ToString() + i.cellInt.ToString());
     }
 
     public void LaunchWinnerDetection(string actualMarker)
@@ -66,24 +66,23 @@ public class PlayerController : TicTacToeElement
 
         if (actualMarker.Equals(game.human.marker) && game.human.playerTurns.Count >= steps)
         {
-            DetectWinner(game.human.playerWins, game.human.playerTurns, game.human);
+            DetectWinner(game.human);
         }
         else if (actualMarker.Equals(game.pc.marker) && game.pc.playerTurns.Count >= steps)
         {
-            DetectWinner(game.pc.playerWins, game.pc.playerTurns, game.pc);
+            DetectWinner(game.pc);
         }
             
     }
 
-    void DetectWinner(List<string> wins, List<string> turns, PlayerModel player)
-
+    void DetectWinner(PlayerModel player)
         // Определение победителя при наличии выигрышных комбинаций
     {
-        foreach (var win in wins)
+        foreach (var win in player.playerWins)
         {
             int score = 0;
 
-            foreach (var turn in turns)
+            foreach (var turn in player.playerTurns)
             {
                 if (win.Contains(turn)) score++;
             }
@@ -94,6 +93,7 @@ public class PlayerController : TicTacToeElement
                 game.gameStateController.finishedGame = true;
                 if (player.isHuman) game.stepExecutionController.OutOfTurns("Вы выиграли");
                 else game.stepExecutionController.OutOfTurns("ПК выиграл");
+                break;
             }
         }         
     }
