@@ -26,11 +26,11 @@ public class GameStateController : TicTacToeElement
         CreatePlayersButton.OnPlayerChosen -= GameStarted;
     }
 
-    public void CheckGameState(string actualMarker, CellButton cell)
+    public void CheckGameState(PlayerModel player, CellButton cell)
     {
         game.boardController.CellsAfterTurn(cell);
-        game.playerController.UpdatePlayers(actualMarker, cell);
+        game.playerController.UpdatePlayers(player, cell);
         game.playerController.CheckRemainingWins();
-        game.playerController.LaunchWinnerDetection(actualMarker);
+        game.playerController.LaunchWinnerDetection(player);
     }
 }

@@ -18,17 +18,17 @@ public class PlayerController : TicTacToeElement
         if (actualMarker.Equals(PlayerModel.markerX)) game.pc.marker = PlayerModel.markerZero;
     }
 
-    public void UpdatePlayers(string actualMarker, CellButton cell)
+    public void UpdatePlayers(PlayerModel player, CellButton cell)
     {
-        if (actualMarker.Equals(game.human.marker) && game.pc.playerWins.Any())
+        if (player.isHuman)
         {
             CheckWinCombinations(game.pc.playerWins, cell);
-            game.human.playerTurns.Add(cell);
+            player.playerTurns.Add(cell);
         }
-        else if (actualMarker.Equals(game.pc.marker) && game.human.playerWins.Any())
+        else if (!player.isHuman)
         {
             CheckWinCombinations(game.human.playerWins, cell);
-            game.pc.playerTurns.Add(cell);
+            player.playerTurns.Add(cell);
         }
     }
 
@@ -47,25 +47,24 @@ public class PlayerController : TicTacToeElement
 
         foreach (var win in wins)
         {
-            if (win.Contains(cell)) tempList.Add(win);
+            if (win.Contains(cell)) 
+            {
+                tempList.Add(win);
+            }
         }
+
         wins.RemoveAll(item => tempList.Contains(item));
     }
 
-    public void LaunchWinnerDetection(string actualMarker)
+    public void LaunchWinnerDetection(PlayerModel player)
     // При достаточном количестве ходов проверяю игру на выигрыш (человек)
     {
         float steps = game.boardModel.boardSettings.rowNumber;
 
-        if (actualMarker.Equals(game.human.marker) && game.human.playerTurns.Count >= steps)
+        if (player.playerTurns.Count >= steps)
         {
-            DetectWinner(game.human);
-        }
-        else if (actualMarker.Equals(game.pc.marker) && game.pc.playerTurns.Count >= steps)
-        {
-            DetectWinner(game.pc);
-        }
-            
+            DetectWinner(player);
+        }   
     }
 
     void DetectWinner(PlayerModel player)
@@ -77,7 +76,10 @@ public class PlayerController : TicTacToeElement
 
             foreach (var turn in player.playerTurns)
             {
-                if (win.Contains(turn)) score++;
+                if (win.Contains(turn)) 
+                {
+                    score++;
+                }  
             }
 
             if (score >= game.boardModel.boardSettings.rowNumber)

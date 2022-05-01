@@ -46,9 +46,14 @@ public class BoardController : TicTacToeElement
             foreach(CellButton cell in game.boardModel.cellList)
             {
                 if (cell.cellChar.Equals(alphabet[i]) && cell.cellInt.Equals(i))
+                {
                     diagonal1.Add(cell);
+                }
+                    
                 if (cell.cellChar.Equals(alphabet[rownumber - i - 1]) && cell.cellInt.Equals(i))
+                {
                     diagonal2.Add(cell);
+                }       
             }
 
             game.boardModel.winCombinations.Add(game.boardModel.cellList.FindAll(c => c.cellInt.Equals(i)));
@@ -69,12 +74,12 @@ public class BoardController : TicTacToeElement
         return newObject;
     }
 
-    void FillCellist(GameObject button, int b, int r)
+    void FillCellist(GameObject button, int buttonIndex, int rowIndex)
     // Заполняю лист актуальными ячейками
     {
         CellButton buttonSettings = button.GetComponent<CellButton>();
-        buttonSettings.cellChar = game.boardModel.alphabet[b];
-        buttonSettings.cellInt = r;
+        buttonSettings.cellChar = game.boardModel.alphabet[buttonIndex];
+        buttonSettings.cellInt = rowIndex;
         game.boardModel.cellList.Add(buttonSettings);
     }
     
@@ -87,7 +92,10 @@ public class BoardController : TicTacToeElement
 
             foreach (var cell in game.boardModel.cellList)
             {
-                if (cell.Equals(receivedCell)) tempList.Add(cell);
+                if (cell.cellChar.Equals(receivedCell.cellChar) && cell.cellInt.Equals(receivedCell.cellInt)) 
+                {
+                    tempList.Add(cell);
+                } 
             }
 
             game.boardModel.cellList.RemoveAll(item => tempList.Contains(item));
