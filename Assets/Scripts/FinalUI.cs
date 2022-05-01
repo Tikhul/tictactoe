@@ -5,11 +5,16 @@ using TMPro;
 
 public class FinalUI : TicTacToeElement
 {
-    public TMP_Text results;
-    
+    [SerializeField] private TMP_Text _results;
+
+    public TMP_Text Results
+    {
+        get => _results;
+        set => _results = value;
+    }
     public void ActivateResults(string result)
     {
-        results.text = result;
-        results.gameObject.SetActive(true);
+        Results.text = result;
+        Results.gameObject.SetActive(true);
     }
 }

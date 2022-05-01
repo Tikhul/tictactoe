@@ -13,28 +13,28 @@ public class StepExecutionController : TicTacToeElement
 
     public void LaunchFirstTurn(string actualMarker)
     {
-        if (actualMarker.Equals(PlayerModel.markerZero)) LaunchPCTurn();
+        if (actualMarker.Equals(PlayerModel.MarkerZero)) LaunchPCTurn();
     }
 
-    void LaunchPCTurn() 
+    private void LaunchPCTurn() 
     {
         Service.BlockButtons();
         game.pcController.GeneratePCTurn();
-    } 
+    }
 
-    void GetPCTurn(CellButton cell)
+    private void GetPCTurn(CellButton cell)
     {
         TurnExecuted(game.pc, cell);
         if(!game.gameStateController.finishedGame) Service.ActivateButtons();
     }
 
-    void GetPlayerTurn(CellButton cell)
+    private void GetPlayerTurn(CellButton cell)
     {
         TurnExecuted(game.human, cell);
         if (!game.gameStateController.finishedGame) LaunchPCTurn();
     }
 
-    void TurnExecuted(PlayerModel player, CellButton cell)
+    private void TurnExecuted(PlayerModel player, CellButton cell)
     {
         game.gameStateController.CheckGameState(player, cell);
     }

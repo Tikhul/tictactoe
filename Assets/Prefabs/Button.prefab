@@ -145,10 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 350567630e1160a40a26d22ffc00e702, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellInt: 0
-  cellChar: 0
-  taken: 0
-  buttonText: {fileID: 1027707769663876576}
+  _buttonText: {fileID: 1027707769663876576}
 --- !u!1 &1027707769663876590
 GameObject:
   m_ObjectHideFlags: 0
@@ -296,7 +293,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 350567630e1160a40a26d22ffc00e702, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellInt: 0
-  cellChar: 0
-  taken: 0
-  buttonText: {fileID: 0}
+  _buttonText: {fileID: 0}

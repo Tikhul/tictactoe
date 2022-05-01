@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Service : TicTacToeElement
 {
+    public static string Alphabet = "abcdefghijklmnopqrstuvwxyz";
     public static void BlockButtons()
     {
         foreach (var cell in FindObjectsOfType<CellButton>())
@@ -17,7 +18,7 @@ public class Service : TicTacToeElement
     {
         foreach (var cell in FindObjectsOfType<CellButton>())
         {
-            if (cell.GetComponent<Button>() && !cell.taken) cell.GetComponent<Button>().enabled = true;
+            if (cell.GetComponent<Button>() && !cell.Taken) cell.GetComponent<Button>().enabled = true;
         }
     }
 

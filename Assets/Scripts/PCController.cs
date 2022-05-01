@@ -16,10 +16,10 @@ public class PCController : TicTacToeElement
 
         yield return new WaitForSeconds(waitTime);
         System.Random rnd = new System.Random();
-        if (game.boardModel.cellList.Count > 0)
+        if (game.boardModel.CellList.Count > 0)
         {
-            int r = rnd.Next(game.boardModel.cellList.Count);
-            CellButton chosenButton = game.boardModel.cellList[r];
+            int r = rnd.Next(game.boardModel.CellList.Count);
+            CellButton chosenButton = game.boardModel.CellList[r];
             OnGenerateFinished(chosenButton);
         }
     }

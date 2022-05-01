@@ -7,61 +7,60 @@ public class BoardController : TicTacToeElement
     public void CreateBoard()
      // Создания борда для игры
     {
-        GameObject parentPanel = game.boardModel.boardSettings.parentPanel;
-        int rowNumber = game.boardModel.boardSettings.rowNumber;
+        GameObject parentPanel = game.boardModel.BoardSettings.parentPanel;
+        int rowNumber = game.boardModel.BoardSettings.rowNumber;
         float parentPanelSide = parentPanel.GetComponent<RectTransform>().sizeDelta.x;
         float buttonWidth = parentPanelSide / rowNumber;
 
-        GameObject boardPanel = CreateBoardElement(parentPanel, game.boardModel.boardParent,
+        GameObject boardPanel = CreateBoardElement(parentPanel, game.boardModel.BoardParent,
             parentPanelSide, parentPanelSide);
 
-        GameObject row = CreateBoardElement(game.boardModel.boardSettings.rows, 
+        GameObject row = CreateBoardElement(game.boardModel.BoardSettings.rows, 
             boardPanel, parentPanelSide, parentPanelSide);
 
         for (int r = 0; r < rowNumber; r++)
         {
-            GameObject column = CreateBoardElement(game.boardModel.boardSettings.columns, row, buttonWidth, parentPanelSide);
+            GameObject column = CreateBoardElement(game.boardModel.BoardSettings.columns, row, buttonWidth, parentPanelSide);
 
             for (int b = 0; b < rowNumber; b++)
             {
-                GameObject button = CreateBoardElement(game.boardModel.boardSettings.buttonExample, column, buttonWidth, buttonWidth);
+                GameObject button = CreateBoardElement(game.boardModel.BoardSettings.buttonExample, column, buttonWidth, buttonWidth);
                 FillCellist(button, b, r);
             }
         }
         CreateWinCombinations();
     }
 
-    void CreateWinCombinations()
+    private void CreateWinCombinations()
     // Создание общих выирышных комбинаций в игре
     {
         List<CellButton> diagonal1 = new List<CellButton>();
         List<CellButton> diagonal2 = new List<CellButton>();
         List<CellButton> filterInt = new List<CellButton>();
         List<CellButton> filterChar = new List<CellButton>();
-        string alphabet = game.boardModel.alphabet;
-        int rownumber = game.boardModel.boardSettings.rowNumber;
+        int rownumber = game.boardModel.BoardSettings.rowNumber;
 
         for (int i = 0; i < rownumber; i++)
         {
-            foreach(CellButton cell in game.boardModel.cellList)
+            foreach(CellButton cell in game.boardModel.CellList)
             {
-                if (cell.cellChar.Equals(alphabet[i]) && cell.cellInt.Equals(i))
+                if (cell.CellChar.Equals(Service.Alphabet[i]) && cell.CellInt.Equals(i))
                 {
                     diagonal1.Add(cell);
                 }
                     
-                if (cell.cellChar.Equals(alphabet[rownumber - i - 1]) && cell.cellInt.Equals(i))
+                if (cell.CellChar.Equals(Service.Alphabet[rownumber - i - 1]) && cell.CellInt.Equals(i))
                 {
                     diagonal2.Add(cell);
                 }       
             }
 
-            game.boardModel.winCombinations.Add(game.boardModel.cellList.FindAll(c => c.cellInt.Equals(i)));
-            game.boardModel.winCombinations.Add(game.boardModel.cellList.FindAll(c => c.cellChar == alphabet[i]));
+            game.boardModel.WinCombinations.Add(game.boardModel.CellList.FindAll(c => c.CellInt.Equals(i)));
+            game.boardModel.WinCombinations.Add(game.boardModel.CellList.FindAll(c => c.CellChar == Service.Alphabet[i]));
         }
 
-        game.boardModel.winCombinations.Add(diagonal1);
-        game.boardModel.winCombinations.Add(diagonal2);
+        game.boardModel.WinCombinations.Add(diagonal1);
+        game.boardModel.WinCombinations.Add(diagonal2);
     }
 
     GameObject CreateBoardElement(GameObject objToCreate, GameObject parent, float width, float height)
@@ -74,31 +73,31 @@ public class BoardController : TicTacToeElement
         return newObject;
     }
 
-    void FillCellist(GameObject button, int buttonIndex, int rowIndex)
+    private void FillCellist(GameObject button, int buttonIndex, int rowIndex)
     // Заполняю лист актуальными ячейками
     {
         CellButton buttonSettings = button.GetComponent<CellButton>();
-        buttonSettings.cellChar = game.boardModel.alphabet[buttonIndex];
-        buttonSettings.cellInt = rowIndex;
-        game.boardModel.cellList.Add(buttonSettings);
+        buttonSettings.CellChar = Service.Alphabet[buttonIndex];
+        buttonSettings.CellInt = rowIndex;
+        game.boardModel.CellList.Add(buttonSettings);
     }
     
     public void CellsAfterTurn(CellButton receivedCell)
     // Проверка оставшихся ячеек после каждого хода
     {
-        if (game.boardModel.cellList.Any())
+        if (game.boardModel.CellList.Any())
         {
             List<CellButton> tempList = new List<CellButton>();
 
-            foreach (var cell in game.boardModel.cellList)
+            foreach (var cell in game.boardModel.CellList)
             {
-                if (cell.cellChar.Equals(receivedCell.cellChar) && cell.cellInt.Equals(receivedCell.cellInt)) 
+                if (cell.CellChar.Equals(receivedCell.CellChar) && cell.CellInt.Equals(receivedCell.CellInt)) 
                 {
                     tempList.Add(cell);
                 } 
             }
 
-            game.boardModel.cellList.RemoveAll(item => tempList.Contains(item));
+            game.boardModel.CellList.RemoveAll(item => tempList.Contains(item));
         }
         else
         {

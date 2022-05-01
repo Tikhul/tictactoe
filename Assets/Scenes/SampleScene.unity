@@ -453,8 +453,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7afcbc587dc02b1448037d96a3312e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerName: {fileID: 329923036}
-  marker: X
+  _playerName: {fileID: 329923036}
+  _marker: X
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1033,11 +1033,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1de487809556f864a85eff7a019276da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boardParent: {fileID: 1658658656}
-  boardSettings: {fileID: 11400000, guid: ba01cc269630d1b47867e93d5a7f4d34, type: 2}
-  winCombinations: []
-  cellList: []
-  alphabet: abcdefghijklmnopqrstuvwxyz
+  _boardParent: {fileID: 1658658656}
+  _boardSettings: {fileID: 11400000, guid: ba01cc269630d1b47867e93d5a7f4d34, type: 2}
 --- !u!114 &1299534256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1062,6 +1059,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 971087d48ba74b84b8a8d81487e09e30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  finishedGame: 0
 --- !u!1 &1347366623
 GameObject:
   m_ObjectHideFlags: 0
@@ -1091,11 +1089,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee913f9a97991444ca28da0ad1bd8501, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isHuman: 0
-  isWinner: 0
-  marker: 
-  playerWins: []
-  playerTurns: []
 --- !u!4 &1347366625
 Transform:
   m_ObjectHideFlags: 0
@@ -1390,8 +1383,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7afcbc587dc02b1448037d96a3312e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerName: {fileID: 1160612782}
-  marker: 0
+  _playerName: {fileID: 1160612782}
+  _marker: 0
 --- !u!1 &1493752099
 GameObject:
   m_ObjectHideFlags: 0
@@ -1421,11 +1414,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee913f9a97991444ca28da0ad1bd8501, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isHuman: 0
-  isWinner: 0
-  marker: 
-  playerWins: []
-  playerTurns: []
 --- !u!4 &1493752101
 Transform:
   m_ObjectHideFlags: 0
@@ -1489,7 +1477,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91d3ee887fe7453489c99bfc670fb5c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  results: {fileID: 1418882154}
+  _results: {fileID: 1418882154}
 --- !u!1 &1658658656
 GameObject:
   m_ObjectHideFlags: 0
