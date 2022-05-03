@@ -22,38 +22,65 @@ public class PCController : TicTacToeElement
     private void ChooseStrategy()
     {
         DetectAlarm();
-      //  Debug.Log(alarm);
-        if (!alarm)
+        //  Debug.Log(alarm);
+
+        if (game.pc.PlayerTurns.Count <= game.boardModel.BoardSettings.rowNumber / 2)
         {
-            if (game.pc.PlayerTurns.Count <= game.boardModel.BoardSettings.rowNumber / 2)
+            int rnd = Random.Range(1, 2);
+            if (rnd == 1 && game.boardModel.BoardSettings.rowNumber % 2 != 0)
             {
-                int rnd = Random.Range(1, 2);
-                if (rnd == 1)
-                {
-                    FillCenterStrategy();
-                }
-                else if (rnd == 2)
-                {
-                    FillDiagonalStrategy();
-                }
+                FillCenterStrategy();
+            }
+            else if (rnd == 2)
+            {
+                FillDiagonalStrategy();
             }
             else
             {
-                if (game.human.PlayerWins.Count - game.pc.PlayerWins.Count > 6)
+                RandomStrategy();
+            }
+        }
+        else
+        {
+            if (game.human.PlayerWins.Count - game.pc.PlayerWins.Count > 6)
+            {
+                int rnd = Random.Range(1, 3);
+                if (rnd == 1 || rnd == 2)
                 {
                     FailHumanStrategy();
                 }
-                else if(game.pc.PlayerWins.Count >= 1)
+                else
+                {
+                    WinStrategy();
+                }
+            }
+            else if (game.pc.PlayerWins.Count >= 1 && !alarm)
+            {
+                int rnd = Random.Range(1, 3);
+
+                if (rnd == 1 || rnd == 2)
+                {
+                    WinStrategy();
+                }
+                else
+                {
+                    RandomStrategy();
+                }
+            }
+            else if (game.pc.PlayerWins.Count >= 1 && alarm)
+            {
+                int rnd = Random.Range(1, 3);
+
+                if (rnd == 1 || rnd == 2)
+                {
+                    FailHumanStrategy();
+                }
+                else
                 {
                     WinStrategy();
                 }
             }
         }
-        else
-        {
-            FailHumanStrategy();
-        }
-        
     }
     private void RandomStrategy()
     {
@@ -65,26 +92,18 @@ public class PCController : TicTacToeElement
     private void FillCenterStrategy()
     {
         Debug.Log("FillCenterStrategy");
-        if(game.boardModel.BoardSettings.rowNumber % 2 != 0)
-        {
-            int centerIndex = game.boardModel.BoardSettings.rowNumber / 2;
-            int centerChar = Service.Alphabet[centerIndex];
-            CellButton chosenButton = game.boardModel.CellList.Single(c => c.CellInt.Equals(centerIndex) && c.CellChar.Equals(centerChar) && !c.Taken);
-            if (chosenButton)
-            {
-                OnGenerateFinished(chosenButton);
-            }
-            else
-            {
-                FillDiagonalStrategy();
-            }
-        }
 
+        int centerIndex = game.boardModel.BoardSettings.rowNumber / 2;
+        int centerChar = Service.Alphabet[centerIndex];
+        CellButton chosenButton = game.boardModel.CellList.Single(c => c.CellInt.Equals(centerIndex) && c.CellChar.Equals(centerChar) && !c.Taken);
+        if (chosenButton)
+        {
+            OnGenerateFinished(chosenButton);
+        }
         else
         {
-            RandomStrategy();
+            FillDiagonalStrategy();
         }
-        
     }
 
     private void FillDiagonalStrategy()
