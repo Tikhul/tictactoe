@@ -2,9 +2,11 @@
 using UnityEngine.UI;
 using TMPro;
 
-public class CellButton : TicTacToeElement
+public class CellButton : TicTacToeElement, ICell
     // Кнопка для поля
 {
+    [SerializeField] private TMP_Text _buttonText;
+
     private int _cellInt;
     private char _cellChar;
     private bool _taken;
@@ -23,15 +25,16 @@ public class CellButton : TicTacToeElement
         get => _taken;
         set => _taken = value;
     }
-    [SerializeField] private TMP_Text _buttonText;
     public TMP_Text ButtonText
     {
         get => _buttonText;
         set => _buttonText = value;
     }
 
-    public delegate void ClickAction(CellButton cell);
-    public static event ClickAction OnPlayerClick;
+    //public delegate void ClickAction(CellButton cell);
+    //public static event ClickAction OnPlayerClick;
+
+    public event System.Action<CellButton> OnPlayerClick = delegate { };
 
     private void OnEnable()
     {
@@ -51,7 +54,7 @@ public class CellButton : TicTacToeElement
         OnPlayerClick?.Invoke(this);
     }
 
-    public void CellTaken(CellButton chosenButton)
+    public void CellTaken(ICell chosenButton)
     // Если кнопку выбрал ПК
     {
         if (chosenButton.Equals(this))
@@ -61,5 +64,17 @@ public class CellButton : TicTacToeElement
             ButtonText.gameObject.SetActive(true);
             GetComponent<Button>().enabled = false;
         }
+    }
+}
+
+public class BerdCell : ICell
+{
+    public void CellClicked()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void CellTaken(ICell chosenButton)
+    {
     }
 }

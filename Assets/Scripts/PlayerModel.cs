@@ -4,10 +4,11 @@ using UnityEngine;
 public class PlayerModel : TicTacToeElement
 {
     // public bool isHuman;
-    private string _marker;
+    private string _marker; private PlayerMarker marker = PlayerMarker.X;
     private bool _isWinner = false;
-    public static string MarkerX = "X";
-    public static string MarkerZero = "0";
+    //public static string MarkerX = "X";
+    //public static string MarkerZero = "0";
+    
     private List<List<CellButton>> _actualWinStrategy = new List<List<CellButton>>();
     private List<List<CellButton>> _playerWins = new List<List<CellButton>>();
     private List<CellButton> _playerTurns = new List<CellButton>();
@@ -49,4 +50,11 @@ public class PlayerModel : TicTacToeElement
         get => _playerTurns;
         set => _playerTurns = value;
     }
+}
+
+
+public enum PlayerMarker
+{
+    X,
+    O
 }

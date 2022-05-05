@@ -196,3 +196,19 @@ class WinsComparer : IComparer<List<CellButton>>
         return 0;
     }
 }
+
+public interface ICell
+{
+    void CellClicked();
+    void CellTaken(ICell chosenButton);
+}
+
+public interface IClicked
+{
+    void CellClicked();
+}
+
+public interface ITaken
+{
+    void CellTaken(ICell chosenButton);
+}

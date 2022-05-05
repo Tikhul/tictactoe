@@ -7,7 +7,12 @@ public class StepExecutionController : TicTacToeElement
     // Выполнение шагов человека и ПК, запуск проверок после шага
     private void OnEnable()
     {
-        CellButton.OnPlayerClick += GetPlayerTurn;
+        foreach(var e in game.boardModel.CellList)
+        {
+            e.OnPlayerClick += GetPlayerTurn;
+        }
+        
+        //CellButton.OnPlayerClick += GetPlayerTurn;
         PCController.OnGenerateFinished += GetPCTurn;
     }
 
