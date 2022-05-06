@@ -34,33 +34,38 @@ public class BoardController : TicTacToeElement
     private void CreateWinCombinations()
     // Создание общих выирышных комбинаций в игре
     {
-        List<CellButton> diagonal1 = new List<CellButton>();
-        List<CellButton> diagonal2 = new List<CellButton>();
-        List<CellButton> filterInt = new List<CellButton>();
-        List<CellButton> filterChar = new List<CellButton>();
-        int rownumber = game.boardModel.BoardSettings.rowNumber;
+        Builder builder = new WinCombinationsBuilder();
+        Director director = new Director(builder);
+        director.Construct();
+        game.boardModel.WinCombinations.AddRange(builder.GetResult());
+        Debug.Log(game.boardModel.WinCombinations.Count);
+        //List<CellButton> diagonal1 = new List<CellButton>();
+        //List<CellButton> diagonal2 = new List<CellButton>();
+        //List<CellButton> filterInt = new List<CellButton>();
+        //List<CellButton> filterChar = new List<CellButton>();
+        //int rownumber = game.boardModel.BoardSettings.rowNumber;
 
-        for (int i = 0; i < rownumber; i++)
-        {
-            foreach(CellButton cell in game.boardModel.CellList)
-            {
-                if (cell.CellChar.Equals(Service.Alphabet[i]) && cell.CellInt.Equals(i))
-                {
-                    diagonal1.Add(cell);
-                }
-                    
-                if (cell.CellChar.Equals(Service.Alphabet[rownumber - i - 1]) && cell.CellInt.Equals(i))
-                {
-                    diagonal2.Add(cell);
-                }       
-            }
+        //for (int i = 0; i < rownumber; i++)
+        //{
+        //    foreach(CellButton cell in game.boardModel.CellList)
+        //    {
+        //        if (cell.CellChar.Equals(Service.Alphabet[i]) && cell.CellInt.Equals(i))
+        //        {
+        //            diagonal1.Add(cell);
+        //        }
 
-            game.boardModel.WinCombinations.Add(game.boardModel.CellList.FindAll(c => c.CellInt.Equals(i)));
-            game.boardModel.WinCombinations.Add(game.boardModel.CellList.FindAll(c => c.CellChar == Service.Alphabet[i]));
-        }
+        //        if (cell.CellChar.Equals(Service.Alphabet[rownumber - i - 1]) && cell.CellInt.Equals(i))
+        //        {
+        //            diagonal2.Add(cell);
+        //        }       
+        //    }
 
-        game.boardModel.WinCombinations.Add(diagonal1);
-        game.boardModel.WinCombinations.Add(diagonal2);
+        //    game.boardModel.WinCombinations.Add(game.boardModel.CellList.FindAll(c => c.CellInt.Equals(i)));
+        //    game.boardModel.WinCombinations.Add(game.boardModel.CellList.FindAll(c => c.CellChar == Service.Alphabet[i]));
+        //}
+
+        //game.boardModel.WinCombinations.Add(diagonal1);
+        //game.boardModel.WinCombinations.Add(diagonal2);
     }
 
     GameObject CreateBoardElement(GameObject objToCreate, GameObject parent, float width, float height)
