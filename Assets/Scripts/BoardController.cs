@@ -7,24 +7,20 @@ public class BoardController : TicTacToeElement
     public void CreateBoard()
      // Создания борда для игры
     {
-        GameObject parentPanel = game.boardModel.BoardSettings.parentPanel;
-        int rowNumber = game.boardModel.BoardSettings.rowNumber;
-        float parentPanelSide = parentPanel.GetComponent<RectTransform>().sizeDelta.x;
-        float buttonWidth = parentPanelSide / rowNumber;
+        BoardPartsPrototype prototype = new StandardPartPrototype();
 
-        GameObject boardPanel = CreateBoardElement(parentPanel, game.boardModel.BoardParent,
-            parentPanelSide, parentPanelSide);
+        GameObject boardPanel = prototype.Clone(prototype.ParentPanel, prototype.BoardParent, 
+            prototype.ParentPanelSide, prototype.ParentPanelSide);
 
-        GameObject row = CreateBoardElement(game.boardModel.BoardSettings.rows, 
-            boardPanel, parentPanelSide, parentPanelSide);
+        GameObject row = prototype.Clone(prototype.Rows, boardPanel, prototype.ParentPanelSide, prototype.ParentPanelSide);
 
-        for (int r = 0; r < rowNumber; r++)
+        for (int r = 0; r < prototype.RowNumber; r++)
         {
-            GameObject column = CreateBoardElement(game.boardModel.BoardSettings.columns, row, buttonWidth, parentPanelSide);
+            GameObject column = prototype.Clone(prototype.Columns, row, prototype.ButtonWidth, prototype.ParentPanelSide);
 
-            for (int b = 0; b < rowNumber; b++)
+            for (int b = 0; b < prototype.RowNumber; b++)
             {
-                GameObject button = CreateBoardElement(game.boardModel.BoardSettings.buttonExample, column, buttonWidth, buttonWidth);
+                GameObject button = prototype.Clone(prototype.ButtonExample, column, prototype.ButtonWidth, prototype.ButtonWidth);
                 FillCellist(button, b, r);
             }
         }
@@ -38,44 +34,6 @@ public class BoardController : TicTacToeElement
         Director director = new Director(builder);
         director.Construct();
         game.boardModel.WinCombinations.AddRange(builder.GetResult());
-        Debug.Log(game.boardModel.WinCombinations.Count);
-        //List<CellButton> diagonal1 = new List<CellButton>();
-        //List<CellButton> diagonal2 = new List<CellButton>();
-        //List<CellButton> filterInt = new List<CellButton>();
-        //List<CellButton> filterChar = new List<CellButton>();
-        //int rownumber = game.boardModel.BoardSettings.rowNumber;
-
-        //for (int i = 0; i < rownumber; i++)
-        //{
-        //    foreach(CellButton cell in game.boardModel.CellList)
-        //    {
-        //        if (cell.CellChar.Equals(Service.Alphabet[i]) && cell.CellInt.Equals(i))
-        //        {
-        //            diagonal1.Add(cell);
-        //        }
-
-        //        if (cell.CellChar.Equals(Service.Alphabet[rownumber - i - 1]) && cell.CellInt.Equals(i))
-        //        {
-        //            diagonal2.Add(cell);
-        //        }       
-        //    }
-
-        //    game.boardModel.WinCombinations.Add(game.boardModel.CellList.FindAll(c => c.CellInt.Equals(i)));
-        //    game.boardModel.WinCombinations.Add(game.boardModel.CellList.FindAll(c => c.CellChar == Service.Alphabet[i]));
-        //}
-
-        //game.boardModel.WinCombinations.Add(diagonal1);
-        //game.boardModel.WinCombinations.Add(diagonal2);
-    }
-
-    GameObject CreateBoardElement(GameObject objToCreate, GameObject parent, float width, float height)
-    {
-        GameObject newObject = Instantiate(objToCreate);
-        newObject.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
-        newObject.transform.SetParent(parent.transform);
-        newObject.transform.localScale = new Vector3(1, 1, 1);
-        newObject.transform.localPosition = newObject.transform.position;
-        return newObject;
     }
 
     private void FillCellist(GameObject button, int buttonIndex, int rowIndex)
@@ -101,7 +59,6 @@ public class BoardController : TicTacToeElement
                     tempList.Add(cell);
                 } 
             }
-
             game.boardModel.CellList.RemoveAll(item => tempList.Contains(item));
         }
         else
@@ -109,10 +66,5 @@ public class BoardController : TicTacToeElement
             game.gameStateController.finishedGame = true;
             game.stepExecutionController.OutOfTurns("Ничья");
         }    
-    }
-
-    public void DestroyBoard()
-    {
-
     }
 }
