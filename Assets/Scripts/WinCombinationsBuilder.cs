@@ -25,20 +25,20 @@ abstract class Builder : TicTacToeElement
     public abstract void BuildDiagonal2();
     public abstract void BuildRows();
     public abstract void BuildColumns();
-    public abstract List<List<CellButton>> GetResult();
+    public abstract List<List<CellButtonModel>> GetResult();
 }
 
 class WinCombinationsBuilder : Builder
 {
-    List<List<CellButton>> combination = new List<List<CellButton>>();
+    List<List<CellButtonModel>> combination = new List<List<CellButtonModel>>();
     public override void BuildDiagonal1()
     {
-        List<CellButton> diagonal1 = new List<CellButton>();
+        List<CellButtonModel> diagonal1 = new List<CellButtonModel>();
         
 
         for (int i = 0; i < game.boardModel.BoardSettings.rowNumber; i++)
         {
-            foreach (CellButton cell in game.boardModel.CellList)
+            foreach (CellButtonModel cell in game.boardModel.CellList)
             {
                 if (cell.CellChar.Equals(Service.Alphabet[i]) && cell.CellInt.Equals(i))
                 {
@@ -50,11 +50,11 @@ class WinCombinationsBuilder : Builder
     }
     public override void BuildDiagonal2()
     {
-        List<CellButton> diagonal2 = new List<CellButton>();
+        List<CellButtonModel> diagonal2 = new List<CellButtonModel>();
 
         for (int i = 0; i < game.boardModel.BoardSettings.rowNumber; i++)
         {
-            foreach (CellButton cell in game.boardModel.CellList)
+            foreach (CellButtonModel cell in game.boardModel.CellList)
             {
                 if (cell.CellChar.Equals(Service.Alphabet[game.boardModel.BoardSettings.rowNumber - i - 1]) && cell.CellInt.Equals(i))
                 {
@@ -78,7 +78,7 @@ class WinCombinationsBuilder : Builder
             combination.Add(game.boardModel.CellList.FindAll(c => c.CellInt.Equals(i)));
         }
     }
-    public override List<List<CellButton>> GetResult()
+    public override List<List<CellButtonModel>> GetResult()
     {
         return combination;
     }

@@ -18,7 +18,7 @@ public class Service : TicTacToeElement
     {
         foreach (var cell in FindObjectsOfType<CellButton>())
         {
-            if (cell.GetComponent<Button>() && !cell.Taken) cell.GetComponent<Button>().enabled = true;
+   //         if (cell.GetComponent<Button>() && !cell.Taken) cell.GetComponent<Button>().enabled = true;
         }
     }
 

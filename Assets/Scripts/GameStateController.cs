@@ -22,11 +22,11 @@ public class GameStateController : TicTacToeElement
         finishedGame = false;
         game.boardController.CreateBoard();
         game.playerController.CreatePlayers(actualMarker);
-        game.stepExecutionController.LaunchFirstTurn(actualMarker);
+        //game.stepExecutionController.LaunchFirstTurn(actualMarker);
         CreatePlayersButton.OnPlayerChosen -= GameStarted;
     }
 
-    public void CheckGameState(PlayerModel player, CellButton cell)
+    public void CheckGameState(PlayerModel player, CellButtonModel cell)
     {
         game.boardController.CellsAfterTurn(cell);
         game.playerController.UpdatePlayers(player, cell);

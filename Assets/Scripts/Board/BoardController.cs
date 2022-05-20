@@ -4,8 +4,16 @@ using System.Linq;
 
 public class BoardController : TicTacToeElement
 {
+    public delegate void CreateAction(int buttonIndex, int rowIndex);
+    public static event CreateAction OnButtonCreated;
+
+    private void OnEnable()
+    {
+        CellButtonController.OnCellFilled += FillCellist;
+    }
+
     public void CreateBoard()
-     // Создания борда для игры
+     // Создание борда для игры
     {
         BoardPartsPrototype prototype = new StandardPartPrototype();
 
@@ -21,7 +29,7 @@ public class BoardController : TicTacToeElement
             for (int b = 0; b < prototype.RowNumber; b++)
             {
                 GameObject button = prototype.Clone(prototype.ButtonExample, column, prototype.ButtonWidth, prototype.ButtonWidth);
-                FillCellist(button, b, r);
+                OnButtonCreated?.Invoke(b, r);
             }
         }
         CreateWinCombinations();
@@ -36,21 +44,18 @@ public class BoardController : TicTacToeElement
         game.boardModel.WinCombinations.AddRange(builder.GetResult());
     }
 
-    private void FillCellist(GameObject button, int buttonIndex, int rowIndex)
+    private void FillCellist(CellButtonModel cell)
     // Заполняю лист актуальными ячейками
     {
-        CellButton buttonSettings = button.GetComponent<CellButton>();
-        buttonSettings.CellChar = Service.Alphabet[buttonIndex];
-        buttonSettings.CellInt = rowIndex;
-        game.boardModel.CellList.Add(buttonSettings);
+        game.boardModel.CellList.Add(cell);
     }
     
-    public void CellsAfterTurn(CellButton receivedCell)
+    public void CellsAfterTurn(CellButtonModel receivedCell)
     // Проверка оставшихся ячеек после каждого хода
     {
         if (game.boardModel.CellList.Any())
         {
-            List<CellButton> tempList = new List<CellButton>();
+            List<CellButtonModel> tempList = new List<CellButtonModel>();
 
             foreach (var cell in game.boardModel.CellList)
             {

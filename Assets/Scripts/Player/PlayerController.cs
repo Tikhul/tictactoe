@@ -6,10 +6,8 @@ public class PlayerController : TicTacToeElement
 {
     public void CreatePlayers(string actualMarker)
     {
-        game.human.IsHuman = true;
         game.human.Marker = actualMarker;
 
-        game.pc.IsHuman = false;
         game.pc.Marker = PlayerModel.MarkerX;
 
         game.human.PlayerWins.AddRange(game.boardModel.WinCombinations);
@@ -18,7 +16,7 @@ public class PlayerController : TicTacToeElement
         if (actualMarker.Equals(PlayerModel.MarkerX)) game.pc.Marker = PlayerModel.MarkerZero;
     }
 
-    public void UpdatePlayers(PlayerModel player, CellButton cell)
+    public void UpdatePlayers(PlayerModel player, CellButtonModel cell)
     {
         if (player.IsHuman)
         {
@@ -40,10 +38,10 @@ public class PlayerController : TicTacToeElement
             game.stepExecutionController.OutOfTurns("Ничья");
         }
     }
-    private void CheckWinCombinations(List<List<CellButton>> wins, CellButton cell)
+    private void CheckWinCombinations(List<List<CellButtonModel>> wins, CellButtonModel cell)
     // Убираю недоступные выигрышные комбинации для игрока
     {
-        List<List<CellButton>> tempList = new List<List<CellButton>>();
+        List<List<CellButtonModel>> tempList = new List<List<CellButtonModel>>();
 
         foreach (var win in wins)
         {

@@ -3,14 +3,14 @@ using UnityEngine;
 
 public class PlayerModel : TicTacToeElement
 {
-    // public bool isHuman;
+    private bool _isHuman;
     private string _marker;
     private bool _isWinner = false;
     public static string MarkerX = "X";
     public static string MarkerZero = "0";
-    private List<List<CellButton>> _actualWinStrategy = new List<List<CellButton>>();
-    private List<List<CellButton>> _playerWins = new List<List<CellButton>>();
-    private List<CellButton> _playerTurns = new List<CellButton>();
+    private List<List<CellButtonModel>> _actualWinStrategy = new List<List<CellButtonModel>>();
+    private List<List<CellButtonModel>> _playerWins = new List<List<CellButtonModel>>();
+    private List<CellButtonModel> _playerTurns = new List<CellButtonModel>();
     public string Marker 
     { 
         get
@@ -28,23 +28,27 @@ public class PlayerModel : TicTacToeElement
         set => _marker = value;
     }
 
-    public bool IsHuman { get; set; }
+    public bool IsHuman 
+    { 
+        get => _isHuman; 
+        set => _isHuman = value; 
+    }
     public bool IsWinner 
     { 
         get => _isWinner;
         set { if (value == true) _isWinner = value; } 
     }
-    public List<List<CellButton>> ActualWinStrategy
+    public List<List<CellButtonModel>> ActualWinStrategy
     {
         get => _actualWinStrategy;
         set => _actualWinStrategy = value;
     }
-    public List<List<CellButton>> PlayerWins
+    public List<List<CellButtonModel>> PlayerWins
     {
         get => _playerWins;
         set => _playerWins = value;
     }
-    public List<CellButton> PlayerTurns
+    public List<CellButtonModel> PlayerTurns
     {
         get => _playerTurns;
         set => _playerTurns = value;
