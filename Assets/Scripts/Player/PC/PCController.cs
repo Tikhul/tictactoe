@@ -8,15 +8,29 @@ public class PCController : TicTacToeElement
     private bool alarm = false;
     private void OnEnable()
     {
-        CreatePlayersButton.OnPlayerChosen += LaunchFirstTurn;
+        BoardController.OnBoardCreated += CreatePCPlayer;
         HumanController.OnHumanTurn += GeneratePCTurn;
     }
     private void OnDisable()
     {
-        CreatePlayersButton.OnPlayerChosen -= LaunchFirstTurn;
         HumanController.OnHumanTurn -= GeneratePCTurn;
     }
 
+    private void CreatePCPlayer(string actualMarker)
+// Создаю игрока ПК
+    {
+        if (actualMarker.Equals(PlayerModel.MarkerX)) 
+        {
+            game.pc.Marker = PlayerModel.MarkerZero;
+        }
+        else
+        {
+            game.pc.Marker = PlayerModel.MarkerX;
+        }
+        game.pc.PlayerWins.AddRange(game.boardModel.WinCombinations);
+        LaunchFirstTurn(actualMarker);
+        BoardController.OnBoardCreated -= CreatePCPlayer;
+    }
     private void LaunchFirstTurn(string actualMarker)
     {
         if (actualMarker.Equals(PlayerModel.MarkerZero)) LaunchPCTurn();

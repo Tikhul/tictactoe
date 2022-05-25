@@ -4,24 +4,6 @@ using UnityEngine;
 using System.Linq;
 public class PlayerController : TicTacToeElement
 {
-    private void OnEnable()
-    {
-        BoardController.OnBoardCreated += CreatePlayers;
-    }
-    public void CreatePlayers(string actualMarker)
-    {
-        game.human.Marker = actualMarker;
-
-        game.pc.Marker = PlayerModel.MarkerX;
-
-        game.human.PlayerWins.AddRange(game.boardModel.WinCombinations);
-        game.pc.PlayerWins.AddRange(game.boardModel.WinCombinations);
-
-        if (actualMarker.Equals(PlayerModel.MarkerX)) game.pc.Marker = PlayerModel.MarkerZero;
-
-        BoardController.OnBoardCreated -= CreatePlayers;
-    }
-
     public void UpdatePlayers(PlayerModel player, CellButton cell)
     {
         if (player.IsHuman)
