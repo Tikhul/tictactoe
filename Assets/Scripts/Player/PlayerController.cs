@@ -4,6 +4,10 @@ using UnityEngine;
 using System.Linq;
 public class PlayerController : TicTacToeElement
 {
+    private void OnEnable()
+    {
+        BoardController.OnBoardCreated += CreatePlayers;
+    }
     public void CreatePlayers(string actualMarker)
     {
         game.human.Marker = actualMarker;
@@ -14,9 +18,11 @@ public class PlayerController : TicTacToeElement
         game.pc.PlayerWins.AddRange(game.boardModel.WinCombinations);
 
         if (actualMarker.Equals(PlayerModel.MarkerX)) game.pc.Marker = PlayerModel.MarkerZero;
+
+        BoardController.OnBoardCreated -= CreatePlayers;
     }
 
-    public void UpdatePlayers(PlayerModel player, CellButtonModel cell)
+    public void UpdatePlayers(PlayerModel player, CellButton cell)
     {
         if (player.IsHuman)
         {
@@ -31,17 +37,18 @@ public class PlayerController : TicTacToeElement
     }
 
     public void CheckRemainingWins()
+    // Проверяю, не закончились ли выигрышные комбинации
     {
         if (!game.human.PlayerWins.Any() && !game.pc.PlayerWins.Any())
         {
-            game.gameStateController.finishedGame = true;
-            game.stepExecutionController.OutOfTurns("Ничья");
+            game.gameController.CheckGameState(true);
+            //game.stepExecutionController.OutOfTurns("Ничья");
         }
     }
-    private void CheckWinCombinations(List<List<CellButtonModel>> wins, CellButtonModel cell)
+    private void CheckWinCombinations(List<List<CellButton>> wins, CellButton cell)
     // Убираю недоступные выигрышные комбинации для игрока
     {
-        List<List<CellButtonModel>> tempList = new List<List<CellButtonModel>>();
+        List<List<CellButton>> tempList = new List<List<CellButton>>();
 
         foreach (var win in wins)
         {
@@ -82,9 +89,9 @@ public class PlayerController : TicTacToeElement
             if (score >= game.boardModel.BoardSettings.rowNumber)
             {
                 player.IsWinner = true;
-                game.gameStateController.finishedGame = true;
-                if (player.IsHuman) game.stepExecutionController.OutOfTurns("Вы выиграли");
-                else game.stepExecutionController.OutOfTurns("ПК выиграл");
+                game.gameController.CheckGameState(true);
+                //if (player.IsHuman) game.stepExecutionController.OutOfTurns("Вы выиграли");
+                //else game.stepExecutionController.OutOfTurns("ПК выиграл");
                 break;
             }
         }         

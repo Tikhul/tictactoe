@@ -8,9 +8,9 @@ public class PlayerModel : TicTacToeElement
     private bool _isWinner = false;
     public static string MarkerX = "X";
     public static string MarkerZero = "0";
-    private List<List<CellButtonModel>> _actualWinStrategy = new List<List<CellButtonModel>>();
-    private List<List<CellButtonModel>> _playerWins = new List<List<CellButtonModel>>();
-    private List<CellButtonModel> _playerTurns = new List<CellButtonModel>();
+    private List<List<CellButton>> _actualWinStrategy = new List<List<CellButton>>();
+    private List<List<CellButton>> _playerWins = new List<List<CellButton>>();
+    private List<CellButton> _playerTurns = new List<CellButton>();
     public string Marker 
     { 
         get
@@ -38,17 +38,17 @@ public class PlayerModel : TicTacToeElement
         get => _isWinner;
         set { if (value == true) _isWinner = value; } 
     }
-    public List<List<CellButtonModel>> ActualWinStrategy
+    public List<List<CellButton>> ActualWinStrategy
     {
         get => _actualWinStrategy;
         set => _actualWinStrategy = value;
     }
-    public List<List<CellButtonModel>> PlayerWins
+    public List<List<CellButton>> PlayerWins
     {
         get => _playerWins;
         set => _playerWins = value;
     }
-    public List<CellButtonModel> PlayerTurns
+    public List<CellButton> PlayerTurns
     {
         get => _playerTurns;
         set => _playerTurns = value;

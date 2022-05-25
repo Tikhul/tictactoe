@@ -913,13 +913,12 @@ GameObject:
   - component: {fileID: 1299534251}
   - component: {fileID: 1299534250}
   - component: {fileID: 1299534253}
-  - component: {fileID: 1299534257}
-  - component: {fileID: 1299534256}
   - component: {fileID: 1299534252}
   - component: {fileID: 1299534259}
   - component: {fileID: 1299534258}
   - component: {fileID: 1299534260}
-  - component: {fileID: 1299534261}
+  - component: {fileID: 1299534257}
+  - component: {fileID: 1299534256}
   m_Layer: 0
   m_Name: TicTacToeGame
   m_TagString: Untagged
@@ -942,13 +941,12 @@ MonoBehaviour:
   boardModel: {fileID: 1299534255}
   pc: {fileID: 1299534258}
   human: {fileID: 1299534259}
+  gameModel: {fileID: 1299534257}
   boardController: {fileID: 1299534254}
   playerController: {fileID: 1299534251}
   pcController: {fileID: 1299534252}
   humanController: {fileID: 1299534260}
-  gameStateController: {fileID: 1299534257}
-  cellButtonController: {fileID: 1299534261}
-  stepExecutionController: {fileID: 1299534256}
+  gameController: {fileID: 1299534256}
   initialUI: {fileID: 508929745}
   finalUI: {fileID: 1592936681}
 --- !u!4 &1299534249
@@ -1048,7 +1046,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1299534247}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0262ee4595b4313489abd4a587c4087e, type: 3}
+  m_Script: {fileID: 11500000, guid: 9654a46fd7c3c664a9b5de43e035d4de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1299534257
@@ -1060,10 +1058,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1299534247}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 971087d48ba74b84b8a8d81487e09e30, type: 3}
+  m_Script: {fileID: 11500000, guid: 20d9aff240a568e4a8a40c96e7baedae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  finishedGame: 0
 --- !u!114 &1299534258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1098,18 +1095,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 267d9822dbc63ad4dbbe76f807595c5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1299534261
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1299534247}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80d0426dd30227d4f9afeda6857a6864, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1418882152

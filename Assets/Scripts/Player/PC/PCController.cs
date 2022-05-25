@@ -9,14 +9,28 @@ public class PCController : TicTacToeElement
     private void OnEnable()
     {
         CreatePlayersButton.OnPlayerChosen += LaunchFirstTurn;
+        HumanController.OnHumanTurn += GeneratePCTurn;
     }
     private void OnDisable()
     {
         CreatePlayersButton.OnPlayerChosen -= LaunchFirstTurn;
+        HumanController.OnHumanTurn -= GeneratePCTurn;
     }
+
     private void LaunchFirstTurn(string actualMarker)
     {
         if (actualMarker.Equals(PlayerModel.MarkerZero)) LaunchPCTurn();
+    }
+
+    public delegate void PCTurnAction();
+    public static event PCTurnAction OnPCTurn;
+    private void GetPCTurn(CellButton cell)
+    {
+        if (!game.gameModel.FinishedGame)
+        {
+            OnPCTurn?.Invoke();
+            Service.ActivateButtons();
+        }
     }
 
     private void LaunchPCTurn()
@@ -25,7 +39,7 @@ public class PCController : TicTacToeElement
         game.pcController.GeneratePCTurn();
     }
 
-    public delegate void GenerateAction(CellButtonModel cell);
+    public delegate void GenerateAction(CellButton cell);
     public static event GenerateAction OnGenerateFinished;
 
     public void GeneratePCTurn()
@@ -105,7 +119,7 @@ public class PCController : TicTacToeElement
     private void RandomStrategy()
     {
         Debug.Log("RandomStrategy");
-        CellButtonModel chosenButton = game.boardModel.CellList[Service.RandomInt(game.boardModel.CellList.Count)];
+        CellButton chosenButton = game.boardModel.CellList[Service.RandomInt(game.boardModel.CellList.Count)];
         OnGenerateFinished(chosenButton);
     }
 
@@ -119,7 +133,7 @@ public class PCController : TicTacToeElement
         {
             Debug.Log(c.CellInt.ToString() + c.CellChar.ToString());
         }
-        CellButtonModel chosenButton = game.boardModel.CellList.Single(c => c.CellInt.Equals(centerIndex) && c.CellChar.Equals(centerChar) && !c.Taken);
+        CellButton chosenButton = game.boardModel.CellList.Single(c => c.CellInt.Equals(centerIndex) && c.CellChar.Equals(centerChar) && !c.Taken);
         if (chosenButton)
         {
             OnGenerateFinished(chosenButton);
@@ -133,10 +147,10 @@ public class PCController : TicTacToeElement
     private void FillDiagonalStrategy()
     {
         Debug.Log("FillDiagonalStrategy");
-        List<CellButtonModel> availableDiagonals = GetAvailableDiagonals();
+        List<CellButton> availableDiagonals = GetAvailableDiagonals();
         if (availableDiagonals.Any())
         {
-            CellButtonModel chosenButton = availableDiagonals[Service.RandomInt(availableDiagonals.Count)];
+            CellButton chosenButton = availableDiagonals[Service.RandomInt(availableDiagonals.Count)];
             OnGenerateFinished(chosenButton);
         }
         else
@@ -148,25 +162,25 @@ public class PCController : TicTacToeElement
     private void WinStrategy()
     {
         Debug.Log("WinStrategy");
-        List<List<CellButtonModel>> actualWins = SortedWins(game.pc.PlayerWins);
-        CellButtonModel chosenButton = actualWins[0].First(c => !c.Taken);
+        List<List<CellButton>> actualWins = SortedWins(game.pc.PlayerWins);
+        CellButton chosenButton = actualWins[0].First(c => !c.Taken);
         OnGenerateFinished(chosenButton);
     }
 
     private void FailHumanStrategy()
     {
         Debug.Log("FailHumanStrategy");
-        List<List<CellButtonModel>> humanWins = SortedWins(game.human.PlayerWins);
-        CellButtonModel chosenButton = humanWins[0].Single(c => !c.Taken);
+        List<List<CellButton>> humanWins = SortedWins(game.human.PlayerWins);
+        CellButton chosenButton = humanWins[0].Single(c => !c.Taken);
         OnGenerateFinished(chosenButton);
         alarm = false;
     }
-    private List<CellButtonModel> GetAvailableDiagonals()
+    private List<CellButton> GetAvailableDiagonals()
     {
-        List<CellButtonModel> diagonals = new List<CellButtonModel>();
+        List<CellButton> diagonals = new List<CellButton>();
         int rowNumber = game.boardModel.BoardSettings.rowNumber;
 
-        foreach (CellButtonModel cell in game.boardModel.CellList.FindAll(c => !c.Taken))
+        foreach (CellButton cell in game.boardModel.CellList.FindAll(c => !c.Taken))
         {
             if (cell.CellInt.Equals(0) && cell.CellChar.Equals(Service.Alphabet[0]) ||
                 cell.CellInt.Equals(0) && cell.CellChar.Equals(Service.Alphabet[rowNumber - 1]) ||
@@ -180,10 +194,10 @@ public class PCController : TicTacToeElement
         return diagonals;
     }
 
-    private List<List<CellButtonModel>> SortedWins(List<List<CellButtonModel>> receivedWins)
+    private List<List<CellButton>> SortedWins(List<List<CellButton>> receivedWins)
     {
         WinsComparer wc = new WinsComparer();
-        List<List<CellButtonModel>> actualWins = receivedWins;
+        List<List<CellButton>> actualWins = receivedWins;
         
         actualWins.Sort(wc);
         foreach (var i in actualWins[0]) Debug.Log(i.CellChar.ToString() + i.CellInt.ToString());
@@ -191,7 +205,7 @@ public class PCController : TicTacToeElement
     }
     private void DetectAlarm()
     {
-        List<List<CellButtonModel>> humanWins = SortedWins(game.human.PlayerWins);
+        List<List<CellButton>> humanWins = SortedWins(game.human.PlayerWins);
 
         if (humanWins[0].FindAll(c => !c.Taken).Count == 1)
         {
@@ -202,9 +216,9 @@ public class PCController : TicTacToeElement
     }
 }
 
-class WinsComparer : IComparer<List<CellButtonModel>>
+class WinsComparer : IComparer<List<CellButton>>
 {
-    public int Compare(List<CellButtonModel> list1, List<CellButtonModel> list2)
+    public int Compare(List<CellButton> list1, List<CellButton> list2)
     {
         int count1 = list1.FindAll(c => !c.Taken).Count;
         int count2 = list2.FindAll(c => !c.Taken).Count;

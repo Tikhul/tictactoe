@@ -4,15 +4,14 @@ using System.Linq;
 
 public class BoardController : TicTacToeElement
 {
-    public delegate void CreateAction(int buttonIndex, int rowIndex);
-    public static event CreateAction OnButtonCreated;
-
     private void OnEnable()
     {
-        CellButtonController.OnCellFilled += FillCellist;
+        CreatePlayersButton.OnPlayerChosen += CreateBoard;
     }
 
-    public void CreateBoard()
+    public delegate void CreateBoardAction(string marker);
+    public static event CreateBoardAction OnBoardCreated;
+    public void CreateBoard(string actualMarker)
      // Создание борда для игры
     {
         BoardPartsPrototype prototype = new StandardPartPrototype();
@@ -29,10 +28,12 @@ public class BoardController : TicTacToeElement
             for (int b = 0; b < prototype.RowNumber; b++)
             {
                 GameObject button = prototype.Clone(prototype.ButtonExample, column, prototype.ButtonWidth, prototype.ButtonWidth);
-                OnButtonCreated?.Invoke(b, r);
+                FillCellist(button, b, r);
             }
         }
         CreateWinCombinations();
+        CreatePlayersButton.OnPlayerChosen -= CreateBoard;
+        OnBoardCreated?.Invoke(actualMarker);
     }
 
     private void CreateWinCombinations()
@@ -44,18 +45,21 @@ public class BoardController : TicTacToeElement
         game.boardModel.WinCombinations.AddRange(builder.GetResult());
     }
 
-    private void FillCellist(CellButtonModel cell)
-    // Заполняю лист актуальными ячейками
+    void FillCellist(GameObject button, int b, int r)
+    // Заполняю список ячеек в борде
     {
-        game.boardModel.CellList.Add(cell);
+        CellButton buttonSettings = button.GetComponent<CellButton>();
+        buttonSettings.CellChar = Service.Alphabet[b];
+        buttonSettings.CellInt = r;
+        game.boardModel.CellList.Add(buttonSettings);
     }
-    
-    public void CellsAfterTurn(CellButtonModel receivedCell)
+
+    public void CellsAfterTurn(CellButton receivedCell)
     // Проверка оставшихся ячеек после каждого хода
     {
         if (game.boardModel.CellList.Any())
         {
-            List<CellButtonModel> tempList = new List<CellButtonModel>();
+            List<CellButton> tempList = new List<CellButton>();
 
             foreach (var cell in game.boardModel.CellList)
             {
@@ -68,8 +72,8 @@ public class BoardController : TicTacToeElement
         }
         else
         {
-            game.gameStateController.finishedGame = true;
-            game.stepExecutionController.OutOfTurns("Ничья");
+            game.gameController.CheckGameState(true);
+          //  game.stepExecutionController.OutOfTurns("Ничья");
         }    
     }
 }

@@ -3,16 +3,16 @@ using UnityEngine;
 
 public class BoardModel : TicTacToeElement
 {
-    private List<CellButtonModel> _cellList = new List<CellButtonModel>();
-    private List<List<CellButtonModel>> _winCombinations = new List<List<CellButtonModel>>();
+    private List<CellButton> _cellList = new List<CellButton>();
+    private List<List<CellButton>> _winCombinations = new List<List<CellButton>>();
     [SerializeField] private GameObject _boardParent;
     [SerializeField] private BoardScriptableObject _boardSettings;
-    public List<CellButtonModel> CellList 
+    public List<CellButton> CellList 
     {   
         get => _cellList; 
         set => _cellList = value; 
     }
-    public List<List<CellButtonModel>> WinCombinations 
+    public List<List<CellButton>> WinCombinations 
     { 
         get => _winCombinations; 
         set => _winCombinations = value; 

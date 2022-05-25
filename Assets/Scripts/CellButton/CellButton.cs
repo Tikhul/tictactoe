@@ -2,12 +2,27 @@
 using UnityEngine.UI;
 using TMPro;
 
-public class CellButton : TicTacToeElement
-    // Кнопка для поля
+public class CellButton : TicTacToeElement, ICellButton
+// Кнопка для поля
 {
+    private int _cellInt;
+    private char _cellChar;
     private bool _taken;
-    private CellButtonModel cell = new CellButtonModel();
-
+    public int CellInt
+    {
+        get => _cellInt;
+        set => _cellInt = value;
+    }
+    public char CellChar
+    {
+        get => _cellChar;
+        set => _cellChar = value;
+    }
+    public bool Taken
+    {
+        get => _taken;
+        set => _taken = value;
+    }
     [SerializeField] private TMP_Text _buttonText;
     public TMP_Text ButtonText
     {
@@ -15,18 +30,11 @@ public class CellButton : TicTacToeElement
         set => _buttonText = value;
     }
 
-    public bool Taken
-    {
-        get => _taken;
-        set => _taken = value;
-    }
-
-    public delegate void ClickAction(CellButtonModel cell);
+    public delegate void ClickAction(CellButton cell);
     public static event ClickAction OnPlayerClick;
 
     private void OnEnable()
     {
-        BoardController.OnButtonCreated += GetCellData;
         PCController.OnGenerateFinished += CellTaken;
     }
 
@@ -37,29 +45,21 @@ public class CellButton : TicTacToeElement
     public void CellClicked()
     // Если нажал человек
     {
+        Taken = true;
         ButtonText.text = game.human.Marker;
         ButtonText.gameObject.SetActive(true);
-        OnPlayerClick?.Invoke(cell);
+        OnPlayerClick?.Invoke(this);
     }
 
-    public void CellTaken(CellButtonModel chosenButton)
+    public void CellTaken(CellButton chosenButton)
     // Если кнопку выбрал ПК
     {
         if (chosenButton.Equals(this))
         {
-            //Taken = true;
+            Taken = true;
             ButtonText.text = game.pc.Marker;
             ButtonText.gameObject.SetActive(true);
             GetComponent<Button>().enabled = false;
         }
-    }
-
-    public delegate void GetAction(CellButtonModel cell, int buttonIndex, int rowIndex);
-    public static event GetAction OnDataReceived;
-
-    public void GetCellData(int buttonIndex, int rowIndex)
-    {
-        BoardController.OnButtonCreated -= GetCellData;
-        OnDataReceived?.Invoke(cell, buttonIndex, rowIndex);
     }
 }
