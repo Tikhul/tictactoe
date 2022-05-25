@@ -4,20 +4,6 @@ using UnityEngine;
 using System.Linq;
 public class PlayerController : TicTacToeElement
 {
-    public void UpdatePlayers(PlayerModel player, CellButton cell)
-    {
-        if (player.IsHuman)
-        {
-            CheckWinCombinations(game.pc.PlayerWins, cell);
-            player.PlayerTurns.Add(cell);
-        }
-        else if (!player.IsHuman)
-        {
-            CheckWinCombinations(game.human.PlayerWins, cell);
-            player.PlayerTurns.Add(cell);
-        }
-    }
-
     public void CheckRemainingWins()
     // Проверяю, не закончились ли выигрышные комбинации
     {
@@ -27,7 +13,7 @@ public class PlayerController : TicTacToeElement
             //game.stepExecutionController.OutOfTurns("Ничья");
         }
     }
-    private void CheckWinCombinations(List<List<CellButton>> wins, CellButton cell)
+    protected void CheckWinCombinations(List<List<CellButton>> wins, CellButton cell)
     // Убираю недоступные выигрышные комбинации для игрока
     {
         List<List<CellButton>> tempList = new List<List<CellButton>>();

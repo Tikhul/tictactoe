@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class PCController : TicTacToeElement
+public class PCController : PlayerController
 {
     private bool alarm = false;
     private void OnEnable()
     {
         BoardController.OnBoardCreated += CreatePCPlayer;
         HumanController.OnHumanTurn += GeneratePCTurn;
+        CellButton.OnPlayerClick += UpdatePC;
     }
     private void OnDisable()
     {
         HumanController.OnHumanTurn -= GeneratePCTurn;
+        CellButton.OnPlayerClick -= UpdatePC;
     }
 
     private void CreatePCPlayer(string actualMarker)
@@ -31,26 +33,15 @@ public class PCController : TicTacToeElement
         LaunchFirstTurn(actualMarker);
         BoardController.OnBoardCreated -= CreatePCPlayer;
     }
+
+    private void UpdatePC(CellButton cell)
+    {
+        CheckWinCombinations(game.pc.PlayerWins, cell);
+        game.pc.PlayerTurns.Add(cell);
+    }
     private void LaunchFirstTurn(string actualMarker)
     {
-        if (actualMarker.Equals(PlayerModel.MarkerZero)) LaunchPCTurn();
-    }
-
-    public delegate void PCTurnAction();
-    public static event PCTurnAction OnPCTurn;
-    private void GetPCTurn(CellButton cell)
-    {
-        if (!game.gameModel.FinishedGame)
-        {
-            OnPCTurn?.Invoke();
-            Service.ActivateButtons();
-        }
-    }
-
-    private void LaunchPCTurn()
-    {
-        Service.BlockButtons();
-        game.pcController.GeneratePCTurn();
+        if (actualMarker.Equals(PlayerModel.MarkerZero)) GeneratePCTurn();
     }
 
     public delegate void GenerateAction(CellButton cell);
@@ -58,6 +49,7 @@ public class PCController : TicTacToeElement
 
     public void GeneratePCTurn()
     {
+        Service.BlockButtons();
         IEnumerator coroutine = WaitPCTurn(2.0f);
         StartCoroutine(coroutine);
     }

@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HumanController : TicTacToeElement
+public class HumanController : PlayerController
 {
-    public delegate void HumanTurnAction();
-    public static event HumanTurnAction OnHumanTurn;
     private void OnEnable()
     {
         BoardController.OnBoardCreated += CreateHumanPlayer;
+        PCController.OnGenerateFinished += GetHumanTurn;
+    }
+    private void OnDisable()
+    {
+        PCController.OnGenerateFinished -= GetHumanTurn;
     }
     private void CreateHumanPlayer(string actualMarker)
     {
@@ -16,8 +19,17 @@ public class HumanController : TicTacToeElement
         game.human.PlayerWins.AddRange(game.boardModel.WinCombinations);
         BoardController.OnBoardCreated -= CreateHumanPlayer;
     }
+    public delegate void HumanTurnAction();
+    public static event HumanTurnAction OnHumanTurn;
     private void GetHumanTurn(CellButton cell)
     {
-     //   if (!game.gameStateController.finishedGame) OnHumanTurn?.Invoke();
+        Service.ActivateButtons();
+        UpdateHuman(cell);
+        if (!game.gameModel.FinishedGame) OnHumanTurn?.Invoke();
+    }
+    private void UpdateHuman(CellButton cell)
+    {
+        CheckWinCombinations(game.human.PlayerWins, cell);
+        game.human.PlayerTurns.Add(cell);
     }
 }
