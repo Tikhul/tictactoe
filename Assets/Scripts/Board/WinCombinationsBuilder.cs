@@ -40,7 +40,7 @@ class WinCombinationsBuilder : Builder
         {
             foreach (CellButton cell in Game.BoardModel.CellList)
             {
-                if (cell.CellChar.Equals(Service.Alphabet[i]) && cell.CellInt.Equals(i))
+                if (cell.CellChar.Equals(BoardModel.Alphabet[i]) && cell.CellInt.Equals(i))
                 {
                     diagonal1.Add(cell);
                 }
@@ -56,7 +56,7 @@ class WinCombinationsBuilder : Builder
         {
             foreach (CellButton cell in Game.BoardModel.CellList)
             {
-                if (cell.CellChar.Equals(Service.Alphabet[Game.BoardModel.BoardSettings.rowNumber - i - 1]) && cell.CellInt.Equals(i))
+                if (cell.CellChar.Equals(BoardModel.Alphabet[Game.BoardModel.BoardSettings.rowNumber - i - 1]) && cell.CellInt.Equals(i))
                 {
                     diagonal2.Add(cell);
                 }
@@ -68,7 +68,7 @@ class WinCombinationsBuilder : Builder
     {
         for (int i = 0; i < Game.BoardModel.BoardSettings.rowNumber; i++)
         {
-            combination.Add(Game.BoardModel.CellList.FindAll(c => c.CellChar == Service.Alphabet[i]));
+            combination.Add(Game.BoardModel.CellList.FindAll(c => c.CellChar == BoardModel.Alphabet[i]));
         }
     }
     public override void BuildColumns()

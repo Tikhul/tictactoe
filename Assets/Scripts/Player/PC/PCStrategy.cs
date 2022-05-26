@@ -73,7 +73,8 @@ public class PCStrategy : TicTacToeElement
     private void RandomStrategy()
     {
         Debug.Log("RandomStrategy");
-        ChosenButton = Game.BoardModel.CellList[Service.RandomInt(Game.BoardModel.CellList.Count)];
+        System.Random rnd = new System.Random();
+        ChosenButton = Game.BoardModel.CellList[rnd.Next(Game.BoardModel.CellList.Count)];
     }
 
     private void FillCenterStrategy()
@@ -81,7 +82,7 @@ public class PCStrategy : TicTacToeElement
         Debug.Log("FillCenterStrategy");
         decimal i = Game.BoardModel.BoardSettings.rowNumber / 2;
         int centerIndex = (int)System.Math.Round(i);
-        int centerChar = Service.Alphabet[centerIndex];
+        int centerChar = BoardModel.Alphabet[centerIndex];
         ChosenButton = Game.BoardModel.CellList.Single(c => c.CellInt.Equals(centerIndex) && c.CellChar.Equals(centerChar) && !c.Taken);
 
         if (!ChosenButton) FillDiagonalStrategy();
@@ -93,7 +94,8 @@ public class PCStrategy : TicTacToeElement
         List<CellButton> availableDiagonals = GetAvailableDiagonals();
         if (availableDiagonals.Any())
         {
-            ChosenButton = availableDiagonals[Service.RandomInt(availableDiagonals.Count)];
+            System.Random rnd = new System.Random();
+            ChosenButton = availableDiagonals[rnd.Next(availableDiagonals.Count)];
         }
         else
         {
@@ -122,10 +124,10 @@ public class PCStrategy : TicTacToeElement
 
         foreach (CellButton cell in Game.BoardModel.CellList.FindAll(c => !c.Taken))
         {
-            if (cell.CellInt.Equals(0) && cell.CellChar.Equals(Service.Alphabet[0]) ||
-                cell.CellInt.Equals(0) && cell.CellChar.Equals(Service.Alphabet[rowNumber - 1]) ||
-                cell.CellInt.Equals(rowNumber - 1) && cell.CellChar.Equals(Service.Alphabet[0]) ||
-                cell.CellInt.Equals(rowNumber - 1) && cell.CellChar.Equals(Service.Alphabet[rowNumber - 1])
+            if (cell.CellInt.Equals(0) && cell.CellChar.Equals(BoardModel.Alphabet[0]) ||
+                cell.CellInt.Equals(0) && cell.CellChar.Equals(BoardModel.Alphabet[rowNumber - 1]) ||
+                cell.CellInt.Equals(rowNumber - 1) && cell.CellChar.Equals(BoardModel.Alphabet[0]) ||
+                cell.CellInt.Equals(rowNumber - 1) && cell.CellChar.Equals(BoardModel.Alphabet[rowNumber - 1])
                 )
             {
                 diagonals.Add(cell);

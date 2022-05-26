@@ -9,8 +9,8 @@ public class BoardController : TicTacToeElement
         CreatePlayersButton.OnPlayerChosen += CreateBoard;
     }
 
-    public delegate void CreateBoardAction(string marker);
-    public static event CreateBoardAction OnBoardCreated;
+    public static event System.Action<string> OnBoardCreated = delegate { };
+
     public void CreateBoard(string actualMarker)
      // Создание борда для игры
     {
@@ -49,7 +49,7 @@ public class BoardController : TicTacToeElement
     // Заполняю список ячеек в борде
     {
         CellButton buttonSettings = button.GetComponent<CellButton>();
-        buttonSettings.CellChar = Service.Alphabet[b];
+        buttonSettings.CellChar = BoardModel.Alphabet[b];
         buttonSettings.CellInt = r;
         Game.BoardModel.CellList.Add(buttonSettings);
     }
@@ -75,5 +75,12 @@ public class BoardController : TicTacToeElement
             Game.GameController.CheckGameState(true);
           //  Game.stepExecutionController.OutOfTurns("Ничья");
         }    
+    }
+    public void ManageButtons(bool state)
+    {
+        foreach (var cell in Game.BoardModel.CellList)
+        {
+            cell.ButtonElement.enabled = state;
+        }
     }
 }

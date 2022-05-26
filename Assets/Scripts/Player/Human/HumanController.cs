@@ -8,12 +8,10 @@ public class HumanController : PlayerController
     {
         BoardController.OnBoardCreated += CreatePlayer;
         CellButton.OnPlayerClick += GetHumanTurn;
-        PCController.OnPCTurn += ActivateBoard;
     }
     private void OnDisable()
     {
         CellButton.OnPlayerClick -= GetHumanTurn;
-        PCController.OnPCTurn -= ActivateBoard;
     }
     public override void CreatePlayer(string actualMarker)
     {
@@ -34,9 +32,5 @@ public class HumanController : PlayerController
         LaunchWinnerDetection(Game.HumanModel);
         CheckRemainingWins();
         Game.HumanModel.PlayerTurns.Add(cell);
-    }
-    private void ActivateBoard(CellButton cell)
-    {
-        Service.ActivateButtons();
     }
 }

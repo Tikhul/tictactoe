@@ -8,6 +8,8 @@ public class CellButton : TicTacToeElement, ICellButton
     private int _cellInt;
     private char _cellChar;
     private bool _taken;
+    [SerializeField] private TMP_Text _buttonText;
+    [SerializeField] private Button _buttonElement;
     public int CellInt
     {
         get => _cellInt;
@@ -23,13 +25,16 @@ public class CellButton : TicTacToeElement, ICellButton
         get => _taken;
         set => _taken = value;
     }
-    [SerializeField] private TMP_Text _buttonText;
     public TMP_Text ButtonText
     {
         get => _buttonText;
         set => _buttonText = value;
     }
-
+    public Button ButtonElement
+    {
+        get => _buttonElement;
+        set => _buttonElement = value;
+    }
     public delegate void ClickAction(CellButton cell);
     public static event ClickAction OnPlayerClick;
 

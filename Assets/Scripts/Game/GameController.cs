@@ -18,6 +18,6 @@ public class GameController : TicTacToeElement
     {
         Debug.Log("GetResult");
         Game.FinalUI.ActivateResults(result);
-        Service.BlockButtons();
+        Game.BoardController.ManageButtons(false);
     }
 }

@@ -146,6 +146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _buttonText: {fileID: 1027707769663876576}
+  _buttonElement: {fileID: 1027707768107338640}
 --- !u!1 &1027707769663876590
 GameObject:
   m_ObjectHideFlags: 0
@@ -293,4 +294,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 350567630e1160a40a26d22ffc00e702, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buttonText: {fileID: 0}
+  _buttonText: {fileID: 1027707769663876576}
+  _buttonElement: {fileID: 1027707768107338640}

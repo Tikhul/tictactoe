@@ -45,7 +45,7 @@ public class PCController : PlayerController
 
     public void GeneratePCTurn()
     {
-        Service.BlockButtons();
+        Game.BoardController.ManageButtons(false);
         IEnumerator coroutine = WaitPCTurn(2.0f);
         StartCoroutine(coroutine);
     }
@@ -55,6 +55,7 @@ public class PCController : PlayerController
         PCStrategy strategy = new PCStrategy();
         strategy.ChooseStrategy();
         OnPCTurn(strategy.ChosenButton);
+        if (!Game.GameModel.FinishedGame) Game.BoardController.ManageButtons(true);
     }
 }
 
