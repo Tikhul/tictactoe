@@ -6,30 +6,37 @@ public class HumanController : PlayerController
 {
     private void OnEnable()
     {
-        BoardController.OnBoardCreated += CreateHumanPlayer;
-        PCController.OnGenerateFinished += GetHumanTurn;
+        BoardController.OnBoardCreated += CreatePlayer;
+        CellButton.OnPlayerClick += GetHumanTurn;
+        PCController.OnPCTurn += ActivateBoard;
     }
     private void OnDisable()
     {
-        PCController.OnGenerateFinished -= GetHumanTurn;
+        CellButton.OnPlayerClick -= GetHumanTurn;
+        PCController.OnPCTurn -= ActivateBoard;
     }
-    private void CreateHumanPlayer(string actualMarker)
+    public override void CreatePlayer(string actualMarker)
     {
-        game.human.Marker = actualMarker;
-        game.human.PlayerWins.AddRange(game.boardModel.WinCombinations);
-        BoardController.OnBoardCreated -= CreateHumanPlayer;
+        Game.HumanModel.Marker = actualMarker;
+        Game.HumanModel.PlayerWins.AddRange(Game.BoardModel.WinCombinations);
+        BoardController.OnBoardCreated -= CreatePlayer;
     }
-    public delegate void HumanTurnAction();
-    public static event HumanTurnAction OnHumanTurn;
+
+    public static event System.Action OnHumanTurn = delegate { };
     private void GetHumanTurn(CellButton cell)
     {
-        Service.ActivateButtons();
-        UpdateHuman(cell);
-        if (!game.gameModel.FinishedGame) OnHumanTurn?.Invoke();
+        UpdatePlayer(cell);
+        if (!Game.GameModel.FinishedGame) OnHumanTurn?.Invoke();
     }
-    private void UpdateHuman(CellButton cell)
+    public override void UpdatePlayer(CellButton cell)
     {
-        CheckWinCombinations(game.human.PlayerWins, cell);
-        game.human.PlayerTurns.Add(cell);
+        CheckWinCombinations(Game.HumanModel.PlayerWins, cell);
+        LaunchWinnerDetection(Game.HumanModel);
+        CheckRemainingWins();
+        Game.HumanModel.PlayerTurns.Add(cell);
+    }
+    private void ActivateBoard(CellButton cell)
+    {
+        Service.ActivateButtons();
     }
 }

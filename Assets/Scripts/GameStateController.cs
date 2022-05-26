@@ -20,17 +20,17 @@ using UnityEngine;
 //    //void GameStarted(string actualMarker)
 //    //{
 //    //    finishedGame = false;
-//    //    game.boardController.CreateBoard();
-//    //    game.playerController.CreatePlayers(actualMarker);
-//    //    game.stepExecutionController.LaunchFirstTurn(actualMarker);
+//    //    Game.boardController.CreateBoard();
+//    //    Game.playerController.CreatePlayers(actualMarker);
+//    //    Game.stepExecutionController.LaunchFirstTurn(actualMarker);
 //    //    CreatePlayersButton.OnPlayerChosen -= GameStarted;
 //    //}
 
 //    public void CheckGameState(PlayerModel player, CellButton cell)
 //    {
-//        game.boardController.CellsAfterTurn(cell);
-//        game.playerController.UpdatePlayers(player, cell);
-//        game.playerController.CheckRemainingWins();
-//        game.playerController.LaunchWinnerDetection(player);
+//        Game.boardController.CellsAfterTurn(cell);
+//        Game.playerController.UpdatePlayers(player, cell);
+//        Game.playerController.CheckRemainingWins();
+//        Game.playerController.LaunchWinnerDetection(player);
 //    }
 //}

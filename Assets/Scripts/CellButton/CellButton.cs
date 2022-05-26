@@ -35,18 +35,18 @@ public class CellButton : TicTacToeElement, ICellButton
 
     private void OnEnable()
     {
-        PCController.OnGenerateFinished += CellTaken;
+        PCController.OnPCTurn += CellTaken;
     }
 
     private void OnDisable()
     {
-        PCController.OnGenerateFinished -= CellTaken;
+        PCController.OnPCTurn -= CellTaken;
     }
     public void CellClicked()
     // Если нажал человек
     {
         Taken = true;
-        ButtonText.text = game.human.Marker;
+        ButtonText.text = Game.HumanModel.Marker;
         ButtonText.gameObject.SetActive(true);
         OnPlayerClick?.Invoke(this);
     }
@@ -57,7 +57,7 @@ public class CellButton : TicTacToeElement, ICellButton
         if (chosenButton.Equals(this))
         {
             Taken = true;
-            ButtonText.text = game.pc.Marker;
+            ButtonText.text = Game.PCModel.Marker;
             ButtonText.gameObject.SetActive(true);
             GetComponent<Button>().enabled = false;
         }

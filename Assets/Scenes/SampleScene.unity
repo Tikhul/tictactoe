@@ -911,8 +911,6 @@ GameObject:
   - component: {fileID: 1299534255}
   - component: {fileID: 1299534254}
   - component: {fileID: 1299534251}
-  - component: {fileID: 1299534250}
-  - component: {fileID: 1299534253}
   - component: {fileID: 1299534252}
   - component: {fileID: 1299534259}
   - component: {fileID: 1299534258}
@@ -938,17 +936,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02878e960a8fa534cb0a14ec446a87a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boardModel: {fileID: 1299534255}
-  pc: {fileID: 1299534258}
-  human: {fileID: 1299534259}
-  gameModel: {fileID: 1299534257}
-  boardController: {fileID: 1299534254}
-  playerController: {fileID: 1299534251}
-  pcController: {fileID: 1299534252}
-  humanController: {fileID: 1299534260}
-  gameController: {fileID: 1299534256}
-  initialUI: {fileID: 508929745}
-  finalUI: {fileID: 1592936681}
+  _boardModel: {fileID: 1299534255}
+  _pc: {fileID: 1299534258}
+  _human: {fileID: 1299534259}
+  _gameModel: {fileID: 1299534257}
+  _boardController: {fileID: 1299534254}
+  _playerController: {fileID: 1299534251}
+  _pcController: {fileID: 1299534252}
+  _humanController: {fileID: 1299534260}
+  _gameController: {fileID: 1299534256}
+  _initialUI: {fileID: 508929745}
+  _finalUI: {fileID: 1592936681}
 --- !u!4 &1299534249
 Transform:
   m_ObjectHideFlags: 0
@@ -963,18 +961,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1299534250
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1299534247}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b60c2958b1fef84488c04a9c58fc34c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1299534251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -997,18 +983,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dd1806221f19f0e48b3c459ab54e76af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1299534253
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1299534247}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6333c7b2fd4ff484fbb4ffa2fde207e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1299534254

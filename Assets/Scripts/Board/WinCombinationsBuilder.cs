@@ -36,9 +36,9 @@ class WinCombinationsBuilder : Builder
         List<CellButton> diagonal1 = new List<CellButton>();
         
 
-        for (int i = 0; i < game.boardModel.BoardSettings.rowNumber; i++)
+        for (int i = 0; i < Game.BoardModel.BoardSettings.rowNumber; i++)
         {
-            foreach (CellButton cell in game.boardModel.CellList)
+            foreach (CellButton cell in Game.BoardModel.CellList)
             {
                 if (cell.CellChar.Equals(Service.Alphabet[i]) && cell.CellInt.Equals(i))
                 {
@@ -52,11 +52,11 @@ class WinCombinationsBuilder : Builder
     {
         List<CellButton> diagonal2 = new List<CellButton>();
 
-        for (int i = 0; i < game.boardModel.BoardSettings.rowNumber; i++)
+        for (int i = 0; i < Game.BoardModel.BoardSettings.rowNumber; i++)
         {
-            foreach (CellButton cell in game.boardModel.CellList)
+            foreach (CellButton cell in Game.BoardModel.CellList)
             {
-                if (cell.CellChar.Equals(Service.Alphabet[game.boardModel.BoardSettings.rowNumber - i - 1]) && cell.CellInt.Equals(i))
+                if (cell.CellChar.Equals(Service.Alphabet[Game.BoardModel.BoardSettings.rowNumber - i - 1]) && cell.CellInt.Equals(i))
                 {
                     diagonal2.Add(cell);
                 }
@@ -66,16 +66,16 @@ class WinCombinationsBuilder : Builder
     }
     public override void BuildRows()
     {
-        for (int i = 0; i < game.boardModel.BoardSettings.rowNumber; i++)
+        for (int i = 0; i < Game.BoardModel.BoardSettings.rowNumber; i++)
         {
-            combination.Add(game.boardModel.CellList.FindAll(c => c.CellChar == Service.Alphabet[i]));
+            combination.Add(Game.BoardModel.CellList.FindAll(c => c.CellChar == Service.Alphabet[i]));
         }
     }
     public override void BuildColumns()
     {
-        for (int i = 0; i < game.boardModel.BoardSettings.rowNumber; i++)
+        for (int i = 0; i < Game.BoardModel.BoardSettings.rowNumber; i++)
         {
-            combination.Add(game.boardModel.CellList.FindAll(c => c.CellInt.Equals(i)));
+            combination.Add(Game.BoardModel.CellList.FindAll(c => c.CellInt.Equals(i)));
         }
     }
     public override List<List<CellButton>> GetResult()

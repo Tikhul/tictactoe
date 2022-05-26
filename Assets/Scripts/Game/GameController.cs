@@ -10,7 +10,14 @@ public class GameController : TicTacToeElement
     {
         if (finished)
         {
-            game.gameModel.FinishedGame = true;
+            Game.GameModel.FinishedGame = true;
         }
+    }
+
+    public void GetResult(string result)
+    {
+        Debug.Log("GetResult");
+        Game.FinalUI.ActivateResults(result);
+        Service.BlockButtons();
     }
 }

@@ -13,26 +13,26 @@
 
 //    private void GetPCTurn(CellButton cell)
 //    {
-//        TurnExecuted(game.pc, cell);
-//        if(!game.gameStateController.finishedGame) Service.ActivateButtons();
+//        TurnExecuted(Game.pc, cell);
+//        if(!Game.gameStateController.finishedGame) Service.ActivateButtons();
 //    }
 
 //    //private void GetPlayerTurn(CellButton cell)
 //    //{
-//    //    TurnExecuted(game.human, cell);
-//    //    //if (!game.gameStateController.finishedGame) LaunchPCTurn();
+//    //    TurnExecuted(Game.human, cell);
+//    //    //if (!Game.gameStateController.finishedGame) LaunchPCTurn();
 //    //}
 
 //    private void TurnExecuted(PlayerModel player, CellButton cell)
 //    {
-//       // game.gameStateController.CheckGameState(player, cell);
+//       // Game.gameStateController.CheckGameState(player, cell);
 //    }
 
 //    public void OutOfTurns(string result)
 //    {
 //        //PCController.OnGenerateFinished -= GetPCTurn;
 //        //CellButton.OnPlayerClick -= GetPlayerTurn;
-//        game.finalUI.ActivateResults(result);
+//        Game.finalUI.ActivateResults(result);
 //        Service.BlockButtons();
 //    }
 //}

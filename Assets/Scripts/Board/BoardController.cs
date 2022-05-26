@@ -42,7 +42,7 @@ public class BoardController : TicTacToeElement
         Builder builder = new WinCombinationsBuilder();
         Director director = new Director(builder);
         director.Construct();
-        game.boardModel.WinCombinations.AddRange(builder.GetResult());
+        Game.BoardModel.WinCombinations.AddRange(builder.GetResult());
     }
 
     void FillCellist(GameObject button, int b, int r)
@@ -51,29 +51,29 @@ public class BoardController : TicTacToeElement
         CellButton buttonSettings = button.GetComponent<CellButton>();
         buttonSettings.CellChar = Service.Alphabet[b];
         buttonSettings.CellInt = r;
-        game.boardModel.CellList.Add(buttonSettings);
+        Game.BoardModel.CellList.Add(buttonSettings);
     }
 
     public void CellsAfterTurn(CellButton receivedCell)
     // Проверка оставшихся ячеек после каждого хода
     {
-        if (game.boardModel.CellList.Any())
+        if (Game.BoardModel.CellList.Any())
         {
             List<CellButton> tempList = new List<CellButton>();
 
-            foreach (var cell in game.boardModel.CellList)
+            foreach (var cell in Game.BoardModel.CellList)
             {
                 if (cell.CellChar.Equals(receivedCell.CellChar) && cell.CellInt.Equals(receivedCell.CellInt)) 
                 {
                     tempList.Add(cell);
                 } 
             }
-            game.boardModel.CellList.RemoveAll(item => tempList.Contains(item));
+            Game.BoardModel.CellList.RemoveAll(item => tempList.Contains(item));
         }
         else
         {
-            game.gameController.CheckGameState(true);
-          //  game.stepExecutionController.OutOfTurns("Ничья");
+            Game.GameController.CheckGameState(true);
+          //  Game.stepExecutionController.OutOfTurns("Ничья");
         }    
     }
 }
