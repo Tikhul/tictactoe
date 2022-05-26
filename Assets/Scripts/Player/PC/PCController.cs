@@ -20,13 +20,13 @@ public class PCController : PlayerController
     public override void CreatePlayer(string actualMarker)
 // Создаю игрока ПК
     {
-        if (actualMarker.Equals(PlayerModel.MarkerX)) 
+        if (actualMarker.Equals(PlayerModel.PlayerMarker.X.ToString())) 
         {
-            Game.PCModel.Marker = PlayerModel.MarkerZero;
+            Game.PCModel.Marker = PlayerModel.PlayerMarker.O.ToString();
         }
         else
         {
-            Game.PCModel.Marker = PlayerModel.MarkerX;
+            Game.PCModel.Marker = PlayerModel.PlayerMarker.X.ToString();
             GeneratePCTurn();
         }
         Game.PCModel.PlayerWins.AddRange(Game.BoardModel.WinCombinations);

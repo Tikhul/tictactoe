@@ -6,8 +6,6 @@ public class PlayerModel : TicTacToeElement
     private bool _isHuman;
     private string _marker;
     private bool _isWinner = false;
-    public static string MarkerX = "X";
-    public static string MarkerZero = "0";
     private List<List<CellButton>> _actualWinStrategy = new List<List<CellButton>>();
     private List<List<CellButton>> _playerWins = new List<List<CellButton>>();
     private List<CellButton> _playerTurns = new List<CellButton>();
@@ -15,7 +13,7 @@ public class PlayerModel : TicTacToeElement
     { 
         get
         {
-            if (_marker.Equals(MarkerZero) || _marker.Equals(MarkerX))
+            if (_marker.Equals(PlayerMarker.X.ToString()) || _marker.Equals(PlayerMarker.O.ToString()))
             {
                 return _marker;
             }
@@ -52,5 +50,10 @@ public class PlayerModel : TicTacToeElement
     {
         get => _playerTurns;
         set => _playerTurns = value;
+    }
+    public enum PlayerMarker
+    {
+        X,
+        O
     }
 }
