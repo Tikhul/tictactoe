@@ -6,26 +6,21 @@ public class HumanController : PlayerController
 {
     private void OnEnable()
     {
-        BoardController.OnBoardCreated += CreatePlayer;
-        CellButton.OnPlayerClick += GetHumanTurn;
+        Game.BoardController.OnBoardCreated += CreatePlayer;
+        Game.PCController.OnPCTurn += UpdatePlayer;
     }
     private void OnDisable()
     {
-        CellButton.OnPlayerClick -= GetHumanTurn;
+        Game.PCController.OnPCTurn -= UpdatePlayer;
     }
     public override void CreatePlayer(string actualMarker)
     {
         Game.HumanModel.Marker = actualMarker;
         Game.HumanModel.PlayerWins.AddRange(Game.BoardModel.WinCombinations);
-        BoardController.OnBoardCreated -= CreatePlayer;
+        Game.BoardController.OnBoardCreated -= CreatePlayer;
     }
 
-    public static event System.Action OnHumanTurn = delegate { };
-    private void GetHumanTurn(CellButton cell)
-    {
-        UpdatePlayer(cell);
-        if (!Game.GameModel.FinishedGame) OnHumanTurn?.Invoke();
-    }
+
     public override void UpdatePlayer(CellButton cell)
     {
         CheckWinCombinations(Game.HumanModel.PlayerWins, cell);

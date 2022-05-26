@@ -82,10 +82,10 @@ public class PCStrategy : TicTacToeElement
         Debug.Log("FillCenterStrategy");
         decimal i = Game.BoardModel.BoardSettings.rowNumber / 2;
         int centerIndex = (int)System.Math.Round(i);
-        int centerChar = BoardModel.Alphabet[centerIndex];
+        char centerChar = BoardModel.Alphabet[centerIndex];
         ChosenButton = Game.BoardModel.CellList.Single(c => c.CellInt.Equals(centerIndex) && c.CellChar.Equals(centerChar) && !c.Taken);
 
-        if (!ChosenButton) FillDiagonalStrategy();
+        if (ChosenButton == null) FillDiagonalStrategy();
     }
 
     private void FillDiagonalStrategy()
@@ -106,6 +106,7 @@ public class PCStrategy : TicTacToeElement
     private void WinStrategy()
     {
         Debug.Log("WinStrategy");
+        Debug.Log(Game.PCModel.PlayerWins.Count);
         List<List<CellButton>> actualWins = SortedWins(Game.PCModel.PlayerWins);
         ChosenButton = actualWins[0].First(c => !c.Taken);
     }
@@ -113,6 +114,7 @@ public class PCStrategy : TicTacToeElement
     private void FailHumanStrategy()
     {
         Debug.Log("FailHumanStrategy");
+        Debug.Log(Game.PCModel.PlayerWins.Count);
         List<List<CellButton>> humanWins = SortedWins(Game.HumanModel.PlayerWins);
         ChosenButton = humanWins[0].Single(c => !c.Taken);
         alarm = false;

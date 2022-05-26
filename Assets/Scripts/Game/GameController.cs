@@ -14,9 +14,9 @@ public class GameController : TicTacToeElement
         }
     }
 
-    public void GetResult(string result)
+    public void GetResults(string result)
     {
-        Debug.Log("GetResult");
+        Debug.Log("GetResults");
         Game.FinalUI.ActivateResults(result);
         Game.BoardController.ManageButtons(false);
     }

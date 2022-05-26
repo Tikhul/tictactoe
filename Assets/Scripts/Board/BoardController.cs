@@ -7,9 +7,15 @@ public class BoardController : TicTacToeElement
     private void OnEnable()
     {
         CreatePlayersButton.OnPlayerChosen += CreateBoard;
+        Game.PCController.OnPCTurn += CellsAfterTurn;
+        CellButton.OnPlayerClick += CellsAfterTurn;
     }
-
-    public static event System.Action<string> OnBoardCreated = delegate { };
+    private void OnDisable()
+    {
+        Game.PCController.OnPCTurn -= CellsAfterTurn;
+        CellButton.OnPlayerClick -= CellsAfterTurn;
+    }
+    public event System.Action<string> OnBoardCreated = delegate { };
 
     public void CreateBoard(string actualMarker)
      // Создание борда для игры
@@ -37,7 +43,7 @@ public class BoardController : TicTacToeElement
     }
 
     private void CreateWinCombinations()
-    // Создание общих выирышных комбинаций в игре
+    // Создание общих выигрышных комбинаций в игре
     {
         Builder builder = new WinCombinationsBuilder();
         Director director = new Director(builder);
@@ -57,6 +63,7 @@ public class BoardController : TicTacToeElement
     public void CellsAfterTurn(CellButton receivedCell)
     // Проверка оставшихся ячеек после каждого хода
     {
+        Debug.Log("CellsAfterTurn");
         if (Game.BoardModel.CellList.Any())
         {
             List<CellButton> tempList = new List<CellButton>();
@@ -73,7 +80,7 @@ public class BoardController : TicTacToeElement
         else
         {
             Game.GameController.CheckGameState(true);
-          //  Game.stepExecutionController.OutOfTurns("Ничья");
+            Game.GameController.GetResults("Ничья");
         }    
     }
     public void ManageButtons(bool state)

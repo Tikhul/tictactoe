@@ -7,13 +7,11 @@ public class PCController : PlayerController
 {
     private void OnEnable()
     {
-        BoardController.OnBoardCreated += CreatePlayer;
-        HumanController.OnHumanTurn += GeneratePCTurn;
+        Game.BoardController.OnBoardCreated += CreatePlayer;
         CellButton.OnPlayerClick += UpdatePlayer;
     }
     private void OnDisable()
     {
-        HumanController.OnHumanTurn -= GeneratePCTurn;
         CellButton.OnPlayerClick -= UpdatePlayer;
     }
 
@@ -30,7 +28,7 @@ public class PCController : PlayerController
             GeneratePCTurn();
         }
         Game.PCModel.PlayerWins.AddRange(Game.BoardModel.WinCombinations);
-        BoardController.OnBoardCreated -= CreatePlayer;
+        Game.BoardController.OnBoardCreated -= CreatePlayer;
     }
 
     public override void UpdatePlayer(CellButton cell)
@@ -39,9 +37,10 @@ public class PCController : PlayerController
         LaunchWinnerDetection(Game.PCModel);
         CheckRemainingWins();
         Game.PCModel.PlayerTurns.Add(cell);
+        if (!Game.GameModel.FinishedGame) GeneratePCTurn();
     }
 
-    public static event System.Action<CellButton> OnPCTurn = delegate { };
+    public event System.Action<CellButton> OnPCTurn = delegate { };
 
     public void GeneratePCTurn()
     {
@@ -51,11 +50,12 @@ public class PCController : PlayerController
     }
     private IEnumerator WaitPCTurn(float waitTime)
     {
+        
         yield return new WaitForSeconds(waitTime);
         PCStrategy strategy = new PCStrategy();
         strategy.ChooseStrategy();
-        OnPCTurn(strategy.ChosenButton);
-        if (!Game.GameModel.FinishedGame) Game.BoardController.ManageButtons(true);
+        OnPCTurn?.Invoke(strategy.ChosenButton);
+        Game.BoardController.ManageButtons(true);
     }
 }
 

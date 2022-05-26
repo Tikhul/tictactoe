@@ -35,17 +35,17 @@ public class CellButton : TicTacToeElement, ICellButton
         get => _buttonElement;
         set => _buttonElement = value;
     }
-    public delegate void ClickAction(CellButton cell);
-    public static event ClickAction OnPlayerClick;
+
+    public static event System.Action<CellButton> OnPlayerClick = delegate { };
 
     private void OnEnable()
     {
-        PCController.OnPCTurn += CellTaken;
+        Game.PCController.OnPCTurn += CellTaken;
     }
 
     private void OnDisable()
     {
-        PCController.OnPCTurn -= CellTaken;
+        Game.PCController.OnPCTurn -= CellTaken;
     }
     public void CellClicked()
     // Если нажал человек

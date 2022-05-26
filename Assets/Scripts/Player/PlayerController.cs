@@ -12,7 +12,7 @@ public class PlayerController : TicTacToeElement
         if (!Game.HumanModel.PlayerWins.Any() && !Game.PCModel.PlayerWins.Any())
         {
             Game.GameController.CheckGameState(true);
-            Game.GameController.GetResult("Ничья");
+            Game.GameController.GetResults("Ничья");
         }
     }
     protected void CheckWinCombinations(List<List<CellButton>> wins, CellButton cell)
@@ -37,6 +37,7 @@ public class PlayerController : TicTacToeElement
 
         if (player.PlayerTurns.Count >= steps)
         {
+            Debug.Log("LaunchWinnerDetection");
             DetectWinner(player);
         }   
     }
@@ -60,8 +61,8 @@ public class PlayerController : TicTacToeElement
             {
                 player.IsWinner = true;
                 Game.GameController.CheckGameState(true);
-                if (player.IsHuman) Game.GameController.GetResult("Вы выиграли");
-                else Game.GameController.GetResult("ПК выиграл");
+                if (player.IsHuman) Game.GameController.GetResults("Вы выиграли");
+                else Game.GameController.GetResults("ПК выиграл");
                 break;
             }
         }         

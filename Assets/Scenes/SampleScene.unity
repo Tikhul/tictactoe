@@ -1352,7 +1352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerName: {fileID: 1160612782}
-  _marker: 0
+  _marker: O
 --- !u!1 &1592936679
 GameObject:
   m_ObjectHideFlags: 0
