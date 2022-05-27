@@ -34,9 +34,6 @@ public class PCController : PlayerController
         CheckWinCombinations(Game.TicTacToeModel.HumanModel.PlayerWins, cell);
         CheckRemainingWins();
         LaunchWinnerDetection(Game.TicTacToeModel.PCModel);
-        Debug.Log("PC update");
-        Debug.Log("Finished game " + Game.TicTacToeModel.GameModel.FinishedGame);
-        //if (!Game.TicTacToeModel.GameModel.FinishedGame) GeneratePCTurn();
     }
 
 
@@ -53,9 +50,10 @@ public class PCController : PlayerController
         {
             yield return new WaitForSeconds(waitTime);
             PCStrategy strategy = new PCStrategy();
-            strategy.RandomStrategy();
+            strategy.ChooseStrategy();
             OnPCTurn?.Invoke(strategy.ChosenButton);
             UpdatePlayer(strategy.ChosenButton);
+
             if (!Game.TicTacToeModel.GameModel.FinishedGame)
             {
                 Game.TicTacToeController.BoardController.ButtonsAfterTurn(true);

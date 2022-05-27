@@ -13,12 +13,12 @@ public class PCStrategy : TicTacToeElement
 
         if (Game.TicTacToeModel.PCModel.PlayerTurns.Count <= Game.TicTacToeModel.BoardModel.BoardSettings.rowNumber / 2)
         {
-            int rnd = Random.Range(1, 2);
-            //if (rnd == 1 && Game.BoardModel.BoardSettings.rowNumber % 2 != 0)
-            //{
-            //    FillCenterStrategy();
-            //}
-            /*else */if (rnd == 2)
+            int rnd = Random.Range(1, 3);
+            if (rnd == 1 && Game.TicTacToeModel.BoardModel.BoardSettings.rowNumber % 2 != 0)
+            {
+                FillCenterStrategy();
+            }
+            else if (rnd == 2)
             {
                 FillDiagonalStrategy();
             }
@@ -67,6 +67,10 @@ public class PCStrategy : TicTacToeElement
                     WinStrategy();
                 }
             }
+            else
+            {
+                RandomStrategy();
+            }
         }
     }
 
@@ -83,9 +87,12 @@ public class PCStrategy : TicTacToeElement
         decimal i = Game.TicTacToeModel.BoardModel.BoardSettings.rowNumber / 2;
         int centerIndex = (int)System.Math.Round(i);
         char centerChar = BoardModel.Alphabet[centerIndex];
-        ChosenButton = Game.TicTacToeModel.BoardModel.CurrentCellList.Single(c => c.CellInt.Equals(centerIndex) && c.CellChar.Equals(centerChar) && !c.Taken);
+        ChosenButton = Game.TicTacToeModel.BoardModel.AllCellList.Single(c => c.CellInt.Equals(centerIndex) && c.CellChar.Equals(centerChar));
 
-        if (ChosenButton == null) FillDiagonalStrategy();
+        if (!Game.TicTacToeModel.BoardModel.CurrentCellList.Contains(ChosenButton))
+        {
+            FillDiagonalStrategy();
+        }
     }
 
     private void FillDiagonalStrategy()
@@ -106,9 +113,9 @@ public class PCStrategy : TicTacToeElement
     private void WinStrategy()
     {
         Debug.Log("WinStrategy");
-      //  Debug.Log(Game.TicTacToeModel.PCModel.PlayerWins.Count);
-        List<List<CellButton>> actualWins = SortedWins(Game.TicTacToeModel.PCModel.PlayerWins);
-        ChosenButton = actualWins[0].First(c => !c.Taken);
+
+            List<List<CellButton>> actualWins = SortedWins(Game.TicTacToeModel.PCModel.PlayerWins);
+            ChosenButton = actualWins[0].First(c => !c.Taken);
     }
 
     private void FailHumanStrategy()
