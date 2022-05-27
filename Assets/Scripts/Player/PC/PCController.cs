@@ -40,8 +40,9 @@ public class PCController : PlayerController
     public void GeneratePCTurn()
     {
         Game.TicTacToeController.BoardController.ManageButtons(false);
-        IEnumerator coroutine = WaitPCTurn(2.0f);
-        StartCoroutine(coroutine);
+        //IEnumerator coroutine = WaitPCTurn(2.0f);
+        //StartCoroutine(coroutine);
+        StartCoroutine(WaitPCTurn(2f));
     }
 
     private IEnumerator WaitPCTurn(float waitTime)

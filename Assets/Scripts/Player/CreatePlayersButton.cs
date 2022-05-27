@@ -1,11 +1,18 @@
 ﻿using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class CreatePlayersButton : TicTacToeElement
 {
     [SerializeField] private TMP_Text _playerName;
     [SerializeField] private string _marker;
     public event System.Action<string> OnPlayerChosen = delegate { };
+
+    private void Awake()
+    {
+        var button = GetComponent<Button>();
+        button.onClick.AddListener(PlayerChosen);
+    }
 
     public TMP_Text PlayerName
     {
