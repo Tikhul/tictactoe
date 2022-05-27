@@ -36,7 +36,7 @@ class WinCombinationsBuilder : Builder
         List<CellButton> diagonal1 = new List<CellButton>();
         
 
-        for (int i = 0; i < Game.TicTacToeModel.BoardModel.BoardSettings.rowNumber; i++)
+        for (int i = 0; i < Game.TicTacToeModel.BoardModel.BoardSettings.RowNumber; i++)
         {
             foreach (CellButton cell in Game.TicTacToeModel.BoardModel.CurrentCellList)
             {
@@ -52,11 +52,11 @@ class WinCombinationsBuilder : Builder
     {
         List<CellButton> diagonal2 = new List<CellButton>();
 
-        for (int i = 0; i < Game.TicTacToeModel.BoardModel.BoardSettings.rowNumber; i++)
+        for (int i = 0; i < Game.TicTacToeModel.BoardModel.BoardSettings.RowNumber; i++)
         {
             foreach (CellButton cell in Game.TicTacToeModel.BoardModel.CurrentCellList)
             {
-                if (cell.CellChar.Equals(BoardModel.Alphabet[Game.TicTacToeModel.BoardModel.BoardSettings.rowNumber - i - 1]) && cell.CellInt.Equals(i))
+                if (cell.CellChar.Equals(BoardModel.Alphabet[Game.TicTacToeModel.BoardModel.BoardSettings.RowNumber - i - 1]) && cell.CellInt.Equals(i))
                 {
                     diagonal2.Add(cell);
                 }
@@ -66,14 +66,14 @@ class WinCombinationsBuilder : Builder
     }
     public override void BuildRows()
     {
-        for (int i = 0; i < Game.TicTacToeModel.BoardModel.BoardSettings.rowNumber; i++)
+        for (int i = 0; i < Game.TicTacToeModel.BoardModel.BoardSettings.RowNumber; i++)
         {
             combination.Add(Game.TicTacToeModel.BoardModel.CurrentCellList.FindAll(c => c.CellChar == BoardModel.Alphabet[i]));
         }
     }
     public override void BuildColumns()
     {
-        for (int i = 0; i < Game.TicTacToeModel.BoardModel.BoardSettings.rowNumber; i++)
+        for (int i = 0; i < Game.TicTacToeModel.BoardModel.BoardSettings.RowNumber; i++)
         {
             combination.Add(Game.TicTacToeModel.BoardModel.CurrentCellList.FindAll(c => c.CellInt.Equals(i)));
         }

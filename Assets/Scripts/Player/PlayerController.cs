@@ -33,7 +33,7 @@ public abstract class PlayerController : TicTacToeElement
     protected void LaunchWinnerDetection(PlayerModel player)
     // При достаточном количестве ходов проверяю игру на выигрыш
     {
-        float steps = Game.TicTacToeModel.BoardModel.BoardSettings.rowNumber;
+        float steps = Game.TicTacToeModel.BoardModel.BoardSettings.RowNumber;
 
         if (player.PlayerTurns.Count >= steps)
         {
@@ -58,7 +58,7 @@ public abstract class PlayerController : TicTacToeElement
                 }  
             }
 
-            if (score >= Game.TicTacToeModel.BoardModel.BoardSettings.rowNumber)
+            if (score >= Game.TicTacToeModel.BoardModel.BoardSettings.RowNumber)
             {
                 player.IsWinner = true;
                 Game.TicTacToeController.GameController.CheckGameState(true);

@@ -14,22 +14,22 @@ abstract class BoardPartsPrototype : TicTacToeElement
     private GameObject _buttonExample;
     public int RowNumber
     {
-        get => Game.TicTacToeModel.BoardModel.BoardSettings.rowNumber;
-        set => Game.TicTacToeModel.BoardModel.BoardSettings.rowNumber = value;
+        get => Game.TicTacToeModel.BoardModel.BoardSettings.RowNumber;
+        set => Game.TicTacToeModel.BoardModel.BoardSettings.RowNumber = value;
     }
     public float ParentPanelSide
     {
-        get => _parentPanelSide = Game.TicTacToeModel.BoardModel.BoardSettings.parentPanel.GetComponent<RectTransform>().sizeDelta.x;
+        get => _parentPanelSide = Game.TicTacToeModel.BoardModel.BoardSettings.ParentPanel.GetComponent<RectTransform>().sizeDelta.x;
         set => _parentPanelSide = value;
     }
     public float ButtonWidth
     {
-        get => _buttonWidth = _parentPanelSide / Game.TicTacToeModel.BoardModel.BoardSettings.rowNumber;
+        get => _buttonWidth = _parentPanelSide / Game.TicTacToeModel.BoardModel.BoardSettings.RowNumber;
         set => _buttonWidth = value;
     }
     public GameObject ParentPanel
     {
-        get => _parentPanel = Game.TicTacToeModel.BoardModel.BoardSettings.parentPanel;
+        get => _parentPanel = Game.TicTacToeModel.BoardModel.BoardSettings.ParentPanel;
         set => _parentPanel = value;
     }
     public GameObject BoardParent
@@ -39,17 +39,17 @@ abstract class BoardPartsPrototype : TicTacToeElement
     }
     public GameObject Rows
     {
-        get => _rows = Game.TicTacToeModel.BoardModel.BoardSettings.rows;
+        get => _rows = Game.TicTacToeModel.BoardModel.BoardSettings.Rows;
         set => _rows = value;
     }
     public GameObject Columns
     {
-        get => _columns = Game.TicTacToeModel.BoardModel.BoardSettings.columns;
+        get => _columns = Game.TicTacToeModel.BoardModel.BoardSettings.Columns;
         set => _columns = value;
     }
     public GameObject ButtonExample
     {
-        get => _buttonExample = Game.TicTacToeModel.BoardModel.BoardSettings.buttonExample;
+        get => _buttonExample = Game.TicTacToeModel.BoardModel.BoardSettings.ButtonExample;
         set => _buttonExample = value;
     }
     public abstract GameObject Clone(GameObject objToCreate, GameObject parent, float width, float height);

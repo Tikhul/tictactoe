@@ -33,7 +33,7 @@ public class BoardModel : TicTacToeElement
     {
         get
         {
-            if (_boardSettings.rowNumber > 2 && _boardSettings.rowNumber < 27)
+            if (_boardSettings.RowNumber > 2 && _boardSettings.RowNumber < 27)
             {
                 return _boardSettings;
             }
