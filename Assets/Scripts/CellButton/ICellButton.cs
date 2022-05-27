@@ -5,5 +5,5 @@ using UnityEngine;
 public interface ICellButton
 {
     void CellClicked();
-    void CellTaken(CellButton chosenButton);
+    void CellTaken(ICellButton chosenButton);
 }

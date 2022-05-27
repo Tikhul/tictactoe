@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class GameModel : TicTacToeElement
 {
-    private bool _finishedGame;
+    private bool _finishedGame = false;
 
     public bool FinishedGame
     {
-        get => _finishedGame = false;
+        get => _finishedGame;
         set => _finishedGame = value;
     }
 }

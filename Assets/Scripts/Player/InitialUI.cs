@@ -6,19 +6,16 @@ using UnityEngine;
 public class InitialUI : TicTacToeElement
     // UI для начала игры
 {
-    private void OnEnable()
+    [SerializeField] private List<CreatePlayersButton> _buttons = new List<CreatePlayersButton>();
+    public List<CreatePlayersButton> Buttons
     {
-        CreatePlayersButton.OnPlayerChosen += ShowPlayersNames;
+        get => _buttons;
+        set => _buttons = value;
     }
 
-    private void OnDisable()
+    public void ShowPlayersNames(string marker)
     {
-        CreatePlayersButton.OnPlayerChosen -= ShowPlayersNames;
-    }
-
-    private void ShowPlayersNames(string marker)
-    {
-        foreach (CreatePlayersButton i in FindObjectsOfType<CreatePlayersButton>())
+        foreach (CreatePlayersButton i in Buttons)
         {
             string actualMarker = i.Marker;
             i.PlayerName.gameObject.SetActive(true);

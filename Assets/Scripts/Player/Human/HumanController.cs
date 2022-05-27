@@ -6,26 +6,30 @@ public class HumanController : PlayerController
 {
     private void OnEnable()
     {
-        Game.BoardController.OnBoardCreated += CreatePlayer;
-        Game.PCController.OnPCTurn += UpdatePlayer;
+        Game.TicTacToeController.BoardController.OnBoardCreated += CreatePlayer;
+        Game.TicTacToeController.PCController.OnPCTurn += UpdatePlayer;
     }
     private void OnDisable()
     {
-        Game.PCController.OnPCTurn -= UpdatePlayer;
+        
     }
     public override void CreatePlayer(string actualMarker)
     {
-        Game.HumanModel.Marker = actualMarker;
-        Game.HumanModel.PlayerWins.AddRange(Game.BoardModel.WinCombinations);
-        Game.BoardController.OnBoardCreated -= CreatePlayer;
+        Game.TicTacToeModel.HumanModel.Marker = actualMarker;
+        Game.TicTacToeModel.HumanModel.PlayerWins.AddRange(Game.TicTacToeModel.BoardModel.WinCombinations);
+        Game.TicTacToeController.BoardController.OnBoardCreated -= CreatePlayer;
     }
 
 
     public override void UpdatePlayer(CellButton cell)
     {
-        CheckWinCombinations(Game.HumanModel.PlayerWins, cell);
-        LaunchWinnerDetection(Game.HumanModel);
+        CheckWinCombinations(Game.TicTacToeModel.PCModel.PlayerWins, cell);
         CheckRemainingWins();
-        Game.HumanModel.PlayerTurns.Add(cell);
+        LaunchWinnerDetection(Game.TicTacToeModel.HumanModel);
+        Game.TicTacToeModel.HumanModel.PlayerTurns.Add(cell);
+        if (Game.TicTacToeModel.GameModel.FinishedGame)
+        {
+            Game.TicTacToeController.PCController.OnPCTurn -= UpdatePlayer;
+        }
     }
 }

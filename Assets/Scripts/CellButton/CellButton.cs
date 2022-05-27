@@ -36,33 +36,37 @@ public class CellButton : TicTacToeElement, ICellButton
         set => _buttonElement = value;
     }
 
-    public static event System.Action<CellButton> OnPlayerClick = delegate { };
+    public event System.Action<CellButton> OnPlayerClick = delegate { };
 
     private void OnEnable()
     {
-        Game.PCController.OnPCTurn += CellTaken;
+        Game.TicTacToeController.PCController.OnPCTurn += CellTaken;
     }
 
     private void OnDisable()
     {
-        Game.PCController.OnPCTurn -= CellTaken;
+        
     }
     public void CellClicked()
     // Если нажал человек
     {
         Taken = true;
-        ButtonText.text = Game.HumanModel.Marker;
+        ButtonText.text = Game.TicTacToeModel.HumanModel.Marker;
         ButtonText.gameObject.SetActive(true);
         OnPlayerClick?.Invoke(this);
+        if (Game.TicTacToeModel.GameModel.FinishedGame)
+        {
+            Game.TicTacToeController.PCController.OnPCTurn -= CellTaken;
+        }
     }
 
-    public void CellTaken(CellButton chosenButton)
+    public void CellTaken(ICellButton chosenButton)
     // Если кнопку выбрал ПК
     {
         if (chosenButton.Equals(this))
         {
             Taken = true;
-            ButtonText.text = Game.PCModel.Marker;
+            ButtonText.text = Game.TicTacToeModel.PCModel.Marker;
             ButtonText.gameObject.SetActive(true);
             GetComponent<Button>().enabled = false;
         }

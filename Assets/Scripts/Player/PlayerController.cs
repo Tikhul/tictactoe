@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-public class PlayerController : TicTacToeElement
+public abstract class PlayerController : TicTacToeElement
 {
-    public virtual void CreatePlayer(string actualMarker) { }
-    public virtual void UpdatePlayer(CellButton cell) { }
+    public abstract void CreatePlayer(string actualMarker);
+    public abstract void UpdatePlayer(CellButton cell);
     protected void CheckRemainingWins()
     // Проверяю, не закончились ли выигрышные комбинации
     {
-        if (!Game.HumanModel.PlayerWins.Any() && !Game.PCModel.PlayerWins.Any())
+        if (!Game.TicTacToeModel.HumanModel.PlayerWins.Any() && !Game.TicTacToeModel.PCModel.PlayerWins.Any())
         {
-            Game.GameController.CheckGameState(true);
-            Game.GameController.GetResults("Ничья");
+            Game.TicTacToeController.GameController.CheckGameState(true);
+            Game.TicTacToeController.GameController.GetResults("Ничья");
         }
     }
     protected void CheckWinCombinations(List<List<CellButton>> wins, CellButton cell)
@@ -33,7 +33,7 @@ public class PlayerController : TicTacToeElement
     protected void LaunchWinnerDetection(PlayerModel player)
     // При достаточном количестве ходов проверяю игру на выигрыш
     {
-        float steps = Game.BoardModel.BoardSettings.rowNumber;
+        float steps = Game.TicTacToeModel.BoardModel.BoardSettings.rowNumber;
 
         if (player.PlayerTurns.Count >= steps)
         {
@@ -57,12 +57,12 @@ public class PlayerController : TicTacToeElement
                 }  
             }
 
-            if (score >= Game.BoardModel.BoardSettings.rowNumber)
+            if (score >= Game.TicTacToeModel.BoardModel.BoardSettings.rowNumber)
             {
                 player.IsWinner = true;
-                Game.GameController.CheckGameState(true);
-                if (player.IsHuman) Game.GameController.GetResults("Вы выиграли");
-                else Game.GameController.GetResults("ПК выиграл");
+                Game.TicTacToeController.GameController.CheckGameState(true);
+                if (player.IsHuman) Game.TicTacToeController.GameController.GetResults("Вы выиграли");
+                else Game.TicTacToeController.GameController.GetResults("ПК выиграл");
                 break;
             }
         }         

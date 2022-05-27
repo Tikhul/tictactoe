@@ -4,18 +4,18 @@ using System.Linq;
 
 public class BoardController : TicTacToeElement
 {
+    public event System.Action<string> OnBoardCreated = delegate { };
+
     private void OnEnable()
     {
-        CreatePlayersButton.OnPlayerChosen += CreateBoard;
-        Game.PCController.OnPCTurn += CellsAfterTurn;
-        CellButton.OnPlayerClick += CellsAfterTurn;
+        Game.TicTacToeController.PCController.OnPCTurn += CellsAfterTurn;
+        //CellButton.OnPlayerClick += CellsAfterTurn;
     }
     private void OnDisable()
     {
-        Game.PCController.OnPCTurn -= CellsAfterTurn;
-        CellButton.OnPlayerClick -= CellsAfterTurn;
+        Game.TicTacToeController.PCController.OnPCTurn -= CellsAfterTurn;
+        //CellButton.OnPlayerClick -= CellsAfterTurn;
     }
-    public event System.Action<string> OnBoardCreated = delegate { };
 
     public void CreateBoard(string actualMarker)
      // Создание борда для игры
@@ -38,7 +38,6 @@ public class BoardController : TicTacToeElement
             }
         }
         CreateWinCombinations();
-        CreatePlayersButton.OnPlayerChosen -= CreateBoard;
         OnBoardCreated?.Invoke(actualMarker);
     }
 
@@ -48,44 +47,45 @@ public class BoardController : TicTacToeElement
         Builder builder = new WinCombinationsBuilder();
         Director director = new Director(builder);
         director.Construct();
-        Game.BoardModel.WinCombinations.AddRange(builder.GetResult());
+        Game.TicTacToeModel.BoardModel.WinCombinations.AddRange(builder.GetResult());
     }
 
-    void FillCellist(GameObject button, int b, int r)
+    public void FillCellist(GameObject button, int b, int r)
     // Заполняю список ячеек в борде
     {
         CellButton buttonSettings = button.GetComponent<CellButton>();
         buttonSettings.CellChar = BoardModel.Alphabet[b];
         buttonSettings.CellInt = r;
-        Game.BoardModel.CellList.Add(buttonSettings);
+        Game.TicTacToeModel.BoardModel.CellList.Add(buttonSettings);
+        buttonSettings.OnPlayerClick += CellsAfterTurn;
     }
 
     public void CellsAfterTurn(CellButton receivedCell)
     // Проверка оставшихся ячеек после каждого хода
     {
-        Debug.Log("CellsAfterTurn");
-        if (Game.BoardModel.CellList.Any())
+        if (Game.TicTacToeModel.BoardModel.CellList.Any())
         {
             List<CellButton> tempList = new List<CellButton>();
 
-            foreach (var cell in Game.BoardModel.CellList)
+            foreach (var cell in Game.TicTacToeModel.BoardModel.CellList)
             {
                 if (cell.CellChar.Equals(receivedCell.CellChar) && cell.CellInt.Equals(receivedCell.CellInt)) 
                 {
                     tempList.Add(cell);
                 } 
             }
-            Game.BoardModel.CellList.RemoveAll(item => tempList.Contains(item));
+            Game.TicTacToeModel.BoardModel.CellList.RemoveAll(item => tempList.Contains(item));
+            receivedCell.OnPlayerClick -= CellsAfterTurn;
         }
         else
         {
-            Game.GameController.CheckGameState(true);
-            Game.GameController.GetResults("Ничья");
+            Game.TicTacToeController.GameController.CheckGameState(true);
+            Game.TicTacToeController.GameController.GetResults("Ничья");
         }    
     }
     public void ManageButtons(bool state)
     {
-        foreach (var cell in Game.BoardModel.CellList)
+        foreach (var cell in Game.TicTacToeModel.BoardModel.CellList)
         {
             cell.ButtonElement.enabled = state;
         }

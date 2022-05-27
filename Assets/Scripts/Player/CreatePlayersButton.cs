@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using TMPro;
 
-public class CreatePlayersButton : MonoBehaviour
+public class CreatePlayersButton : TicTacToeElement
 {
     [SerializeField] private TMP_Text _playerName;
     [SerializeField] private string _marker;
+    public event System.Action<string> OnPlayerChosen = delegate { };
 
     public TMP_Text PlayerName
     {
@@ -17,12 +18,11 @@ public class CreatePlayersButton : MonoBehaviour
         get => _marker;
         set => _marker = value;
     }
-
-    public delegate void ClickAction(string marker);
-    public static event ClickAction OnPlayerChosen;
-
+    
     public void PlayerChosen()
     {
-        OnPlayerChosen?.Invoke(Marker);
+        OnPlayerChosen(Marker);
+        Game.TicTacToeView.InitialUI.ShowPlayersNames(Marker);
+        Game.TicTacToeController.BoardController.CreateBoard(Marker);
     }
 }
