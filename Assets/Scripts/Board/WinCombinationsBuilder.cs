@@ -38,7 +38,7 @@ class WinCombinationsBuilder : Builder
 
         for (int i = 0; i < Game.TicTacToeModel.BoardModel.BoardSettings.rowNumber; i++)
         {
-            foreach (CellButton cell in Game.TicTacToeModel.BoardModel.CellList)
+            foreach (CellButton cell in Game.TicTacToeModel.BoardModel.CurrentCellList)
             {
                 if (cell.CellChar.Equals(BoardModel.Alphabet[i]) && cell.CellInt.Equals(i))
                 {
@@ -54,7 +54,7 @@ class WinCombinationsBuilder : Builder
 
         for (int i = 0; i < Game.TicTacToeModel.BoardModel.BoardSettings.rowNumber; i++)
         {
-            foreach (CellButton cell in Game.TicTacToeModel.BoardModel.CellList)
+            foreach (CellButton cell in Game.TicTacToeModel.BoardModel.CurrentCellList)
             {
                 if (cell.CellChar.Equals(BoardModel.Alphabet[Game.TicTacToeModel.BoardModel.BoardSettings.rowNumber - i - 1]) && cell.CellInt.Equals(i))
                 {
@@ -68,14 +68,14 @@ class WinCombinationsBuilder : Builder
     {
         for (int i = 0; i < Game.TicTacToeModel.BoardModel.BoardSettings.rowNumber; i++)
         {
-            combination.Add(Game.TicTacToeModel.BoardModel.CellList.FindAll(c => c.CellChar == BoardModel.Alphabet[i]));
+            combination.Add(Game.TicTacToeModel.BoardModel.CurrentCellList.FindAll(c => c.CellChar == BoardModel.Alphabet[i]));
         }
     }
     public override void BuildColumns()
     {
         for (int i = 0; i < Game.TicTacToeModel.BoardModel.BoardSettings.rowNumber; i++)
         {
-            combination.Add(Game.TicTacToeModel.BoardModel.CellList.FindAll(c => c.CellInt.Equals(i)));
+            combination.Add(Game.TicTacToeModel.BoardModel.CurrentCellList.FindAll(c => c.CellInt.Equals(i)));
         }
     }
     public override List<List<CellButton>> GetResult()

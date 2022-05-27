@@ -56,7 +56,10 @@ public class PCController : PlayerController
             strategy.RandomStrategy();
             OnPCTurn?.Invoke(strategy.ChosenButton);
             UpdatePlayer(strategy.ChosenButton);
-            Game.TicTacToeController.BoardController.ManageButtons(true);
+            if (!Game.TicTacToeModel.GameModel.FinishedGame)
+            {
+                Game.TicTacToeController.BoardController.ButtonsAfterTurn(true);
+            }   
         }
     }
 }

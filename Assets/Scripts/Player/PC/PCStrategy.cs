@@ -74,7 +74,7 @@ public class PCStrategy : TicTacToeElement
     {
         Debug.Log("RandomStrategy");
         System.Random rnd = new System.Random();
-        ChosenButton = Game.TicTacToeModel.BoardModel.CellList[rnd.Next(Game.TicTacToeModel.BoardModel.CellList.Count)];
+        ChosenButton = Game.TicTacToeModel.BoardModel.CurrentCellList[rnd.Next(Game.TicTacToeModel.BoardModel.CurrentCellList.Count)];
     }
 
     private void FillCenterStrategy()
@@ -83,7 +83,7 @@ public class PCStrategy : TicTacToeElement
         decimal i = Game.TicTacToeModel.BoardModel.BoardSettings.rowNumber / 2;
         int centerIndex = (int)System.Math.Round(i);
         char centerChar = BoardModel.Alphabet[centerIndex];
-        ChosenButton = Game.TicTacToeModel.BoardModel.CellList.Single(c => c.CellInt.Equals(centerIndex) && c.CellChar.Equals(centerChar) && !c.Taken);
+        ChosenButton = Game.TicTacToeModel.BoardModel.CurrentCellList.Single(c => c.CellInt.Equals(centerIndex) && c.CellChar.Equals(centerChar) && !c.Taken);
 
         if (ChosenButton == null) FillDiagonalStrategy();
     }
@@ -124,7 +124,7 @@ public class PCStrategy : TicTacToeElement
         List<CellButton> diagonals = new List<CellButton>();
         int rowNumber = Game.TicTacToeModel.BoardModel.BoardSettings.rowNumber;
 
-        foreach (CellButton cell in Game.TicTacToeModel.BoardModel.CellList.FindAll(c => !c.Taken))
+        foreach (CellButton cell in Game.TicTacToeModel.BoardModel.CurrentCellList.FindAll(c => !c.Taken))
         {
             if (cell.CellInt.Equals(0) && cell.CellChar.Equals(BoardModel.Alphabet[0]) ||
                 cell.CellInt.Equals(0) && cell.CellChar.Equals(BoardModel.Alphabet[rowNumber - 1]) ||

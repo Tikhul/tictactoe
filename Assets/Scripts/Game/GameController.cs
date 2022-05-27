@@ -6,12 +6,9 @@ public class GameController : TicTacToeElement
 
 // Общее состояние игры
 {
-    public void CheckGameState(bool finished)
+    public void CheckGameState(bool state)
     {
-        if (finished)
-        {
-            Game.TicTacToeModel.GameModel.FinishedGame = true;
-        }
+       Game.TicTacToeModel.GameModel.FinishedGame = state;
     }
 
     public void GetResults(string result)

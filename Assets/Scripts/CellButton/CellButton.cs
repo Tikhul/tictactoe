@@ -42,11 +42,6 @@ public class CellButton : TicTacToeElement, ICellButton
     {
         Game.TicTacToeController.PCController.OnPCTurn += CellTaken;
     }
-
-    private void OnDisable()
-    {
-        
-    }
     public void CellClicked()
     // Если нажал человек
     {
@@ -58,6 +53,8 @@ public class CellButton : TicTacToeElement, ICellButton
         {
             Game.TicTacToeController.PCController.OnPCTurn -= CellTaken;
         }
+        ButtonElement.enabled = false;
+        Debug.Log(CellChar.ToString() + CellInt.ToString() + Taken.ToString());
     }
 
     public void CellTaken(ICellButton chosenButton)
@@ -68,7 +65,7 @@ public class CellButton : TicTacToeElement, ICellButton
             Taken = true;
             ButtonText.text = Game.TicTacToeModel.PCModel.Marker;
             ButtonText.gameObject.SetActive(true);
-            GetComponent<Button>().enabled = false;
+            ButtonElement.enabled = false;
         }
     }
 }

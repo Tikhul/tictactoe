@@ -7,14 +7,13 @@ public class HumanController : PlayerController
     private void OnEnable()
     {
         Game.TicTacToeController.BoardController.OnBoardCreated += CreatePlayer;
-       // Game.TicTacToeController.PCController.OnPCTurn += UpdatePlayer;
     }
     public override void CreatePlayer(string actualMarker)
     {
         Game.TicTacToeModel.HumanModel.Marker = actualMarker;
         Game.TicTacToeModel.HumanModel.PlayerWins.AddRange(Game.TicTacToeModel.BoardModel.WinCombinations);
         Game.TicTacToeController.BoardController.OnBoardCreated -= CreatePlayer;
-        foreach (var cell in Game.TicTacToeModel.BoardModel.CellList)
+        foreach (var cell in Game.TicTacToeModel.BoardModel.CurrentCellList)
         {
             cell.OnPlayerClick += UpdatePlayer;
         }
@@ -27,11 +26,10 @@ public class HumanController : PlayerController
         CheckWinCombinations(Game.TicTacToeModel.PCModel.PlayerWins, cell);
         CheckRemainingWins();
         LaunchWinnerDetection(Game.TicTacToeModel.HumanModel);
-        Debug.Log("Human update");
+
         if (Game.TicTacToeModel.GameModel.FinishedGame)
         {
-            //  Game.TicTacToeController.PCController.OnPCTurn -= UpdatePlayer;
-            foreach (var c in Game.TicTacToeModel.BoardModel.CellList)
+            foreach (var c in Game.TicTacToeModel.BoardModel.CurrentCellList)
             {
                 c.OnPlayerClick -= UpdatePlayer;
             }

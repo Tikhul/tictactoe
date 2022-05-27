@@ -54,27 +54,26 @@ public class BoardController : TicTacToeElement
         CellButton buttonSettings = button.GetComponent<CellButton>();
         buttonSettings.CellChar = BoardModel.Alphabet[b];
         buttonSettings.CellInt = r;
-        Game.TicTacToeModel.BoardModel.CellList.Add(buttonSettings);
+        Game.TicTacToeModel.BoardModel.CurrentCellList.Add(buttonSettings);
+        Game.TicTacToeModel.BoardModel.AllCellList.Add(buttonSettings);
         buttonSettings.OnPlayerClick += CellsAfterTurn;
     }
 
     public void CellsAfterTurn(CellButton receivedCell)
     // Проверка оставшихся ячеек после каждого хода
     {
-        if (Game.TicTacToeModel.BoardModel.CellList.Any())
+        if (Game.TicTacToeModel.BoardModel.CurrentCellList.Any())
         {
             List<CellButton> tempList = new List<CellButton>();
 
-            foreach (var cell in Game.TicTacToeModel.BoardModel.CellList)
+            foreach (var cell in Game.TicTacToeModel.BoardModel.CurrentCellList)
             {
-              //  Debug.Log("Cell: " + cell.CellChar.ToString() + cell.CellInt.ToString());
-              //  Debug.Log("Received Cell: " + receivedCell.CellChar.ToString() + receivedCell.CellInt.ToString());
                 if (cell.CellChar.Equals(receivedCell.CellChar) && cell.CellInt.Equals(receivedCell.CellInt)) 
                 {
                     tempList.Add(cell);
                 } 
             }
-            Game.TicTacToeModel.BoardModel.CellList.RemoveAll(item => tempList.Contains(item));
+            Game.TicTacToeModel.BoardModel.CurrentCellList.RemoveAll(item => tempList.Contains(item));
             receivedCell.OnPlayerClick -= CellsAfterTurn;
         }
         else
@@ -83,9 +82,17 @@ public class BoardController : TicTacToeElement
             Game.TicTacToeController.GameController.GetResults("Ничья");
         }    
     }
+    
     public void ManageButtons(bool state)
     {
-        foreach (var cell in Game.TicTacToeModel.BoardModel.CellList)
+        foreach (var cell in Game.TicTacToeModel.BoardModel.AllCellList)
+        {
+            cell.ButtonElement.enabled = state;
+        }
+    }
+    public void ButtonsAfterTurn(bool state)
+    {
+        foreach (var cell in Game.TicTacToeModel.BoardModel.CurrentCellList)
         {
             cell.ButtonElement.enabled = state;
         }
