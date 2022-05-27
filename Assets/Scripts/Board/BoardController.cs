@@ -9,12 +9,10 @@ public class BoardController : TicTacToeElement
     private void OnEnable()
     {
         Game.TicTacToeController.PCController.OnPCTurn += CellsAfterTurn;
-        //CellButton.OnPlayerClick += CellsAfterTurn;
     }
     private void OnDisable()
     {
         Game.TicTacToeController.PCController.OnPCTurn -= CellsAfterTurn;
-        //CellButton.OnPlayerClick -= CellsAfterTurn;
     }
 
     public void CreateBoard(string actualMarker)
@@ -69,6 +67,8 @@ public class BoardController : TicTacToeElement
 
             foreach (var cell in Game.TicTacToeModel.BoardModel.CellList)
             {
+              //  Debug.Log("Cell: " + cell.CellChar.ToString() + cell.CellInt.ToString());
+              //  Debug.Log("Received Cell: " + receivedCell.CellChar.ToString() + receivedCell.CellInt.ToString());
                 if (cell.CellChar.Equals(receivedCell.CellChar) && cell.CellInt.Equals(receivedCell.CellInt)) 
                 {
                     tempList.Add(cell);

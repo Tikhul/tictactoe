@@ -10,11 +10,6 @@ public class PCController : PlayerController
     private void OnEnable()
     {
         Game.TicTacToeController.BoardController.OnBoardCreated += CreatePlayer;
-        //CellButton.OnPlayerClick += UpdatePlayer;
-    }
-    private void OnDisable()
-    {
-       
     }
 
     public override void CreatePlayer(string actualMarker)
@@ -31,19 +26,17 @@ public class PCController : PlayerController
         }
         Game.TicTacToeModel.PCModel.PlayerWins.AddRange(Game.TicTacToeModel.BoardModel.WinCombinations);
         Game.TicTacToeController.BoardController.OnBoardCreated -= CreatePlayer;
-        foreach(var cell in Game.TicTacToeModel.BoardModel.CellList)
-        {
-            cell.OnPlayerClick += UpdatePlayer;
-        }
     }
 
     public override void UpdatePlayer(CellButton cell)
     {
+        Game.TicTacToeModel.PCModel.PlayerTurns.Add(cell);
         CheckWinCombinations(Game.TicTacToeModel.HumanModel.PlayerWins, cell);
         CheckRemainingWins();
         LaunchWinnerDetection(Game.TicTacToeModel.PCModel);
-        Game.TicTacToeModel.PCModel.PlayerTurns.Add(cell);
-        if (!Game.TicTacToeModel.GameModel.FinishedGame) GeneratePCTurn();
+        Debug.Log("PC update");
+        Debug.Log("Finished game " + Game.TicTacToeModel.GameModel.FinishedGame);
+        //if (!Game.TicTacToeModel.GameModel.FinishedGame) GeneratePCTurn();
     }
 
 
@@ -56,18 +49,14 @@ public class PCController : PlayerController
 
     private IEnumerator WaitPCTurn(float waitTime)
     {
-        
-        yield return new WaitForSeconds(waitTime);
-        PCStrategy strategy = new PCStrategy();
-        strategy.ChooseStrategy();
         if (!Game.TicTacToeModel.GameModel.FinishedGame)
         {
+            yield return new WaitForSeconds(waitTime);
+            PCStrategy strategy = new PCStrategy();
+            strategy.RandomStrategy();
             OnPCTurn?.Invoke(strategy.ChosenButton);
+            UpdatePlayer(strategy.ChosenButton);
             Game.TicTacToeController.BoardController.ManageButtons(true);
-        }
-        else
-        {
-            //CellButton.OnPlayerClick -= UpdatePlayer;
         }
     }
 }

@@ -45,6 +45,7 @@ public abstract class PlayerController : TicTacToeElement
     private void DetectWinner(PlayerModel player)
     // Определение победителя при наличии выигрышных комбинаций
     {
+        Debug.Log("Player ishuman " + player.IsHuman);
         foreach (var win in player.PlayerWins)
         {
             int score = 0;

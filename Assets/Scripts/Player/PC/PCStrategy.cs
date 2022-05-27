@@ -70,7 +70,7 @@ public class PCStrategy : TicTacToeElement
         }
     }
 
-    private void RandomStrategy()
+    public void RandomStrategy()
     {
         Debug.Log("RandomStrategy");
         System.Random rnd = new System.Random();
@@ -106,7 +106,7 @@ public class PCStrategy : TicTacToeElement
     private void WinStrategy()
     {
         Debug.Log("WinStrategy");
-        Debug.Log(Game.TicTacToeModel.PCModel.PlayerWins.Count);
+      //  Debug.Log(Game.TicTacToeModel.PCModel.PlayerWins.Count);
         List<List<CellButton>> actualWins = SortedWins(Game.TicTacToeModel.PCModel.PlayerWins);
         ChosenButton = actualWins[0].First(c => !c.Taken);
     }
@@ -114,7 +114,7 @@ public class PCStrategy : TicTacToeElement
     private void FailHumanStrategy()
     {
         Debug.Log("FailHumanStrategy");
-        Debug.Log(Game.TicTacToeModel.PCModel.PlayerWins.Count);
+    //    Debug.Log(Game.TicTacToeModel.PCModel.PlayerWins.Count);
         List<List<CellButton>> humanWins = SortedWins(Game.TicTacToeModel.HumanModel.PlayerWins);
         ChosenButton = humanWins[0].Single(c => !c.Taken);
         alarm = false;
